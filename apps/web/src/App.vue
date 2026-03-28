@@ -60,11 +60,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <el-menu mode="horizontal" :router="false">
-    <el-menu-item index="/">Step By Step</el-menu-item>
+  <el-menu mode="horizontal" :router="true">
+    <el-menu-item index="/">训练计划</el-menu-item>
     <div style="flex: 1"></div>
     <template v-if="isLoggedIn">
-      <el-menu-item disabled style="cursor: default">
+      <el-menu-item to="/profile">
         {{ user?.username }}
       </el-menu-item>
       <el-menu-item @click="handleLogout">
@@ -81,9 +81,7 @@ onMounted(async () => {
     </template>
   </el-menu>
 
-  <div style="padding: 20px">
-    <h1>欢迎</h1>
-  </div>
+  <router-view />
 
   <el-dialog v-model="loginDialogVisible" title="登录" width="320px">
     <el-form label-position="top" :model="loginForm" @submit.prevent="handleLogin">

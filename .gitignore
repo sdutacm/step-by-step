@@ -53,3 +53,4 @@ coverage/
 # pnpm-lock.yaml
 
 *.db
+.ruff_cache
