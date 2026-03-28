@@ -7,6 +7,7 @@ from db.base import Base
 
 if TYPE_CHECKING:
     from db.models.source_user import SourceUser
+    from db.models.step import Step
 
 
 class User(Base):
@@ -21,3 +22,4 @@ class User(Base):
     source_users: Mapped[list["SourceUser"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
+    steps: Mapped[list["Step"]] = relationship(back_populates="creator")

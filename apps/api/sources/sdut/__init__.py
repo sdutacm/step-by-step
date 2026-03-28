@@ -13,7 +13,7 @@ class SDUT(SourceBase):
 
     @staticmethod
     def problem_url(pid: str):
-        return f"https://oj.sdutacm.cn/onlinejudde3/problems/{pid}"
+        return f"https://oj.sdutacm.cn/onlinejudge3/problems/{pid}"
 
     @staticmethod
     def user_url(username: str):

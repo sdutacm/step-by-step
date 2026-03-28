@@ -28,3 +28,14 @@ class PaginatedSolutionsResponse(BaseModel):
     page: int
     page_size: int
     items: list[SolutionResponse]
+
+
+class ProblemSimple(BaseModel):
+    id: int
+    problem_id: str
+    source: str
+    title: str
+    order: int = 0
+
+    class Config:
+        from_attributes = True

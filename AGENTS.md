@@ -87,7 +87,7 @@ apps/
 
 - **source**: `sdut`
 - **登录**: POST <https://oj.sdutacm.cn/onlinejudge3/api/login>
-- **题目URL**: <https://oj.sdutacm.cn/onlinejudde3/problems/{pid}>
+- **题目URL**: <https://oj.sdutacm.cn/onlinejudge3/problems/{pid}>
 - **用户URL**: <https://oj.sdutacm.cn/onlinejudge3/users/{username}>
 
 ## 枚举值

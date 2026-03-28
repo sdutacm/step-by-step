@@ -7,8 +7,10 @@ from fastapi import FastAPI, Request
 from loguru import logger
 
 from app.routers.auth import router as auth_router
+from app.routers.problem import router as problem_router
 from app.routers.solution import router as solution_router
 from app.routers.source import router as source_router
+from app.routers.step import router as step_router
 from db.base import Base
 from db.session import engine
 from sources import sources
@@ -99,6 +101,8 @@ async def log_requests(request: Request, call_next):
 app.include_router(auth_router)
 app.include_router(source_router)
 app.include_router(solution_router)
+app.include_router(step_router)
+app.include_router(problem_router)
 
 
 @app.get("/")

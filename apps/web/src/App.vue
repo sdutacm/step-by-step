@@ -65,13 +65,17 @@ onMounted(async () => {
 
 <template>
   <el-menu mode="horizontal" :router="true" :default-active="activeIndex">
-    <el-menu-item index="/">训练计划</el-menu-item>
+    <el-menu-item index="/">提交记录</el-menu-item>
+    <el-menu-item index="/steps">训练计划</el-menu-item>
     <div style="flex: 1"></div>
     <template v-if="isLoggedIn">
+      <el-menu-item index="/steps/create">
+        创建训练计划
+      </el-menu-item>
       <el-menu-item index="/profile">
         {{ user?.username }}
       </el-menu-item>
-      <el-menu-item @click="handleLogout">
+      <el-menu-item index="" @click="handleLogout">
         退出登录
       </el-menu-item>
     </template>

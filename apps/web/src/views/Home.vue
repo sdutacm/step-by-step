@@ -19,7 +19,7 @@ const pagination = ref({
   total: 0,
 })
 
-const resultMap: Record<number, { label: string; type: string }> = {
+const resultMap: Record<number, { label: string; type: 'success' | 'danger' | 'warning' | 'info' }> = {
   1: { label: 'Accepted', type: 'success' },
   2: { label: 'Wrong Answer', type: 'danger' },
   3: { label: 'Time Limit Exceeded', type: 'warning' },
@@ -29,7 +29,7 @@ const resultMap: Record<number, { label: string; type: string }> = {
   7: { label: 'Compile Error', type: 'danger' },
   8: { label: 'Presentation Error', type: 'warning' },
   9: { label: 'System Error', type: 'danger' },
-  999: { label: 'Unknown', type: 'info' },
+  999: { label: 'Unknown', type: 'danger' },
 }
 
 const languageMap: Record<number, string> = {
@@ -65,7 +65,7 @@ function getProblemUrl(source: string, ojProblemId: string | null): string {
     case 'vj':
       return `https://vjudge.net/problem/${ojProblemId}`
     case 'sdut':
-      return `https://oj.sdutacm.cn/onlinejudde3/problems/${ojProblemId}`
+      return `https://oj.sdutacm.cn/onlinejudge3/problems/${ojProblemId}`
     default:
       return '#'
   }
@@ -109,12 +109,8 @@ onMounted(() => {
       <template #header>
         <span>提交记录</span>
       </template>
-      <el-table
-        v-loading="isLoading"
-        :data="solutions"
-        style="width: 100%"
-        :default-sort="{ prop: 'submitted_at', order: 'descending' }"
-      >
+      <el-table v-loading="isLoading" :data="solutions" style="width: 100%"
+        :default-sort="{ prop: 'submitted_at', order: 'descending' }">
         <el-table-column prop="submitted_at" label="时间" width="180" sortable>
           <template #default="{ row }">
             {{ formatTime(row.submitted_at) }}
@@ -128,12 +124,8 @@ onMounted(() => {
         <el-table-column prop="username" label="用户" width="120" />
         <el-table-column prop="problem_title" label="题目" min-width="200">
           <template #default="{ row }">
-            <a
-              :href="getProblemUrl(row.source, row.oj_problem_id)"
-              target="_blank"
-              rel="noopener noreferrer"
-              style="color: #409eff; text-decoration: none"
-            >
+            <a :href="getProblemUrl(row.source, row.oj_problem_id)" target="_blank" rel="noopener noreferrer"
+              style="color: #409eff; text-decoration: none">
               {{ row.problem_title || `Problem #${row.oj_problem_id || row.problem_id}` }}
             </a>
           </template>
@@ -153,15 +145,9 @@ onMounted(() => {
       </el-table>
       <el-empty v-if="!isLoading && !solutions.length" description="暂无提交记录" />
       <div style="margin-top: 20px; display: flex; justify-content: flex-end">
-        <el-pagination
-          v-model:current-page="pagination.page"
-          v-model:page-size="pagination.page_size"
-          :page-sizes="[10, 20, 50, 100]"
-          :total="pagination.total"
-          layout="total, sizes, prev, pager, next"
-          @current-change="handlePageChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination v-model:current-page="pagination.page" v-model:page-size="pagination.page_size"
+          :page-sizes="[10, 20, 50, 100]" :total="pagination.total" layout="total, sizes, prev, pager, next"
+          @current-change="handlePageChange" @size-change="handleSizeChange" />
       </div>
     </el-card>
   </div>
