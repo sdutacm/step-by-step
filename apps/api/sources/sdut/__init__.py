@@ -29,4 +29,4 @@ class SDUT:
                 json={"loginName": username, "password": password},
                 headers=headers,
             )
-            return resp.json()
+            return resp.json()["success"] is True
