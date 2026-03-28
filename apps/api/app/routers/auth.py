@@ -5,15 +5,15 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from loguru import logger
 from sqlalchemy.orm import Session, joinedload
 
-from db.session import get_db
-from db.models.user import User
-from schemas.user import UserCreate, UserResponse, UserUpdate, Token
-from app.core.security import (
-    verify_password,
-    get_password_hash,
-    create_access_token,
-)
 from app.core.config import settings
+from app.core.security import (
+    create_access_token,
+    get_password_hash,
+    verify_password,
+)
+from db.models.user import User
+from db.session import get_db
+from schemas.user import Token, UserCreate, UserResponse, UserUpdate
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")

@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, UniqueConstraint
+
 from db.base import Base
 
 
@@ -9,3 +10,5 @@ class Problem(Base):
     problem_id = Column(String, index=True)
     source = Column(String)
     title = Column(String)
+
+    __table_args__ = (UniqueConstraint("source", "problem_id"),)

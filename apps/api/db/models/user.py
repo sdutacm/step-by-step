@@ -1,11 +1,13 @@
 from typing import TYPE_CHECKING
 
-from db.base import Base
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from db.base import Base
+
 if TYPE_CHECKING:
     from db.models.source_user import SourceUser
+
 
 class User(Base):
     __tablename__ = "users"

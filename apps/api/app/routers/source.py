@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from loguru import logger
 from sqlalchemy.orm import Session
 
-from db.session import get_db
-from db.models.user import User
+from app.routers.auth import get_current_user
 from db.models.source_user import SourceUser
+from db.models.user import User
+from db.session import get_db
 from schemas.source import SourceBindingRequest
 from schemas.user import SourceUserResponse
 from sources import sources
-from app.routers.auth import get_current_user
 
 router = APIRouter(prefix="/api/sources", tags=["sources"])
 
