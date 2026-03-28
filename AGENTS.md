@@ -150,10 +150,3 @@ uv run uvicorn apps.api.app.main:app --reload --dir apps/api
 # 或直接运行
 cd apps/api && uvicorn app.main:app --reload
 ```
-
-## 待开发功能
-
-- [ ] 前端项目 (apps/web)
-- [ ] problems() 和 solutions() 方法实现
-- [ ] step 和 group 功能
-- [ ] 题目和提交记录的同步与展示
