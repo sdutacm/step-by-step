@@ -1,7 +1,11 @@
+from typing import TYPE_CHECKING
+
+from db.base import Base
 from sqlalchemy import ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from db.base import Base
 
+if TYPE_CHECKING:
+    from db.models.user import User
 
 class SourceUser(Base):
     __tablename__ = "source_users"
