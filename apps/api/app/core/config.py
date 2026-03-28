@@ -15,5 +15,8 @@ class Settings(BaseSettings):
     SDUT_SPIDER_USER: str
     SDUT_SPIDER_PASS: str
 
+    VJ_SPIDER_USER: str
+    VJ_SPIDER_PASS: str
+
 
 settings = Settings()
