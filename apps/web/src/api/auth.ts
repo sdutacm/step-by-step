@@ -13,16 +13,28 @@ export interface AuthResponse {
   token_type: string
 }
 
+export interface SourceUser {
+  id: number
+  source: string
+}
+
 export interface User {
   id: number
   username: string
   nickname: string | null
   avatar_url: string | null
+  source_users: SourceUser[]
 }
 
 export interface UserUpdateData {
   nickname?: string
   avatar_url?: string
+}
+
+export interface SourceBindingData {
+  source: string
+  username: string
+  password: string
 }
 
 const TOKEN_KEY = 'access_token'
@@ -123,4 +135,58 @@ export async function updateCurrentUser(data: UserUpdateData): Promise<User> {
 
 export async function logout(): Promise<void> {
   removeToken()
+}
+
+export interface Source {
+  source: string
+}
+
+export async function getSources(): Promise<Source[]> {
+  const response = await fetch('/api/sources')
+  if (!response.ok) {
+    throw new Error('Failed to get sources')
+  }
+  return await response.json()
+}
+
+export async function bindSource(data: SourceBindingData): Promise<SourceUser> {
+  const token = getToken()
+  if (!token) {
+    throw new Error('No token found')
+  }
+
+  const response = await fetch('/api/sources/bind', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.detail || '绑定失败')
+  }
+
+  return await response.json()
+}
+
+export async function unbindSource(source: string): Promise<void> {
+  const token = getToken()
+  if (!token) {
+    throw new Error('No token found')
+  }
+
+  const response = await fetch(`/api/sources/unbind/${source}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.detail || '解绑失败')
+  }
 }
