@@ -3,14 +3,15 @@ from datetime import datetime, timedelta
 from typing import List
 
 import httpx
+from loguru import logger
+from sqlalchemy.orm import Session
+
 from app.core.config import settings
 from db.models.problem import Problem
 from db.models.solution import Solution
 from db.session import SessionLocal
-from loguru import logger
 from schemas.language import LanguageEnum
 from schemas.result import ResultEnum
-from sqlalchemy.orm import Session
 
 
 def to_language_enum(raw_language: str) -> LanguageEnum:

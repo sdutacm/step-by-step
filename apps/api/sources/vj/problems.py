@@ -1,11 +1,12 @@
 from typing import List
 
 import httpx
+from loguru import logger
+from sqlalchemy.orm import Session
+
 from app.core.config import settings
 from db.models.problem import Problem
 from db.session import SessionLocal
-from loguru import logger
-from sqlalchemy.orm import Session
 
 
 async def login(client: httpx.AsyncClient):

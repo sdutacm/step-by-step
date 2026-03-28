@@ -3,15 +3,15 @@ import sys
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.interval import IntervalTrigger
-from db.base import Base
-from db.session import engine
 from fastapi import FastAPI, Request
 from loguru import logger
-from sources import sources
 
 from app.routers.auth import router as auth_router
 from app.routers.solution import router as solution_router
 from app.routers.source import router as source_router
+from db.base import Base
+from db.session import engine
+from sources import sources
 
 logger.remove()
 logger.add(

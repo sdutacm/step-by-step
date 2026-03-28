@@ -136,7 +136,7 @@ apps/
 - 禁止使用 `any` 类型
 - 密码使用 bcrypt 哈希存储
 - 平台适配器位于 `sources/` 目录，需实现 `login`、`problems`、`solutions` 静态方法
-- 代码修改后使用工具进行规范格式化 `uv run ruff check --select I --fix && uv run ruff format`
+- 代码修改后使用工具进行规范格式化 `cd apps/api && uv run ruff check --select I --fix && uv run ruff format`
 
 ## 开发命令
 

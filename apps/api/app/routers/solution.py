@@ -1,9 +1,10 @@
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.orm import Session, joinedload
+
 from db.models.problem import Problem
 from db.models.solution import Solution
 from db.session import get_db
-from fastapi import APIRouter, Depends, Query
 from schemas.solution import PaginatedSolutionsResponse, SolutionResponse
-from sqlalchemy.orm import Session, joinedload
 
 router = APIRouter(prefix="/api/solutions", tags=["solutions"])
 

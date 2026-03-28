@@ -1,6 +1,7 @@
-from db.base import Base
 from sqlalchemy import Column, Integer, String, UniqueConstraint
 from sqlalchemy.orm import relationship
+
+from db.base import Base
 
 
 class Problem(Base):
