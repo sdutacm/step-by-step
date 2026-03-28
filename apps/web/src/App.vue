@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { ElDialog, ElForm, ElFormItem, ElInput, ElMessage } from 'element-plus'
 import { login, register, getCurrentUser, logout, type User } from './api/auth'
+
+const route = useRoute()
 
 const user = ref<User | null>(null)
 const loginDialogVisible = ref(false)
@@ -18,6 +21,7 @@ const registerForm = ref({
 })
 
 const isLoggedIn = computed(() => !!user.value)
+const activeIndex = computed(() => route.path)
 
 async function handleLogin() {
   try {
@@ -60,11 +64,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <el-menu mode="horizontal" :router="true">
+  <el-menu mode="horizontal" :router="true" :default-active="activeIndex">
     <el-menu-item index="/">训练计划</el-menu-item>
     <div style="flex: 1"></div>
     <template v-if="isLoggedIn">
-      <el-menu-item to="/profile">
+      <el-menu-item index="/profile">
         {{ user?.username }}
       </el-menu-item>
       <el-menu-item @click="handleLogout">
