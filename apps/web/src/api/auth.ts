@@ -16,6 +16,13 @@ export interface AuthResponse {
 export interface User {
   id: number
   username: string
+  nickname: string | null
+  avatar_url: string | null
+}
+
+export interface UserUpdateData {
+  nickname?: string
+  avatar_url?: string
 }
 
 const TOKEN_KEY = 'access_token'
@@ -87,6 +94,28 @@ export async function getCurrentUser(): Promise<User> {
   if (!response.ok) {
     removeToken()
     throw new Error('Failed to get current user')
+  }
+
+  return await response.json()
+}
+
+export async function updateCurrentUser(data: UserUpdateData): Promise<User> {
+  const token = getToken()
+  if (!token) {
+    throw new Error('No token found')
+  }
+
+  const response = await fetch('/api/auth/me', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to update user')
   }
 
   return await response.json()

@@ -11,9 +11,16 @@ class UserCreate(UserBase):
 
 class UserResponse(UserBase):
     id: int
+    nickname: str | None = None
+    avatar_url: str | None = None
 
     class Config:
         from_attributes = True
+
+
+class UserUpdate(BaseModel):
+    nickname: str | None = None
+    avatar_url: str | None = None
 
 
 class Token(BaseModel):

@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from db.session import get_db
 from db.models.user import User
-from schemas.user import UserCreate, UserResponse, Token
+from schemas.user import UserCreate, UserResponse, UserUpdate, Token
 from app.core.security import (
     verify_password,
     get_password_hash,
@@ -99,4 +99,20 @@ async def get_current_user(
 
 @router.get("/me", response_model=UserResponse)
 def get_me(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
+@router.patch("/me", response_model=UserResponse)
+def update_me(
+    update_data: UserUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    if update_data.nickname is not None:
+        current_user.nickname = update_data.nickname
+    if update_data.avatar_url is not None:
+        current_user.avatar_url = update_data.avatar_url
+
+    db.commit()
+    db.refresh(current_user)
     return current_user
