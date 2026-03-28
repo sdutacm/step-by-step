@@ -3,13 +3,15 @@ import time
 
 
 class SDUT:
+    source = "sdut"
+
     @staticmethod
     def problem_url(pid: str):
         return f"https://oj.sdutacm.cn/onlinejudde3/problems/{pid}"
 
     @staticmethod
-    def user_url(user_id: str):
-        return f"https://oj.sdutacm.cn/onlinejudge3/users/{user_id}"
+    def user_url(username: str):
+        return f"https://oj.sdutacm.cn/onlinejudge3/users/{username}"
 
     @staticmethod
     async def login(username: str, password: str):
