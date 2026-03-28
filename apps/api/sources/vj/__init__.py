@@ -1,4 +1,5 @@
 import httpx
+from loguru import logger
 
 
 class VJ:
@@ -14,17 +15,23 @@ class VJ:
 
     @staticmethod
     async def login(username: str, password: str):
+        logger.info(f"VJ login attempt: username={username}")
         async with httpx.AsyncClient() as client:
             login_url = "https://vjudge.net/user/login"
             resp = await client.post(
                 login_url, data={"username": username, "password": password}
             )
-            return resp.text == "success"
+            success = resp.text == "success"
+            if success:
+                logger.success(f"VJ login successful: username={username}")
+            else:
+                logger.warning(f"VJ login failed: username={username}")
+            return success
 
     @staticmethod
     async def problems():
-        pass
+        logger.debug("VJ problems called (not implemented)")
 
     @staticmethod
     async def solutions():
-        pass
+        logger.debug("VJ solutions called (not implemented)")

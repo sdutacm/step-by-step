@@ -3,6 +3,7 @@ from typing import Optional
 
 import bcrypt
 from jose import JWTError, jwt
+from loguru import logger
 
 from app.core.config import settings
 
@@ -14,7 +15,9 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+    hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+    logger.debug("Password hashed successfully")
+    return hashed
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
@@ -29,6 +32,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     encoded_jwt = jwt.encode(
         to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM
     )
+    logger.debug(f"Access token created for subject: {data.get('sub')}")
     return encoded_jwt
 
 
@@ -37,6 +41,8 @@ def decode_access_token(token: str) -> Optional[dict]:
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
+        logger.debug(f"Token decoded successfully for subject: {payload.get('sub')}")
         return payload
-    except JWTError:
+    except JWTError as e:
+        logger.warning(f"Token decode failed: {e}")
         return None

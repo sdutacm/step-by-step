@@ -1,6 +1,7 @@
 import time
 
 import httpx
+from loguru import logger
 
 
 class SDUT:
@@ -16,6 +17,7 @@ class SDUT:
 
     @staticmethod
     async def login(username: str, password: str):
+        logger.info(f"SDUT login attempt: username={username}")
         async with httpx.AsyncClient() as client:
             session_url = "https://oj.sdutacm.cn/onlinejudge3/api/getSession?t=" + str(
                 time.time() * 1000
@@ -29,12 +31,17 @@ class SDUT:
                 json={"loginName": username, "password": password},
                 headers=headers,
             )
-            return resp.json()["success"] is True
+            success = resp.json()["success"] is True
+            if success:
+                logger.success(f"SDUT login successful: username={username}")
+            else:
+                logger.warning(f"SDUT login failed: username={username}")
+            return success
 
     @staticmethod
     async def problems():
-        pass
+        logger.debug("SDUT problems called (not implemented)")
 
     @staticmethod
     async def solutions():
-        pass
+        logger.debug("SDUT solutions called (not implemented)")
