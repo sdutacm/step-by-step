@@ -12,5 +12,8 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = "sqlite:///./step_by_step.db"
 
+    SDUT_SPIDER_USER: str
+    SDUT_SPIDER_PASS: str
+
 
 settings = Settings()

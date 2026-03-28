@@ -34,7 +34,7 @@ async def fetch_problems(client: httpx.AsyncClient, session: Session) -> List[Pr
         for row in rows:
             prob = (
                 session.query(Problem)
-                .where(
+                .filter(
                     Problem.source == "sdut",
                     Problem.problem_id == str(row["problemId"]),
                 )
