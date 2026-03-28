@@ -4,6 +4,7 @@ from typing import List
 
 import httpx
 from loguru import logger
+from sqlalchemy.orm import Session
 
 from db.models.problem import Problem
 from db.session import SessionLocal
@@ -18,7 +19,7 @@ async def get_csrf(client: httpx.AsyncClient):
     return csrf
 
 
-async def fetch_problems(client: httpx.AsyncClient) -> List[Problem]:
+async def fetch_problems(client: httpx.AsyncClient, session: Session) -> List[Problem]:
     url = "https://oj.sdutacm.cn/onlinejudge3/api/getProblemList"
     page = 1
     # 先进行一次请求，获取总量
@@ -31,26 +32,30 @@ async def fetch_problems(client: httpx.AsyncClient) -> List[Problem]:
         resp = await client.post(url, json={"limit": 20, "page": page})
         rows = resp.json()["data"]["rows"]
         for row in rows:
-            prob = Problem()
+            prob = (
+                session.query(Problem)
+                .where(
+                    Problem.source == "sdut",
+                    Problem.problem_id == str(row["problemId"]),
+                )
+                .first()
+            )
+            if prob is None:
+                prob = Problem()
+                probs.append(prob)
             prob.problem_id = str(row["problemId"])
             prob.title = row["title"]
-            probs.append(prob)
+            prob.source = "sdut"
+            session.add(prob)
+            logger.info(f"update sdut problem title = {prob.title}")
     return probs
 
 
 async def problems():
-    logger.info("Hello World!")
-    async with httpx.AsyncClient() as client:
-        csrf_token = await get_csrf(client)
-        client.headers.update({"x-csrf-token": csrf_token})
-        probs = await fetch_problems(client)
     with SessionLocal() as session:
-        for prob in probs:
-            session.merge(prob)
+        async with httpx.AsyncClient() as client:
+            csrf_token = await get_csrf(client)
+            client.headers.update({"x-csrf-token": csrf_token})
+            probs = await fetch_problems(client, session)
         session.commit()
-
-
-# if __name__ == "__main__":
-#     import asyncio
-
-#     asyncio.run(problems())
+        logger.info(f"本次抓取 problems count = {len(probs)}")
