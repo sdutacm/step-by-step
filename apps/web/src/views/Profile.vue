@@ -6,6 +6,7 @@ import {
   ElDescriptionsItem,
   ElAvatar,
   ElMessage,
+  ElMessageBox,
   ElButton,
   ElInput,
   ElDialog,
@@ -118,11 +119,22 @@ async function handleBind() {
 
 async function handleUnbind(source: string) {
   try {
+    await ElMessageBox.confirm(
+      `确定要解绑平台 ${source.toUpperCase()} 吗？`,
+      '解绑确认',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    )
     await unbindSource(source)
     ElMessage.success('解绑成功')
     await refreshUser()
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '解绑失败')
+    if ((e as Error).message !== 'cancel') {
+      ElMessage.error((e as Error).message || '解绑失败')
+    }
   }
 }
 
