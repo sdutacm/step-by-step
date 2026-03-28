@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { ElButton, ElDialog, ElForm, ElFormItem, ElInput, ElMessage } from 'element-plus'
+import { ElDialog, ElForm, ElFormItem, ElInput, ElMessage } from 'element-plus'
 import { login, register, getCurrentUser, logout, type User } from './api/auth'
 
 const user = ref<User | null>(null)
@@ -34,10 +34,11 @@ async function handleLogin() {
 async function handleRegister() {
   try {
     await register(registerForm.value)
-    ElMessage.success('注册成功，请登录')
+    ElMessage.success('注册成功')
     registerDialogVisible.value = false
+    loginForm.value = { username: registerForm.value.username, password: registerForm.value.password }
     registerForm.value = { username: '', password: '' }
-    loginDialogVisible.value = true
+    await handleLogin()
   } catch (error: any) {
     ElMessage.error(error.message || '注册失败')
   }
@@ -66,16 +67,16 @@ onMounted(async () => {
       <el-menu-item disabled style="cursor: default">
         {{ user?.username }}
       </el-menu-item>
-      <el-menu-item>
-        <el-button @click="handleLogout">退出登录</el-button>
+      <el-menu-item @click="handleLogout">
+        退出登录
       </el-menu-item>
     </template>
     <template v-else>
-      <el-menu-item>
-        <el-button @click="loginDialogVisible = true">登录</el-button>
+      <el-menu-item @click="loginDialogVisible = true">
+        登录
       </el-menu-item>
-      <el-menu-item>
-        <el-button @click="registerDialogVisible = true">注册</el-button>
+      <el-menu-item @click="registerDialogVisible = true">
+        注册
       </el-menu-item>
     </template>
   </el-menu>
@@ -84,16 +85,16 @@ onMounted(async () => {
     <h1>欢迎</h1>
   </div>
 
-  <el-dialog v-model="loginDialogVisible" title="登录" width="400px">
-    <el-form :model="loginForm" @submit.prevent="handleLogin">
+  <el-dialog v-model="loginDialogVisible" title="登录" width="320px">
+    <el-form label-position="top" :model="loginForm" @submit.prevent="handleLogin">
       <el-form-item label="用户名">
-        <el-input v-model="loginForm.username" placeholder="用户名" />
+        <el-input v-model="loginForm.username" placeholder="请输入用户名" />
       </el-form-item>
       <el-form-item label="密码">
         <el-input
           v-model="loginForm.password"
           type="password"
-          placeholder="密码"
+          placeholder="请输入密码"
           @keyup.enter="handleLogin"
         />
       </el-form-item>
@@ -105,16 +106,16 @@ onMounted(async () => {
     </el-form>
   </el-dialog>
 
-  <el-dialog v-model="registerDialogVisible" title="注册" width="400px">
-    <el-form :model="registerForm" @submit.prevent="handleRegister">
+  <el-dialog v-model="registerDialogVisible" title="注册" width="320px">
+    <el-form label-position="top" :model="registerForm" @submit.prevent="handleRegister">
       <el-form-item label="用户名">
-        <el-input v-model="registerForm.username" placeholder="用户名" />
+        <el-input v-model="registerForm.username" placeholder="请输入用户名" />
       </el-form-item>
       <el-form-item label="密码">
         <el-input
           v-model="registerForm.password"
           type="password"
-          placeholder="密码"
+          placeholder="请输入密码"
         />
       </el-form-item>
       <el-form-item>
