@@ -8,6 +8,7 @@ class UserBase(BaseModel):
 class SourceUserResponse(BaseModel):
     id: int
     source: str
+    username: str
 
     class Config:
         from_attributes = True

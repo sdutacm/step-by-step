@@ -76,10 +76,10 @@ onMounted(async () => {
       </el-menu-item>
     </template>
     <template v-else>
-      <el-menu-item @click="loginDialogVisible = true">
+      <el-menu-item index="" @click="loginDialogVisible = true">
         登录
       </el-menu-item>
-      <el-menu-item @click="registerDialogVisible = true">
+      <el-menu-item index="" @click="registerDialogVisible = true">
         注册
       </el-menu-item>
     </template>

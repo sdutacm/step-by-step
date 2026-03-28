@@ -1,12 +1,12 @@
 import sys
 
+from db.base import Base
+from db.session import engine
 from fastapi import FastAPI, Request
 from loguru import logger
 
 from app.routers.auth import router as auth_router
 from app.routers.source import router as source_router
-from db.base import Base
-from db.session import engine
 
 logger.remove()
 logger.add(

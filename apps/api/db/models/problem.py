@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Integer, String, UniqueConstraint
-
 from db.base import Base
+from sqlalchemy import Column, Integer, String, UniqueConstraint
 
 
 class Problem(Base):

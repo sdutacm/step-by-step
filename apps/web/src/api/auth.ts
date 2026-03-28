@@ -16,6 +16,7 @@ export interface AuthResponse {
 export interface SourceUser {
   id: number
   source: string
+  username: string
 }
 
 export interface User {
@@ -172,13 +173,13 @@ export async function bindSource(data: SourceBindingData): Promise<SourceUser> {
   return await response.json()
 }
 
-export async function unbindSource(source: string): Promise<void> {
+export async function unbindSource(bindingId: number): Promise<void> {
   const token = getToken()
   if (!token) {
     throw new Error('No token found')
   }
 
-  const response = await fetch(`/api/sources/unbind/${source}`, {
+  const response = await fetch(`/api/sources/unbind/${bindingId}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,

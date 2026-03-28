@@ -1,14 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from loguru import logger
-from sqlalchemy.orm import Session
-
-from app.routers.auth import get_current_user
 from db.models.source_user import SourceUser
 from db.models.user import User
 from db.session import get_db
+from fastapi import APIRouter, Depends, HTTPException, status
+from loguru import logger
 from schemas.source import SourceBindingRequest
 from schemas.user import SourceUserResponse
 from sources import sources
+from sqlalchemy.orm import Session
+
+from app.routers.auth import get_current_user
 
 router = APIRouter(prefix="/api/sources", tags=["sources"])
 
@@ -33,7 +33,7 @@ async def bind_source(
     db: Session = Depends(get_db),
 ):
     logger.info(
-        f"Bind source attempt: user={current_user.username}, source={binding_data.source}"
+        f"Bind source attempt: user={current_user.username}, source={binding_data.source}, username={binding_data.username}"
     )
     source = get_source(binding_data.source)
     if source is None:
@@ -44,30 +44,20 @@ async def bind_source(
         )
 
     existing = (
-        db.query(SourceUser).filter(SourceUser.source == binding_data.source).first()
-    )
-    if existing:
-        logger.warning(f"Source '{binding_data.source}' already bound to another user")
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Source '{binding_data.source}' is already bound to another user",
-        )
-
-    user_existing = (
         db.query(SourceUser)
         .filter(
             SourceUser.source == binding_data.source,
-            SourceUser.user_id == current_user.id,
+            SourceUser.username == binding_data.username,
         )
         .first()
     )
-    if user_existing:
+    if existing:
         logger.warning(
-            f"Source '{binding_data.source}' already bound to user '{current_user.username}'"
+            f"Username '{binding_data.username}' on '{binding_data.source}' is already bound"
         )
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Source '{binding_data.source}' is already bound to your account",
+            detail=f"Username '{binding_data.username}' is already bound on this source",
         )
 
     logger.debug(
@@ -86,44 +76,49 @@ async def bind_source(
     source_user = SourceUser(
         user_id=current_user.id,
         source=binding_data.source,
+        username=binding_data.username,
     )
     db.add(source_user)
     db.commit()
     db.refresh(source_user)
     logger.success(
-        f"Source '{binding_data.source}' bound to user '{current_user.username}' (id={source_user.id})"
+        f"Source '{binding_data.source}' (username={binding_data.username}) bound to user '{current_user.username}' (id={source_user.id})"
     )
     return source_user
 
 
-@router.delete("/unbind/{source}")
+@router.delete("/unbind/{binding_id}")
 def unbind_source(
-    source: str,
+    binding_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    logger.info(f"Unbind source: user={current_user.username}, source={source}")
+    logger.info(
+        f"Unbind binding: user={current_user.username}, binding_id={binding_id}"
+    )
     source_user = (
         db.query(SourceUser)
         .filter(
-            SourceUser.source == source,
+            SourceUser.id == binding_id,
             SourceUser.user_id == current_user.id,
         )
         .first()
     )
     if not source_user:
         logger.warning(
-            f"Source '{source}' is not bound to user '{current_user.username}'"
+            f"Binding {binding_id} not found for user '{current_user.username}'"
         )
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Source '{source}' is not bound to your account",
+            detail="Binding not found",
         )
 
     db.delete(source_user)
     db.commit()
-    logger.success(f"Source '{source}' unbound from user '{current_user.username}'")
-    return {"message": f"Source '{source}' unbound successfully"}
+    logger.success(
+        f"Binding {binding_id} ({source_user.source}/{source_user.username}) unbound from user '{current_user.username}'"
+    )
+    return {"message": "Unbound successfully"}
 
 
 @router.get("/bindings", response_model=list[SourceUserResponse])
@@ -135,6 +130,6 @@ def list_bindings(
         db.query(SourceUser).filter(SourceUser.user_id == current_user.id).all()
     )
     logger.debug(
-        f"List bindings for user '{current_user.username}': {[su.source for su in source_users]}"
+        f"List bindings for user '{current_user.username}': {[(su.source, su.username) for su in source_users]}"
     )
     return source_users

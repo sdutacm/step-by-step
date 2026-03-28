@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
+from db.base import Base
 from sqlalchemy import ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from db.base import Base
 
 if TYPE_CHECKING:
     from db.models.user import User
@@ -11,12 +10,15 @@ if TYPE_CHECKING:
 
 class SourceUser(Base):
     __tablename__ = "source_users"
-    __table_args__ = (UniqueConstraint("source", "user_id", name="uq_source_user"),)
+    __table_args__ = (
+        UniqueConstraint("source", "username", name="uq_source_username"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"), index=True
     )
     source: Mapped[str] = mapped_column(String, index=True)
+    username: Mapped[str] = mapped_column(String, index=True)
 
     user: Mapped["User"] = relationship(back_populates="source_users")

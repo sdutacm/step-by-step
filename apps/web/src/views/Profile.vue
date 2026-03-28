@@ -34,7 +34,6 @@ const bindDialogVisible = ref(false)
 const isEditing = ref(false)
 const isBinding = ref(false)
 const sources = ref<Source[]>([])
-const boundSources = ref<string[]>([])
 
 const editForm = ref({
   nickname: '',
@@ -50,7 +49,6 @@ const bindForm = ref({
 async function refreshUser() {
   try {
     user.value = await getCurrentUser()
-    boundSources.value = user.value.source_users.map((su) => su.source)
   } catch {
     ElMessage.error('获取用户信息失败')
   }
@@ -117,10 +115,10 @@ async function handleBind() {
   }
 }
 
-async function handleUnbind(source: string) {
+async function handleUnbind(bindingId: number, source: string, username: string) {
   try {
     await ElMessageBox.confirm(
-      `确定要解绑平台 ${source.toUpperCase()} 吗？`,
+      `确定要解绑平台 ${source.toUpperCase()} (用户名: ${username}) 吗？`,
       '解绑确认',
       {
         confirmButtonText: '确定',
@@ -128,7 +126,7 @@ async function handleUnbind(source: string) {
         type: 'warning',
       }
     )
-    await unbindSource(source)
+    await unbindSource(bindingId)
     ElMessage.success('解绑成功')
     await refreshUser()
   } catch (e: unknown) {
@@ -136,10 +134,6 @@ async function handleUnbind(source: string) {
       ElMessage.error((e as Error).message || '解绑失败')
     }
   }
-}
-
-function getAvailableSources() {
-  return sources.value.filter((s) => !boundSources.value.includes(s.source))
 }
 
 onMounted(async () => {
@@ -188,14 +182,15 @@ onMounted(async () => {
         </div>
       </template>
       <el-table :data="user?.source_users || []" style="width: 100%">
-        <el-table-column prop="source" label="平台">
+        <el-table-column prop="source" label="平台" width="120">
           <template #default="{ row }">
             <el-tag>{{ row.source.toUpperCase() }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column prop="username" label="用户名" />
         <el-table-column label="操作" width="100">
           <template #default="{ row }">
-            <el-button type="danger" size="small" @click="handleUnbind(row.source)">
+            <el-button type="danger" size="small" @click="handleUnbind(row.id, row.source, row.username)">
               解绑
             </el-button>
           </template>
@@ -225,7 +220,7 @@ onMounted(async () => {
       <el-form-item label="平台">
         <el-select v-model="bindForm.source" placeholder="请选择平台" style="width: 100%">
           <el-option
-            v-for="s in getAvailableSources()"
+            v-for="s in sources"
             :key="s.source"
             :label="s.source.toUpperCase()"
             :value="s.source"

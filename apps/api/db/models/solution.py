@@ -1,8 +1,7 @@
-from sqlalchemy import Column, DateTime, Enum, Integer, String
-
 from db.base import Base
 from schemas.language import LanguageEnum
 from schemas.result import ResultEnum
+from sqlalchemy import Column, DateTime, Enum, Integer, String
 
 
 class Solution(Base):
