@@ -1,12 +1,16 @@
 import sys
 
-from db.base import Base
-from db.session import engine
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.interval import IntervalTrigger
 from fastapi import FastAPI, Request
 from loguru import logger
 
 from app.routers.auth import router as auth_router
 from app.routers.source import router as source_router
+from db.base import Base
+from db.session import engine
+from sources import sources
 
 logger.remove()
 logger.add(
@@ -26,15 +30,59 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+scheduler = AsyncIOScheduler()
+
+
+def create_sync_problems_task(source_cls):
+    source_name = source_cls.__name__
+
+    async def task():
+        logger.info(f"Starting scheduled {source_name} problems sync")
+        try:
+            await source_cls.problems()
+        except Exception as e:
+            logger.error(f"Error syncing {source_name} problems: {e}")
+
+    return task
+
+
+def create_sync_solutions_task(source_cls):
+    source_name = source_cls.__name__
+
+    async def task():
+        logger.info(f"Starting scheduled {source_name} solutions sync")
+        try:
+            await source_cls.solutions()
+        except Exception as e:
+            logger.error(f"Error syncing {source_name} solutions: {e}")
+
+    return task
+
 
 @app.on_event("startup")
 async def startup_event():
     logger.info("Application startup")
+    for source_cls in sources:
+        scheduler.add_job(
+            create_sync_problems_task(source_cls),
+            CronTrigger(hour=0, minute=0),
+            id=f"sync_{source_cls.__name__.lower()}_problems",
+            replace_existing=True,
+        )
+        scheduler.add_job(
+            create_sync_solutions_task(source_cls),
+            IntervalTrigger(hours=1),
+            id=f"sync_{source_cls.__name__.lower()}_solutions",
+            replace_existing=True,
+        )
+    scheduler.start()
+    logger.info("Scheduler started")
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
     logger.info("Application shutdown")
+    scheduler.shutdown()
 
 
 @app.middleware("http")

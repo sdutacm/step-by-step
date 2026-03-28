@@ -3,8 +3,12 @@ import time
 import httpx
 from loguru import logger
 
+from sources.base import SourceBase
 
-class SDUT:
+from .problems import problems
+
+
+class SDUT(SourceBase):
     source = "sdut"
 
     @staticmethod
@@ -41,6 +45,7 @@ class SDUT:
     @staticmethod
     async def problems():
         logger.debug("SDUT problems called (not implemented)")
+        await problems()
 
     @staticmethod
     async def solutions():

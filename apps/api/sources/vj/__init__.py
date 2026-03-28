@@ -1,8 +1,10 @@
 import httpx
 from loguru import logger
 
+from sources.base import SourceBase
 
-class VJ:
+
+class VJ(SourceBase):
     source = "vj"
 
     @staticmethod
