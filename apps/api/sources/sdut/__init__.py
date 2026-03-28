@@ -1,5 +1,6 @@
-import httpx
 import time
+
+import httpx
 
 
 class SDUT:
@@ -16,9 +17,8 @@ class SDUT:
     @staticmethod
     async def login(username: str, password: str):
         async with httpx.AsyncClient() as client:
-            session_url = (
-                "https://oj.sdutacm.cn/onlinejudge3/api/getSession?t="
-                + str(time.time() * 1000)
+            session_url = "https://oj.sdutacm.cn/onlinejudge3/api/getSession?t=" + str(
+                time.time() * 1000
             )
             resp = await client.get(session_url)
             csrf = resp.cookies.get("csrfToken")
@@ -30,3 +30,11 @@ class SDUT:
                 headers=headers,
             )
             return resp.json()["success"] is True
+
+    @staticmethod
+    async def problems():
+        pass
+
+    @staticmethod
+    async def solutions():
+        pass

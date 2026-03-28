@@ -20,3 +20,11 @@ class VJ:
                 login_url, data={"username": username, "password": password}
             )
             return resp.text == "success"
+
+    @staticmethod
+    async def problems():
+        pass
+
+    @staticmethod
+    async def solutions():
+        pass
