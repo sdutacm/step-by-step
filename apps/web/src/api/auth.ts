@@ -191,3 +191,38 @@ export async function unbindSource(bindingId: number): Promise<void> {
     throw new Error(error.detail || '解绑失败')
   }
 }
+
+export interface Solution {
+  id: number
+  username: string
+  nickname: string | null
+  source: string
+  result: number
+  language: number
+  submitted_at: string
+  solution_id: number
+  problem_id: number | null
+  oj_problem_id: string | null
+  problem_title: string | null
+}
+
+export interface PaginatedSolutions {
+  total: number
+  page: number
+  page_size: number
+  items: Solution[]
+}
+
+export interface GetSolutionsParams {
+  page?: number
+  page_size?: number
+}
+
+export async function getSolutions(params: GetSolutionsParams = {}): Promise<PaginatedSolutions> {
+  const { page = 1, page_size = 20 } = params
+  const response = await fetch(`/api/solutions/?page=${page}&page_size=${page_size}`)
+  if (!response.ok) {
+    throw new Error('Failed to get solutions')
+  }
+  return await response.json()
+}

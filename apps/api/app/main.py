@@ -3,14 +3,15 @@ import sys
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.interval import IntervalTrigger
-from fastapi import FastAPI, Request
-from loguru import logger
-
-from app.routers.auth import router as auth_router
-from app.routers.source import router as source_router
 from db.base import Base
 from db.session import engine
+from fastapi import FastAPI, Request
+from loguru import logger
 from sources import sources
+
+from app.routers.auth import router as auth_router
+from app.routers.solution import router as solution_router
+from app.routers.source import router as source_router
 
 logger.remove()
 logger.add(
@@ -97,6 +98,7 @@ async def log_requests(request: Request, call_next):
 
 app.include_router(auth_router)
 app.include_router(source_router)
+app.include_router(solution_router)
 
 
 @app.get("/")
