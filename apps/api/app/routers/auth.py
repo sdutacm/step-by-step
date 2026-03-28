@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from db.session import get_db
 from db.models.user import User
@@ -22,7 +22,10 @@ def authenticate_user(db: Session, username: str, password: str) -> User | None:
     user = db.query(User).filter(User.username == username).first()
     if not user:
         return None
-    if not verify_password(password, user.hashed_password or ""):
+    if not verify_password(
+        password,
+        str(user.hashed_password) if user.hashed_password is not None else "",
+    ):
         return None
     return user
 
@@ -87,7 +90,12 @@ async def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    user = db.query(User).filter(User.username == username).first()
+    user = (
+        db.query(User)
+        .options(joinedload(User.source_users))
+        .filter(User.username == username)
+        .first()
+    )
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
