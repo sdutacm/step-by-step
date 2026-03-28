@@ -5,7 +5,6 @@ export interface LoginData {
 
 export interface RegisterData {
   username: string
-  email: string
   password: string
 }
 
@@ -17,7 +16,6 @@ export interface AuthResponse {
 export interface User {
   id: number
   username: string
-  email: string
 }
 
 const TOKEN_KEY = 'access_token'
@@ -49,7 +47,7 @@ export async function login(data: LoginData): Promise<AuthResponse> {
 
   if (!response.ok) {
     const error = await response.json()
-    throw new Error(error.detail || 'Login failed')
+    throw new Error(error.detail || '登录失败')
   }
 
   const result = await response.json()
@@ -68,7 +66,7 @@ export async function register(data: RegisterData): Promise<User> {
 
   if (!response.ok) {
     const error = await response.json()
-    throw new Error(error.detail || 'Registration failed')
+    throw new Error(error.detail || '注册失败')
   }
 
   return await response.json()

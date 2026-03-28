@@ -29,21 +29,16 @@ def authenticate_user(db: Session, username: str, password: str) -> User | None:
 
 @router.post("/register", response_model=UserResponse)
 def register(user_data: UserCreate, db: Session = Depends(get_db)):
-    existing_user = (
-        db.query(User)
-        .filter((User.username == user_data.username) | (User.email == user_data.email))
-        .first()
-    )
+    existing_user = db.query(User).filter(User.username == user_data.username).first()
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Username or email already registered",
+            detail="Username already registered",
         )
 
     hashed_password = get_password_hash(user_data.password)
     new_user = User(
         username=user_data.username,
-        email=user_data.email,
         hashed_password=hashed_password,
     )
     db.add(new_user)

@@ -14,7 +14,6 @@ const loginForm = ref({
 
 const registerForm = ref({
   username: '',
-  email: '',
   password: '',
 })
 
@@ -26,28 +25,28 @@ async function handleLogin() {
     user.value = await getCurrentUser()
     loginDialogVisible.value = false
     loginForm.value = { username: '', password: '' }
-    ElMessage.success('Login successful')
+    ElMessage.success('登录成功')
   } catch (error: any) {
-    ElMessage.error(error.message || 'Login failed')
+    ElMessage.error(error.message || '登录失败')
   }
 }
 
 async function handleRegister() {
   try {
     await register(registerForm.value)
-    ElMessage.success('Registration successful, please login')
+    ElMessage.success('注册成功，请登录')
     registerDialogVisible.value = false
-    registerForm.value = { username: '', email: '', password: '' }
+    registerForm.value = { username: '', password: '' }
     loginDialogVisible.value = true
   } catch (error: any) {
-    ElMessage.error(error.message || 'Registration failed')
+    ElMessage.error(error.message || '注册失败')
   }
 }
 
 async function handleLogout() {
   await logout()
   user.value = null
-  ElMessage.success('Logged out')
+  ElMessage.success('已退出登录')
 }
 
 onMounted(async () => {
@@ -68,62 +67,59 @@ onMounted(async () => {
         {{ user?.username }}
       </el-menu-item>
       <el-menu-item>
-        <el-button @click="handleLogout">Logout</el-button>
+        <el-button @click="handleLogout">退出登录</el-button>
       </el-menu-item>
     </template>
     <template v-else>
       <el-menu-item>
-        <el-button @click="loginDialogVisible = true">Login</el-button>
+        <el-button @click="loginDialogVisible = true">登录</el-button>
       </el-menu-item>
       <el-menu-item>
-        <el-button @click="registerDialogVisible = true">Register</el-button>
+        <el-button @click="registerDialogVisible = true">注册</el-button>
       </el-menu-item>
     </template>
   </el-menu>
 
   <div style="padding: 20px">
-    <h1>Welcome</h1>
+    <h1>欢迎</h1>
   </div>
 
-  <el-dialog v-model="loginDialogVisible" title="Login" width="400px">
+  <el-dialog v-model="loginDialogVisible" title="登录" width="400px">
     <el-form :model="loginForm" @submit.prevent="handleLogin">
-      <el-form-item label="Username">
-        <el-input v-model="loginForm.username" placeholder="Username" />
+      <el-form-item label="用户名">
+        <el-input v-model="loginForm.username" placeholder="用户名" />
       </el-form-item>
-      <el-form-item label="Password">
+      <el-form-item label="密码">
         <el-input
           v-model="loginForm.password"
           type="password"
-          placeholder="Password"
+          placeholder="密码"
           @keyup.enter="handleLogin"
         />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit" style="width: 100%">
-          Login
+          登录
         </el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
 
-  <el-dialog v-model="registerDialogVisible" title="Register" width="400px">
+  <el-dialog v-model="registerDialogVisible" title="注册" width="400px">
     <el-form :model="registerForm" @submit.prevent="handleRegister">
-      <el-form-item label="Username">
-        <el-input v-model="registerForm.username" placeholder="Username" />
+      <el-form-item label="用户名">
+        <el-input v-model="registerForm.username" placeholder="用户名" />
       </el-form-item>
-      <el-form-item label="Email">
-        <el-input v-model="registerForm.email" placeholder="Email" type="email" />
-      </el-form-item>
-      <el-form-item label="Password">
+      <el-form-item label="密码">
         <el-input
           v-model="registerForm.password"
           type="password"
-          placeholder="Password"
+          placeholder="密码"
         />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit" style="width: 100%">
-          Register
+          注册
         </el-button>
       </el-form-item>
     </el-form>
