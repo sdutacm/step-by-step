@@ -157,8 +157,20 @@ export async function removeProblemFromStep(stepId: number, problemId: number): 
   }
 }
 
-export async function getProblems(page: number = 1, pageSize: number = 100): Promise<{ items: ProblemSimple[]; total: number }> {
-  const response = await fetch(`/api/problems?page=${page}&page_size=${pageSize}`)
+export async function getProblems(
+  page: number = 1,
+  pageSize: number = 20,
+  title?: string,
+  source?: string
+): Promise<{ items: ProblemSimple[]; total: number }> {
+  let url = `/api/problems?page=${page}&page_size=${pageSize}`
+  if (title) {
+    url += `&title=${encodeURIComponent(title)}`
+  }
+  if (source) {
+    url += `&source=${encodeURIComponent(source)}`
+  }
+  const response = await fetch(url)
   if (!response.ok) {
     throw new Error('Failed to get problems')
   }

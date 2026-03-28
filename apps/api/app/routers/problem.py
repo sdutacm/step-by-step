@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
 from db.models.problem import Problem
@@ -12,19 +12,22 @@ router = APIRouter(prefix="/api/problems", tags=["problems"])
 @router.get("")
 def get_problems(
     page: int = Query(1, ge=1),
-    page_size: int = Query(100, ge=1, le=500),
+    page_size: int = Query(20, ge=1, le=100),
+    title: str | None = Query(None),
+    source: str | None = Query(None),
     db: Session = Depends(get_db),
 ):
-    total = db.query(func.count(Problem.id)).scalar()
+    query = db.query(Problem)
+
+    if title:
+        query = query.filter(Problem.title.contains(title))
+    if source:
+        query = query.filter(Problem.source == source)
+
+    total = query.count()
     offset = (page - 1) * page_size
 
-    problems = (
-        db.query(Problem)
-        .order_by(Problem.id.desc())
-        .offset(offset)
-        .limit(page_size)
-        .all()
-    )
+    problems = query.order_by(Problem.id.desc()).offset(offset).limit(page_size).all()
 
     items = [
         ProblemSimple(

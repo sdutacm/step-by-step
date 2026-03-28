@@ -14,19 +14,20 @@ import {
   ElForm,
   ElFormItem,
   ElInput,
-  ElInputNumber,
   ElSelect,
   ElOption,
+  ElPagination,
 } from 'element-plus'
 import {
   getStep,
   updateStep,
   addProblemsToStep,
   removeProblemFromStep,
+  getProblems,
   type Step,
   type StepProblemItem,
+  type ProblemSimple,
 } from '../api/step'
-import { getProblems, type ProblemSimple } from '../api/step'
 import { getToken } from '../api/auth'
 
 const router = useRouter()
@@ -37,8 +38,11 @@ const isLoading = ref(false)
 const isEditing = ref(false)
 const isAddingProblems = ref(false)
 const isSubmitting = ref(false)
+const problemsLoading = ref(false)
 const availableProblems = ref<ProblemSimple[]>([])
 const selectedProblems = ref<StepProblemItem[]>([])
+const problemsPagination = ref({ page: 1, page_size: 20, total: 0 })
+const problemsSearch = ref({ title: '', source: '' })
 
 const stepId = computed(() => Number(route.params.id))
 
@@ -51,16 +55,12 @@ function isLoggedIn() {
   return !!getToken()
 }
 
-function isCreator() {
-  return step.value?.creator_id === 0
-}
-
 function getProblemUrl(source: string, problemId: string): string {
   switch (source.toLowerCase()) {
     case 'vj':
       return `https://vjudge.net/problem/${problemId}`
     case 'sdut':
-      return `https://oj.sdutacm.cn/onlinejudge3/problems/${problemId}`
+      return `https://oj.sdutacm.cn/onlinejudde3/problems/${problemId}`
     default:
       return '#'
   }
@@ -81,14 +81,33 @@ async function fetchStep() {
 }
 
 async function fetchAvailableProblems() {
+  problemsLoading.value = true
   try {
-    const data = await getProblems(1, 500)
+    const data = await getProblems(
+      problemsPagination.value.page,
+      problemsPagination.value.page_size,
+      problemsSearch.value.title || undefined,
+      problemsSearch.value.source || undefined
+    )
     availableProblems.value = data.items.filter(
       (p) => !step.value?.problems.some((sp) => sp.id === p.id)
     )
+    problemsPagination.value.total = data.total
   } catch {
     ElMessage.error('获取题目列表失败')
+  } finally {
+    problemsLoading.value = false
   }
+}
+
+async function handleProblemsSearch() {
+  problemsPagination.value.page = 1
+  await fetchAvailableProblems()
+}
+
+async function handleProblemsPageChange(page: number) {
+  problemsPagination.value.page = page
+  await fetchAvailableProblems()
 }
 
 async function handleUpdate() {
@@ -113,13 +132,11 @@ async function handleUpdate() {
 }
 
 async function openAddProblemsDialog() {
-  await fetchAvailableProblems()
+  problemsSearch.value = { title: '', source: '' }
+  problemsPagination.value = { page: 1, page_size: 20, total: 0 }
   selectedProblems.value = []
+  await fetchAvailableProblems()
   isAddingProblems.value = true
-}
-
-function updateProblemOrder(index: number, order: number) {
-  selectedProblems.value[index].order = order
 }
 
 async function handleAddProblems() {
@@ -264,22 +281,50 @@ onMounted(() => {
     </el-card>
   </div>
 
-  <el-dialog v-model="isAddingProblems" title="添加题目" width="700px">
-    <div style="margin-bottom: 16px">
-      <el-table
-        :data="availableProblems"
-        max-height="400"
-        @selection-change="(rows: ProblemSimple[]) => selectedProblems = rows.map(p => ({ problem_id: p.id, order: 0 }))"
+  <el-dialog v-model="isAddingProblems" title="添加题目" width="800px">
+    <div style="margin-bottom: 16px; display: flex; gap: 12px">
+      <el-input
+        v-model="problemsSearch.title"
+        placeholder="搜索题目标题"
+        style="width: 300px"
+        clearable
+        @keyup.enter="handleProblemsSearch"
+      />
+      <el-select
+        v-model="problemsSearch.source"
+        placeholder="选择平台"
+        style="width: 150px"
+        clearable
+        @change="handleProblemsSearch"
       >
-        <el-table-column type="selection" width="55" />
-        <el-table-column prop="problem_id" label="题目ID" width="100" />
-        <el-table-column prop="source" label="平台" width="100">
-          <template #default="{ row }">
-            <el-tag size="small">{{ row.source.toUpperCase() }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="title" label="标题" min-width="200" />
-      </el-table>
+        <el-option label="VJ" value="vj" />
+        <el-option label="SDUT" value="sdut" />
+      </el-select>
+      <el-button type="primary" @click="handleProblemsSearch">搜索</el-button>
+    </div>
+    <el-table
+      v-loading="problemsLoading"
+      :data="availableProblems"
+      max-height="400"
+      @selection-change="(rows: ProblemSimple[]) => selectedProblems = rows.map(p => ({ problem_id: p.id, order: 0 }))"
+    >
+      <el-table-column type="selection" width="55" />
+      <el-table-column prop="problem_id" label="题目ID" width="100" />
+      <el-table-column prop="source" label="平台" width="100">
+        <template #default="{ row }">
+          <el-tag size="small">{{ row.source.toUpperCase() }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="title" label="标题" min-width="200" />
+    </el-table>
+    <div style="margin-top: 16px; display: flex; justify-content: flex-end">
+      <el-pagination
+        v-model:current-page="problemsPagination.page"
+        :page-size="problemsPagination.page_size"
+        :total="problemsPagination.total"
+        layout="prev, pager, next"
+        @current-change="handleProblemsPageChange"
+      />
     </div>
     <template #footer>
       <el-button @click="isAddingProblems = false">取消</el-button>
