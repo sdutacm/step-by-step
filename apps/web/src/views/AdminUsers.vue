@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 import {
   ElCard,
   ElTable,
@@ -9,47 +9,47 @@ import {
   ElMessage,
   ElSwitch,
   ElPagination,
-} from 'element-plus'
-import { getUsers, updateUserSuperAdmin, type AdminUser } from '../api/admin'
+} from "element-plus";
+import { getUsers, updateUserSuperAdmin, type AdminUser } from "../api/admin";
 
-const users = ref<AdminUser[]>([])
-const total = ref(0)
-const page = ref(1)
-const pageSize = ref(20)
-const loading = ref(false)
+const users = ref<AdminUser[]>([]);
+const total = ref(0);
+const page = ref(1);
+const pageSize = ref(20);
+const loading = ref(false);
 
 async function refreshUsers() {
-  loading.value = true
+  loading.value = true;
   try {
-    const response = await getUsers(page.value, pageSize.value)
-    users.value = response.items
-    total.value = response.total
+    const response = await getUsers(page.value, pageSize.value);
+    users.value = response.items;
+    total.value = response.total;
   } catch {
-    ElMessage.error('获取用户列表失败')
+    ElMessage.error("获取用户列表失败");
   } finally {
-    loading.value = false
+    loading.value = false;
   }
 }
 
 async function handleToggleSuperAdmin(user: AdminUser) {
   try {
-    await updateUserSuperAdmin(user.id, !user.is_super_admin)
-    ElMessage.success('更新成功')
-    await refreshUsers()
+    await updateUserSuperAdmin(user.id, !user.is_super_admin);
+    ElMessage.success("更新成功");
+    await refreshUsers();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '更新失败')
-    await refreshUsers()
+    ElMessage.error((e as Error).message || "更新失败");
+    await refreshUsers();
   }
 }
 
 function handlePageChange(newPage: number) {
-  page.value = newPage
-  refreshUsers()
+  page.value = newPage;
+  refreshUsers();
 }
 
 onMounted(() => {
-  refreshUsers()
-})
+  refreshUsers();
+});
 </script>
 
 <template>
@@ -65,15 +65,12 @@ onMounted(() => {
         <el-table-column prop="username" label="用户名" />
         <el-table-column prop="nickname" label="昵称">
           <template #default="{ row }">
-            {{ row.nickname || '-' }}
+            {{ row.nickname || "-" }}
           </template>
         </el-table-column>
         <el-table-column label="超级管理员" width="150">
           <template #default="{ row }">
-            <el-switch
-              :model-value="row.is_super_admin"
-              @change="handleToggleSuperAdmin(row)"
-            />
+            <el-switch :model-value="row.is_super_admin" @change="handleToggleSuperAdmin(row)" />
           </template>
         </el-table-column>
         <el-table-column label="操作" width="100">

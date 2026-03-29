@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import {
   ElCard,
   ElTable,
@@ -9,71 +9,75 @@ import {
   ElEmpty,
   ElMessage,
   ElTag,
-} from 'element-plus'
-import { getPublicBoards, type PublicBoardListItem, type PublicBoardListResponse } from '../api/board'
+} from "element-plus";
+import {
+  getPublicBoards,
+  type PublicBoardListItem,
+  type PublicBoardListResponse,
+} from "../api/board";
 
-const router = useRouter()
+const router = useRouter();
 
-const boards = ref<PublicBoardListItem[]>([])
-const isLoading = ref(false)
+const boards = ref<PublicBoardListItem[]>([]);
+const isLoading = ref(false);
 const pagination = ref({
   page: 1,
   page_size: 20,
   total: 0,
-})
+});
 
 function formatTime(time: string) {
-  const d = new Date(time)
-  const pad = (n: number) => n.toString().padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+  const d = new Date(time);
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
 function getVisibilityLabel(visibility: string): string {
-  if (visibility === 'public') return '公开'
-  if (visibility === 'group_member') return '组内可见'
-  return '看板内可见'
+  if (visibility === "public") return "公开";
+  if (visibility === "group_member") return "组内可见";
+  return "看板内可见";
 }
 
 function getVisibilityType(visibility: string): string {
-  if (visibility === 'public') return 'success'
-  if (visibility === 'group_member') return 'warning'
-  return 'info'
+  if (visibility === "public") return "success";
+  if (visibility === "group_member") return "warning";
+  return "info";
 }
 
 async function fetchBoards() {
-  isLoading.value = true
+  isLoading.value = true;
   try {
     const data: PublicBoardListResponse = await getPublicBoards(
       pagination.value.page,
       pagination.value.page_size
-    )
-    boards.value = data.items
-    pagination.value.total = data.total
+    );
+    boards.value = data.items;
+    pagination.value.total = data.total;
   } catch {
-    ElMessage.error('获取公开看板列表失败')
+    ElMessage.error("获取公开看板列表失败");
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 }
 
 function handlePageChange(page: number) {
-  pagination.value.page = page
-  fetchBoards()
+  pagination.value.page = page;
+  fetchBoards();
 }
 
 function handleSizeChange(size: number) {
-  pagination.value.page_size = size
-  pagination.value.page = 1
-  fetchBoards()
+  pagination.value.page_size = size;
+  pagination.value.page = 1;
+  fetchBoards();
 }
 
 function goToBoardDetail(id: number) {
-  router.push(`/boards/${id}`)
+  router.push(`/boards/${id}`);
 }
 
 onMounted(() => {
-  fetchBoards()
-})
+  fetchBoards();
+});
 </script>
 
 <template>
@@ -97,17 +101,17 @@ onMounted(() => {
         </el-table-column>
         <el-table-column prop="description" label="描述" min-width="200">
           <template #default="{ row }">
-            {{ row.description || '-' }}
+            {{ row.description || "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="group_name" label="所属组织" width="150">
           <template #default="{ row }">
-            {{ row.group_name || '-' }}
+            {{ row.group_name || "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="step_title" label="训练计划" width="150">
           <template #default="{ row }">
-            {{ row.step_title || '-' }}
+            {{ row.step_title || "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="creator_username" label="创建者" width="120" />

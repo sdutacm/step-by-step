@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 import {
   ElCard,
   ElDescriptions,
@@ -17,7 +17,7 @@ import {
   ElTable,
   ElTableColumn,
   ElTag,
-} from 'element-plus'
+} from "element-plus";
 import {
   getCurrentUser,
   updateCurrentUser,
@@ -29,61 +29,61 @@ import {
   type User,
   type Source,
   type GhostAccount,
-} from '../api/auth'
-import { useUserStore } from '../stores/user'
+} from "../api/auth";
+import { useUserStore } from "../stores/user";
 
-const userStore = useUserStore()
-const user = ref<User | null>(null)
-const editDialogVisible = ref(false)
-const bindDialogVisible = ref(false)
-const claimDialogVisible = ref(false)
-const isEditing = ref(false)
-const isBinding = ref(false)
-const isClaiming = ref(false)
-const sources = ref<Source[]>([])
-const ghostAccounts = ref<GhostAccount[]>([])
-const isLoadingGhosts = ref(false)
+const userStore = useUserStore();
+const user = ref<User | null>(null);
+const editDialogVisible = ref(false);
+const bindDialogVisible = ref(false);
+const claimDialogVisible = ref(false);
+const isEditing = ref(false);
+const isBinding = ref(false);
+const isClaiming = ref(false);
+const sources = ref<Source[]>([]);
+const ghostAccounts = ref<GhostAccount[]>([]);
+const isLoadingGhosts = ref(false);
 
 const editForm = ref({
-  nickname: '',
-  avatar_url: '',
-})
+  nickname: "",
+  avatar_url: "",
+});
 
 const bindForm = ref({
-  source: '',
-  username: '',
-  password: '',
-})
+  source: "",
+  username: "",
+  password: "",
+});
 
 const claimForm = ref({
-  source: '',
-  username: '',
-  password: '',
-})
+  source: "",
+  username: "",
+  password: "",
+});
 
 async function refreshUser() {
   try {
-    user.value = await getCurrentUser()
-    userStore.setUser(user.value)
+    user.value = await getCurrentUser();
+    userStore.setUser(user.value);
   } catch {
-    ElMessage.error('获取用户信息失败')
+    ElMessage.error("获取用户信息失败");
   }
 }
 
 async function refreshSources() {
   try {
-    sources.value = await getSources()
+    sources.value = await getSources();
   } catch {
-    ElMessage.error('获取平台列表失败')
+    ElMessage.error("获取平台列表失败");
   }
 }
 
 function openEditDialog() {
   editForm.value = {
-    nickname: user.value?.nickname || '',
-    avatar_url: user.value?.avatar_url || '',
-  }
-  editDialogVisible.value = true
+    nickname: user.value?.nickname || "",
+    avatar_url: user.value?.avatar_url || "",
+  };
+  editDialogVisible.value = true;
 }
 
 async function handleUpdate() {
@@ -91,43 +91,43 @@ async function handleUpdate() {
     await updateCurrentUser({
       nickname: editForm.value.nickname || undefined,
       avatar_url: editForm.value.avatar_url || undefined,
-    })
-    ElMessage.success('更新成功')
-    editDialogVisible.value = false
-    await refreshUser()
+    });
+    ElMessage.success("更新成功");
+    editDialogVisible.value = false;
+    await refreshUser();
   } catch {
-    ElMessage.error('更新失败')
+    ElMessage.error("更新失败");
   }
 }
 
 function openBindDialog() {
   bindForm.value = {
-    source: '',
-    username: '',
-    password: '',
-  }
-  bindDialogVisible.value = true
+    source: "",
+    username: "",
+    password: "",
+  };
+  bindDialogVisible.value = true;
 }
 
 async function handleBind() {
   if (!bindForm.value.source || !bindForm.value.username || !bindForm.value.password) {
-    ElMessage.error('请填写所有字段')
-    return
+    ElMessage.error("请填写所有字段");
+    return;
   }
-  isBinding.value = true
+  isBinding.value = true;
   try {
     await bindSource({
       source: bindForm.value.source,
       username: bindForm.value.username,
       password: bindForm.value.password,
-    })
-    ElMessage.success('绑定成功')
-    bindDialogVisible.value = false
-    await refreshUser()
+    });
+    ElMessage.success("绑定成功");
+    bindDialogVisible.value = false;
+    await refreshUser();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '绑定失败')
+    ElMessage.error((e as Error).message || "绑定失败");
   } finally {
-    isBinding.value = false
+    isBinding.value = false;
   }
 }
 
@@ -135,75 +135,84 @@ async function handleUnbind(bindingId: number, source: string, username: string)
   try {
     await ElMessageBox.confirm(
       `确定要解绑平台 ${source.toUpperCase()} (用户名: ${username}) 吗？`,
-      '解绑确认',
+      "解绑确认",
       {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
       }
-    )
-    await unbindSource(bindingId)
-    ElMessage.success('解绑成功')
-    await refreshUser()
+    );
+    await unbindSource(bindingId);
+    ElMessage.success("解绑成功");
+    await refreshUser();
   } catch (e: unknown) {
-    if ((e as Error).message !== 'cancel') {
-      ElMessage.error((e as Error).message || '解绑失败')
+    if ((e as Error).message !== "cancel") {
+      ElMessage.error((e as Error).message || "解绑失败");
     }
   }
 }
 
 async function fetchGhostAccounts() {
-  isLoadingGhosts.value = true
+  isLoadingGhosts.value = true;
   try {
-    const data = await getGhostAccounts()
-    ghostAccounts.value = data.ghosts
+    const data = await getGhostAccounts();
+    ghostAccounts.value = data.ghosts;
   } catch {
-    ElMessage.error('获取幽灵账号失败')
+    ElMessage.error("获取幽灵账号失败");
   } finally {
-    isLoadingGhosts.value = false
+    isLoadingGhosts.value = false;
   }
 }
 
 function openClaimDialog() {
   claimForm.value = {
-    source: '',
-    username: '',
-    password: '',
-  }
-  claimDialogVisible.value = true
-  fetchGhostAccounts()
+    source: "",
+    username: "",
+    password: "",
+  };
+  claimDialogVisible.value = true;
+  fetchGhostAccounts();
 }
 
 async function handleClaimGhost() {
   if (!claimForm.value.source || !claimForm.value.username || !claimForm.value.password) {
-    ElMessage.error('请填写所有字段')
-    return
+    ElMessage.error("请填写所有字段");
+    return;
   }
-  isClaiming.value = true
+  isClaiming.value = true;
   try {
     const result = await claimGhostAccount({
       source: claimForm.value.source,
       username: claimForm.value.username,
       password: claimForm.value.password,
-    })
-    ElMessage.success(result.message)
-    claimDialogVisible.value = false
-    await refreshUser()
-    await fetchGhostAccounts()
+    });
+    ElMessage.success(result.message);
+    claimDialogVisible.value = false;
+    await refreshUser();
+    await fetchGhostAccounts();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '认领失败')
+    ElMessage.error((e as Error).message || "认领失败");
   } finally {
-    isClaiming.value = false
+    isClaiming.value = false;
   }
 }
 
 onMounted(async () => {
-  await Promise.all([refreshUser(), refreshSources()])
-})
+  await Promise.all([refreshUser(), refreshSources()]);
+});
 </script>
 
 <template>
-  <div style="padding: 20px; max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+  <div
+    style="
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    "
+  >
     <el-card>
       <template #header>
         <div style="display: flex; align-items: center; justify-content: space-between">
@@ -225,7 +234,7 @@ onMounted(async () => {
       </template>
       <el-descriptions :column="1" border>
         <el-descriptions-item label="用户名">{{ user?.username }}</el-descriptions-item>
-        <el-descriptions-item label="昵称">{{ user?.nickname || '未设置' }}</el-descriptions-item>
+        <el-descriptions-item label="昵称">{{ user?.nickname || "未设置" }}</el-descriptions-item>
         <el-descriptions-item label="头像">
           <el-image
             v-if="user?.avatar_url"
@@ -254,7 +263,11 @@ onMounted(async () => {
         <el-table-column prop="username" label="用户名" />
         <el-table-column label="操作" width="100">
           <template #default="{ row }">
-            <el-button type="danger" size="small" @click="handleUnbind(row.id, row.source, row.username)">
+            <el-button
+              type="danger"
+              size="small"
+              @click="handleUnbind(row.id, row.source, row.username)"
+            >
               解绑
             </el-button>
           </template>
@@ -279,7 +292,7 @@ onMounted(async () => {
         <el-table-column prop="username" label="用户名" />
         <el-table-column prop="nickname" label="昵称">
           <template #default="{ row }">
-            {{ row.nickname || '-' }}
+            {{ row.nickname || "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="bound" label="状态" width="100">
@@ -289,7 +302,10 @@ onMounted(async () => {
           </template>
         </el-table-column>
       </el-table>
-      <el-empty v-if="!isLoadingGhosts && !ghostAccounts.length" description="暂无非本人的幽灵账号" />
+      <el-empty
+        v-if="!isLoadingGhosts && !ghostAccounts.length"
+        description="暂无非本人的幽灵账号"
+      />
     </el-card>
   </div>
 
@@ -324,7 +340,12 @@ onMounted(async () => {
         <el-input v-model="bindForm.username" placeholder="请输入平台用户名" />
       </el-form-item>
       <el-form-item label="密码">
-        <el-input v-model="bindForm.password" type="password" placeholder="请输入平台密码" show-password />
+        <el-input
+          v-model="bindForm.password"
+          type="password"
+          placeholder="请输入平台密码"
+          show-password
+        />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -355,7 +376,12 @@ onMounted(async () => {
         <el-input v-model="claimForm.username" placeholder="请输入OJ平台用户名" />
       </el-form-item>
       <el-form-item label="密码">
-        <el-input v-model="claimForm.password" type="password" placeholder="请输入OJ平台密码" show-password />
+        <el-input
+          v-model="claimForm.password"
+          type="password"
+          placeholder="请输入OJ平台密码"
+          show-password
+        />
       </el-form-item>
     </el-form>
     <el-divider />
@@ -370,7 +396,7 @@ onMounted(async () => {
         <el-table-column prop="username" label="用户名" />
         <el-table-column prop="nickname" label="昵称">
           <template #default="{ row }">
-            {{ row.nickname || '-' }}
+            {{ row.nickname || "-" }}
           </template>
         </el-table-column>
       </el-table>

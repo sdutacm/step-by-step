@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { ref, onMounted, computed, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import {
   ElCard,
   ElButton,
@@ -23,7 +23,7 @@ import {
   ElProgress,
   ElAlert,
   type UploadInstance,
-} from 'element-plus'
+} from "element-plus";
 import {
   getGroup,
   updateGroup,
@@ -38,7 +38,7 @@ import {
   type GroupMember,
   type UpdateMemberData,
   type ImportRecord,
-} from '../api/group'
+} from "../api/group";
 import {
   getBoards,
   createBoard,
@@ -53,493 +53,505 @@ import {
   type CreateBoardData,
   type UpdateBoardData,
   type BoardUser,
-} from '../api/board'
-import { getSteps, type StepListItem } from '../api/step'
-import { getCurrentUser } from '../api/auth'
-import { useUserStore } from '../stores/user'
+} from "../api/board";
+import { getSteps, type StepListItem } from "../api/step";
+import { getCurrentUser } from "../api/auth";
+import { useUserStore } from "../stores/user";
 
-const router = useRouter()
-const route = useRoute()
-const userStore = useUserStore()
+const router = useRouter();
+const route = useRoute();
+const userStore = useUserStore();
 
-const group = ref<Group | null>(null)
-const isLoading = ref(false)
-const isEditing = ref(false)
-const isSubmitting = ref(false)
+const group = ref<Group | null>(null);
+const isLoading = ref(false);
+const isEditing = ref(false);
+const isSubmitting = ref(false);
 
-const members = ref<GroupMember[]>([])
-const membersPagination = ref({ page: 1, page_size: 20, total: 0 })
-const membersLoading = ref(false)
+const members = ref<GroupMember[]>([]);
+const membersPagination = ref({ page: 1, page_size: 20, total: 0 });
+const membersLoading = ref(false);
 
-const addMemberDialogVisible = ref(false)
-const addMemberForm = ref({ username: '' })
-const isAddingMember = ref(false)
+const addMemberDialogVisible = ref(false);
+const addMemberForm = ref({ username: "" });
+const isAddingMember = ref(false);
 
-const editMemberDialogVisible = ref(false)
-const editMemberForm = ref<UpdateMemberData>({ role: 'member' })
-const editingMember = ref<GroupMember | null>(null)
+const editMemberDialogVisible = ref(false);
+const editMemberForm = ref<UpdateMemberData>({ role: "member" });
+const editingMember = ref<GroupMember | null>(null);
 
-const boards = ref<BoardListItem[]>([])
-const boardsPagination = ref({ page: 1, page_size: 20, total: 0 })
-const boardsLoading = ref(false)
+const boards = ref<BoardListItem[]>([]);
+const boardsPagination = ref({ page: 1, page_size: 20, total: 0 });
+const boardsLoading = ref(false);
 
-const createBoardDialogVisible = ref(false)
-const availableSteps = ref<StepListItem[]>([])
+const createBoardDialogVisible = ref(false);
+const availableSteps = ref<StepListItem[]>([]);
 const createBoardForm = ref<CreateBoardData & { step_id: number }>({
-  name: '',
-  description: '',
-  visibility: 'board_user',
+  name: "",
+  description: "",
+  visibility: "board_user",
   step_id: 0,
-})
-const isCreatingBoard = ref(false)
+});
+const isCreatingBoard = ref(false);
 
-const editBoardDialogVisible = ref(false)
+const editBoardDialogVisible = ref(false);
 const editBoardForm = ref<UpdateBoardData & { step_id: number }>({
-  name: '',
-  description: '',
-  visibility: 'board_user',
+  name: "",
+  description: "",
+  visibility: "board_user",
   step_id: 0,
-})
-const editingBoard = ref<BoardListItem | null>(null)
-const isUpdatingBoard = ref(false)
+});
+const editingBoard = ref<BoardListItem | null>(null);
+const isUpdatingBoard = ref(false);
 
-const manageBoardUsersDialogVisible = ref(false)
-const boardUsers = ref<BoardUser[]>([])
-const boardUsersLoading = ref(false)
-const availableUsers = ref<{ id: number; username: string; nickname: string | null }[]>([])
-const selectedUserIds = ref<number[]>([])
-const isManagingUsers = ref(false)
+const manageBoardUsersDialogVisible = ref(false);
+const boardUsers = ref<BoardUser[]>([]);
+const boardUsersLoading = ref(false);
+const availableUsers = ref<{ id: number; username: string; nickname: string | null }[]>([]);
+const selectedUserIds = ref<number[]>([]);
+const isManagingUsers = ref(false);
 
-const importDialogVisible = ref(false)
-const importRecords = ref<ImportRecord[]>([])
-const importLoading = ref(false)
-const isImporting = ref(false)
-const importResultDialogVisible = ref(false)
-const importResult = ref<{ total: number; success: number; skipped: number; errors: Array<{ row: number; username: string; error: string }> } | null>(null)
-const uploadRef = ref<UploadInstance | null>(null)
+const importDialogVisible = ref(false);
+const importRecords = ref<ImportRecord[]>([]);
+const importLoading = ref(false);
+const isImporting = ref(false);
+const importResultDialogVisible = ref(false);
+const importResult = ref<{
+  total: number;
+  success: number;
+  skipped: number;
+  errors: Array<{ row: number; username: string; error: string }>;
+} | null>(null);
+const uploadRef = ref<UploadInstance | null>(null);
 
-const currentUser = ref<{ id: number } | null>(null)
-const groupMemberRole = ref<'admin' | 'member' | null>(null)
+const currentUser = ref<{ id: number } | null>(null);
+const groupMemberRole = ref<"admin" | "member" | null>(null);
 
-const groupId = computed(() => Number(route.params.id))
+const groupId = computed(() => Number(route.params.id));
 
 const editForm = ref({
-  name: '',
-  description: '',
-})
+  name: "",
+  description: "",
+});
 
 function formatTime(time: string) {
-  const d = new Date(time)
-  const pad = (n: number) => n.toString().padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+  const d = new Date(time);
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
 async function fetchCurrentUser() {
   try {
-    const user = await getCurrentUser()
-    currentUser.value = user
-    userStore.setUser(user)
+    const user = await getCurrentUser();
+    currentUser.value = user;
+    userStore.setUser(user);
   } catch {
-    currentUser.value = null
-    userStore.clearUser()
+    currentUser.value = null;
+    userStore.clearUser();
   }
 }
 
 async function fetchGroup() {
-  isLoading.value = true
+  isLoading.value = true;
   try {
-    group.value = await getGroup(groupId.value)
-    editForm.value.name = group.value.name
-    editForm.value.description = group.value.description || ''
+    group.value = await getGroup(groupId.value);
+    editForm.value.name = group.value.name;
+    editForm.value.description = group.value.description || "";
   } catch {
-    ElMessage.error('获取组织详情失败')
-    router.push('/groups')
+    ElMessage.error("获取组织详情失败");
+    router.push("/groups");
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 }
 
 async function fetchMembers() {
-  membersLoading.value = true
+  membersLoading.value = true;
   try {
-    const data = await getGroupMembers(groupId.value, membersPagination.value.page, membersPagination.value.page_size)
-    members.value = data.items
-    membersPagination.value.total = data.total
+    const data = await getGroupMembers(
+      groupId.value,
+      membersPagination.value.page,
+      membersPagination.value.page_size
+    );
+    members.value = data.items;
+    membersPagination.value.total = data.total;
     if (currentUser.value) {
-      const myMembership = data.items.find((m) => m.user_id === currentUser.value!.id)
-      groupMemberRole.value = myMembership?.role || null
+      const myMembership = data.items.find(m => m.user_id === currentUser.value!.id);
+      groupMemberRole.value = myMembership?.role || null;
     }
   } catch {
-    ElMessage.error('获取成员列表失败')
+    ElMessage.error("获取成员列表失败");
   } finally {
-    membersLoading.value = false
+    membersLoading.value = false;
   }
 }
 
 async function fetchBoards() {
-  boardsLoading.value = true
+  boardsLoading.value = true;
   try {
-    const data = await getBoards(groupId.value, boardsPagination.value.page, boardsPagination.value.page_size)
-    boards.value = data.items
-    boardsPagination.value.total = data.total
+    const data = await getBoards(
+      groupId.value,
+      boardsPagination.value.page,
+      boardsPagination.value.page_size
+    );
+    boards.value = data.items;
+    boardsPagination.value.total = data.total;
   } catch {
-    ElMessage.error('获取看板列表失败')
+    ElMessage.error("获取看板列表失败");
   } finally {
-    boardsLoading.value = false
+    boardsLoading.value = false;
   }
 }
 
 async function fetchAvailableSteps() {
   try {
-    const stepsRes = await getSteps(1, 100)
-    availableSteps.value = stepsRes.items
+    const stepsRes = await getSteps(1, 100);
+    availableSteps.value = stepsRes.items;
   } catch {
-    ElMessage.error('获取训练计划列表失败')
+    ElMessage.error("获取训练计划列表失败");
   }
 }
 
 function openCreateBoardDialog() {
-  fetchAvailableSteps()
+  fetchAvailableSteps();
   createBoardForm.value = {
-    name: '',
-    description: '',
-    visibility: 'board_user',
+    name: "",
+    description: "",
+    visibility: "board_user",
     step_id: 0,
-  }
-  createBoardDialogVisible.value = true
+  };
+  createBoardDialogVisible.value = true;
 }
 
 async function handleCreateBoard() {
   if (!createBoardForm.value.name.trim()) {
-    ElMessage.warning('请输入看板名称')
-    return
+    ElMessage.warning("请输入看板名称");
+    return;
   }
   if (!createBoardForm.value.step_id) {
-    ElMessage.warning('请选择训练计划')
-    return
+    ElMessage.warning("请选择训练计划");
+    return;
   }
-  isCreatingBoard.value = true
+  isCreatingBoard.value = true;
   try {
-    await createBoard(groupId.value, createBoardForm.value)
-    ElMessage.success('创建成功')
-    createBoardDialogVisible.value = false
-    await fetchBoards()
+    await createBoard(groupId.value, createBoardForm.value);
+    ElMessage.success("创建成功");
+    createBoardDialogVisible.value = false;
+    await fetchBoards();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '创建失败')
+    ElMessage.error((e as Error).message || "创建失败");
   } finally {
-    isCreatingBoard.value = false
+    isCreatingBoard.value = false;
   }
 }
 
 async function openEditBoardDialog(board: BoardListItem) {
-  const fullBoard = await getBoards(groupId.value).then(res => res.items.find(b => b.id === board.id))
-  if (!fullBoard) return
-  await fetchAvailableSteps()
-  editingBoard.value = board
+  const fullBoard = await getBoards(groupId.value).then(res =>
+    res.items.find(b => b.id === board.id)
+  );
+  if (!fullBoard) return;
+  await fetchAvailableSteps();
+  editingBoard.value = board;
   editBoardForm.value = {
     name: board.name,
-    description: board.description || '',
+    description: board.description || "",
     visibility: board.visibility,
     step_id: 0,
-  }
-  editBoardDialogVisible.value = true
+  };
+  editBoardDialogVisible.value = true;
 }
 
 async function handleUpdateBoard() {
-  if (!editingBoard.value) return
+  if (!editingBoard.value) return;
   if (!editBoardForm.value.name?.trim()) {
-    ElMessage.warning('请输入看板名称')
-    return
+    ElMessage.warning("请输入看板名称");
+    return;
   }
-  isUpdatingBoard.value = true
+  isUpdatingBoard.value = true;
   try {
     const updateData: UpdateBoardData = {
       name: editBoardForm.value.name,
       description: editBoardForm.value.description || undefined,
       visibility: editBoardForm.value.visibility,
       step_id: editBoardForm.value.step_id || undefined,
-    }
-    await updateBoard(editingBoard.value.id, updateData)
-    ElMessage.success('更新成功')
-    editBoardDialogVisible.value = false
-    editingBoard.value = null
-    await fetchBoards()
+    };
+    await updateBoard(editingBoard.value.id, updateData);
+    ElMessage.success("更新成功");
+    editBoardDialogVisible.value = false;
+    editingBoard.value = null;
+    await fetchBoards();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '更新失败')
+    ElMessage.error((e as Error).message || "更新失败");
   } finally {
-    isUpdatingBoard.value = false
+    isUpdatingBoard.value = false;
   }
 }
 
 async function handleDeleteBoard(board: BoardListItem) {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除看板「${board.name}」吗？`,
-      '删除确认',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    )
-    await deleteBoard(board.id)
-    ElMessage.success('删除成功')
-    await fetchBoards()
+    await ElMessageBox.confirm(`确定要删除看板「${board.name}」吗？`, "删除确认", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    });
+    await deleteBoard(board.id);
+    ElMessage.success("删除成功");
+    await fetchBoards();
   } catch (e: unknown) {
-    if ((e as Error).message !== 'cancel') {
-      ElMessage.error((e as Error).message || '删除失败')
+    if ((e as Error).message !== "cancel") {
+      ElMessage.error((e as Error).message || "删除失败");
     }
   }
 }
 
 async function openManageBoardUsersDialog(board: BoardListItem) {
-  editingBoard.value = board
-  manageBoardUsersDialogVisible.value = true
-  await fetchBoardUsers(board.id)
-  const membersRes = await getGroupMembers(groupId.value, 1, 100)
+  editingBoard.value = board;
+  manageBoardUsersDialogVisible.value = true;
+  await fetchBoardUsers(board.id);
+  const membersRes = await getGroupMembers(groupId.value, 1, 100);
   availableUsers.value = membersRes.items.map(m => ({
     id: m.user_id,
     username: m.username,
     nickname: m.nickname,
-  }))
-  selectedUserIds.value = []
+  }));
+  selectedUserIds.value = [];
 }
 
 async function fetchBoardUsers(boardId: number) {
-  boardUsersLoading.value = true
+  boardUsersLoading.value = true;
   try {
-    const data = await getBoardUsers(boardId)
-    boardUsers.value = data.items
+    const data = await getBoardUsers(boardId);
+    boardUsers.value = data.items;
   } catch {
-    ElMessage.error('获取成员列表失败')
+    ElMessage.error("获取成员列表失败");
   } finally {
-    boardUsersLoading.value = false
+    boardUsersLoading.value = false;
   }
 }
 
 async function handleAddBoardUsers() {
   if (!editingBoard.value || !selectedUserIds.value.length) {
-    ElMessage.warning('请选择用户')
-    return
+    ElMessage.warning("请选择用户");
+    return;
   }
-  isManagingUsers.value = true
+  isManagingUsers.value = true;
   try {
-    await createBoardUsers(editingBoard.value.id, selectedUserIds.value)
-    ElMessage.success('添加成功')
-    selectedUserIds.value = []
-    await fetchBoardUsers(editingBoard.value.id)
+    await createBoardUsers(editingBoard.value.id, selectedUserIds.value);
+    ElMessage.success("添加成功");
+    selectedUserIds.value = [];
+    await fetchBoardUsers(editingBoard.value.id);
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '添加失败')
+    ElMessage.error((e as Error).message || "添加失败");
   } finally {
-    isManagingUsers.value = false
+    isManagingUsers.value = false;
   }
 }
 
 async function handleRemoveBoardUser(userId: number, username: string) {
-  if (!editingBoard.value) return
+  if (!editingBoard.value) return;
   try {
-    await ElMessageBox.confirm(
-      `确定要移除「${username}」吗？`,
-      '移除确认',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    )
-    await deleteBoardUser(editingBoard.value.id, userId)
-    ElMessage.success('移除成功')
-    await fetchBoardUsers(editingBoard.value.id)
+    await ElMessageBox.confirm(`确定要移除「${username}」吗？`, "移除确认", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    });
+    await deleteBoardUser(editingBoard.value.id, userId);
+    ElMessage.success("移除成功");
+    await fetchBoardUsers(editingBoard.value.id);
   } catch (e: unknown) {
-    if ((e as Error).message !== 'cancel') {
-      ElMessage.error((e as Error).message || '移除失败')
+    if ((e as Error).message !== "cancel") {
+      ElMessage.error((e as Error).message || "移除失败");
     }
   }
 }
 
 function handleBoardsPageChange(page: number) {
-  boardsPagination.value.page = page
-  fetchBoards()
+  boardsPagination.value.page = page;
+  fetchBoards();
 }
 
 async function handleUpdate() {
   if (!editForm.value.name.trim()) {
-    ElMessage.error('请输入名称')
-    return
+    ElMessage.error("请输入名称");
+    return;
   }
-  isSubmitting.value = true
+  isSubmitting.value = true;
   try {
     await updateGroup(groupId.value, {
       name: editForm.value.name,
       description: editForm.value.description || undefined,
-    })
-    ElMessage.success('更新成功')
-    isEditing.value = false
-    await fetchGroup()
+    });
+    ElMessage.success("更新成功");
+    isEditing.value = false;
+    await fetchGroup();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '更新失败')
+    ElMessage.error((e as Error).message || "更新失败");
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
 }
 
 async function handleAddMember() {
   if (!addMemberForm.value.username.trim()) {
-    ElMessage.warning('请输入用户名')
-    return
+    ElMessage.warning("请输入用户名");
+    return;
   }
-  isAddingMember.value = true
+  isAddingMember.value = true;
   try {
-    await addGroupMember(groupId.value, { username: addMemberForm.value.username })
-    ElMessage.success('添加成功')
-    addMemberDialogVisible.value = false
-    addMemberForm.value.username = ''
-    await fetchMembers()
+    await addGroupMember(groupId.value, { username: addMemberForm.value.username });
+    ElMessage.success("添加成功");
+    addMemberDialogVisible.value = false;
+    addMemberForm.value.username = "";
+    await fetchMembers();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '添加失败')
+    ElMessage.error((e as Error).message || "添加失败");
   } finally {
-    isAddingMember.value = false
+    isAddingMember.value = false;
   }
 }
 
 function openEditMemberDialog(member: GroupMember) {
-  editingMember.value = member
-  editMemberForm.value.role = member.role
-  editMemberDialogVisible.value = true
+  editingMember.value = member;
+  editMemberForm.value.role = member.role;
+  editMemberDialogVisible.value = true;
 }
 
 async function handleUpdateMember() {
-  if (!editingMember.value) return
-  isSubmitting.value = true
+  if (!editingMember.value) return;
+  isSubmitting.value = true;
   try {
-    await updateGroupMember(groupId.value, editingMember.value.user_id, editMemberForm.value)
-    ElMessage.success('更新成功')
-    editMemberDialogVisible.value = false
-    editingMember.value = null
-    await fetchMembers()
+    await updateGroupMember(groupId.value, editingMember.value.user_id, editMemberForm.value);
+    ElMessage.success("更新成功");
+    editMemberDialogVisible.value = false;
+    editingMember.value = null;
+    await fetchMembers();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '更新失败')
+    ElMessage.error((e as Error).message || "更新失败");
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
 }
 
 async function handleRemoveMember(member: GroupMember) {
   try {
-    await ElMessageBox.confirm(
-      `确定要将「${member.username}」从组织中移除吗？`,
-      '移除确认',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    )
-    await removeGroupMember(groupId.value, member.user_id)
-    ElMessage.success('移除成功')
-    await fetchMembers()
+    await ElMessageBox.confirm(`确定要将「${member.username}」从组织中移除吗？`, "移除确认", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    });
+    await removeGroupMember(groupId.value, member.user_id);
+    ElMessage.success("移除成功");
+    await fetchMembers();
   } catch (e: unknown) {
-    if ((e as Error).message !== 'cancel') {
-      ElMessage.error((e as Error).message || '移除失败')
+    if ((e as Error).message !== "cancel") {
+      ElMessage.error((e as Error).message || "移除失败");
     }
   }
 }
 
 async function fetchImportRecords() {
-  importLoading.value = true
+  importLoading.value = true;
   try {
-    const data = await getImportRecords(groupId.value)
-    importRecords.value = data.items
+    const data = await getImportRecords(groupId.value);
+    importRecords.value = data.items;
   } catch {
-    ElMessage.error('获取导入记录失败')
+    ElMessage.error("获取导入记录失败");
   } finally {
-    importLoading.value = false
+    importLoading.value = false;
   }
 }
 
 async function handleDownloadTemplate() {
   try {
-    await downloadImportTemplate(groupId.value)
-    ElMessage.success('模板下载成功')
+    await downloadImportTemplate(groupId.value);
+    ElMessage.success("模板下载成功");
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '下载失败')
+    ElMessage.error((e as Error).message || "下载失败");
   }
 }
 
 async function handleImport(file: File) {
   if (!file) {
-    ElMessage.error('请选择文件')
-    return
+    ElMessage.error("请选择文件");
+    return;
   }
-  isImporting.value = true
+  isImporting.value = true;
   try {
-    const result = await importOjAccounts(groupId.value, file)
-    importResult.value = result
-    importResultDialogVisible.value = true
-    uploadRef.value?.clearFiles()
-    await fetchImportRecords()
-    await fetchMembers()
+    const result = await importOjAccounts(groupId.value, file);
+    importResult.value = result;
+    importResultDialogVisible.value = true;
+    uploadRef.value?.clearFiles();
+    await fetchImportRecords();
+    await fetchMembers();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '导入失败')
+    ElMessage.error((e as Error).message || "导入失败");
   } finally {
-    isImporting.value = false
+    isImporting.value = false;
   }
 }
 
 function handleFileChange(uploadFile: { raw?: File }) {
   if (uploadFile.raw) {
-    handleImport(uploadFile.raw)
+    handleImport(uploadFile.raw);
   }
 }
 
 function openImportDialog() {
-  importResult.value = null
-  importDialogVisible.value = true
-  fetchImportRecords()
+  importResult.value = null;
+  importDialogVisible.value = true;
+  fetchImportRecords();
 }
 
 function handleMembersPageChange(page: number) {
-  membersPagination.value.page = page
-  fetchMembers()
+  membersPagination.value.page = page;
+  fetchMembers();
 }
 
 function isAdmin() {
-  return userStore.isSuperAdmin || groupMemberRole.value === 'admin'
+  return userStore.isSuperAdmin || groupMemberRole.value === "admin";
 }
 
 function getVisibilityLabel(visibility: BoardVisibility): string {
   const labels: Record<BoardVisibility, string> = {
-    public: '公开',
-    group_member: '组内可见',
-    board_user: '看板内可见',
-  }
-  return labels[visibility] || visibility
+    public: "公开",
+    group_member: "组内可见",
+    board_user: "看板内可见",
+  };
+  return labels[visibility] || visibility;
 }
 
 function getVisibilityType(visibility: BoardVisibility): string {
-  if (visibility === 'public') return 'success'
-  if (visibility === 'group_member') return 'warning'
-  return 'info'
+  if (visibility === "public") return "success";
+  if (visibility === "group_member") return "warning";
+  return "info";
 }
 
 onMounted(async () => {
-  await fetchCurrentUser()
-  await Promise.all([fetchGroup(), fetchMembers(), fetchBoards()])
-})
+  await fetchCurrentUser();
+  await Promise.all([fetchGroup(), fetchMembers(), fetchBoards()]);
+});
 
 watch(
   () => userStore.user,
   async (newUser, oldUser) => {
     if (!oldUser && newUser) {
-      await fetchCurrentUser()
-      await Promise.all([fetchMembers(), fetchBoards()])
+      await fetchCurrentUser();
+      await Promise.all([fetchMembers(), fetchBoards()]);
     }
   }
-)
+);
 </script>
 
 <template>
-  <div style="padding: 20px; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+  <div
+    style="
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    "
+  >
     <el-card v-if="!isLoading && group">
       <template #header>
         <div style="display: flex; align-items: center; justify-content: space-between">
@@ -556,7 +568,12 @@ watch(
       <template v-if="isEditing">
         <el-form label-position="top" :model="editForm">
           <el-form-item label="名称" required>
-            <el-input v-model="editForm.name" placeholder="请输入名称" maxlength="100" show-word-limit />
+            <el-input
+              v-model="editForm.name"
+              placeholder="请输入名称"
+              maxlength="100"
+              show-word-limit
+            />
           </el-form-item>
           <el-form-item label="描述">
             <el-input
@@ -579,7 +596,7 @@ watch(
         <div style="display: flex; flex-direction: column; gap: 16px">
           <div>
             <strong>描述：</strong>
-            <span>{{ group.description || '暂无描述' }}</span>
+            <span>{{ group.description || "暂无描述" }}</span>
           </div>
           <div>
             <strong>成员数：</strong>
@@ -620,20 +637,25 @@ watch(
             <el-table-column prop="username" label="用户名" min-width="150">
               <template #default="{ row }">
                 <span>{{ row.username }}</span>
-                <el-tag v-if="row.role === 'admin'" type="warning" size="small" style="margin-left: 8px">
+                <el-tag
+                  v-if="row.role === 'admin'"
+                  type="warning"
+                  size="small"
+                  style="margin-left: 8px"
+                >
                   管理员
                 </el-tag>
               </template>
             </el-table-column>
             <el-table-column prop="nickname" label="昵称" min-width="150">
               <template #default="{ row }">
-                {{ row.nickname || '-' }}
+                {{ row.nickname || "-" }}
               </template>
             </el-table-column>
             <el-table-column prop="role" label="角色" width="100">
               <template #default="{ row }">
                 <el-tag :type="row.role === 'admin' ? 'warning' : 'info'" size="small">
-                  {{ row.role === 'admin' ? '管理员' : '成员' }}
+                  {{ row.role === "admin" ? "管理员" : "成员" }}
                 </el-tag>
               </template>
             </el-table-column>
@@ -654,7 +676,10 @@ watch(
             </el-table-column>
           </el-table>
           <el-empty v-if="!membersLoading && !members.length" description="暂无成员" />
-          <div v-if="membersPagination.total > membersPagination.page_size" style="margin-top: 16px; display: flex; justify-content: flex-end">
+          <div
+            v-if="membersPagination.total > membersPagination.page_size"
+            style="margin-top: 16px; display: flex; justify-content: flex-end"
+          >
             <el-pagination
               v-model:current-page="membersPagination.page"
               :page-size="membersPagination.page_size"
@@ -670,15 +695,13 @@ watch(
             <span>看板管理 ({{ boardsPagination.total }})</span>
           </template>
           <div style="margin-bottom: 16px; display: flex; justify-content: flex-end">
-            <el-button type="primary" @click="openCreateBoardDialog">
-              创建看板
-            </el-button>
+            <el-button type="primary" @click="openCreateBoardDialog"> 创建看板 </el-button>
           </div>
           <el-table v-loading="boardsLoading" :data="boards" style="width: 100%">
             <el-table-column prop="name" label="名称" min-width="150" />
             <el-table-column prop="description" label="描述" min-width="200">
               <template #default="{ row }">
-                {{ row.description || '-' }}
+                {{ row.description || "-" }}
               </template>
             </el-table-column>
             <el-table-column prop="visibility" label="可见性" width="120">
@@ -712,7 +735,10 @@ watch(
             </el-table-column>
           </el-table>
           <el-empty v-if="!boardsLoading && !boards.length" description="暂无看板" />
-          <div v-if="boardsPagination.total > boardsPagination.page_size" style="margin-top: 16px; display: flex; justify-content: flex-end">
+          <div
+            v-if="boardsPagination.total > boardsPagination.page_size"
+            style="margin-top: 16px; display: flex; justify-content: flex-end"
+          >
             <el-pagination
               v-model:current-page="boardsPagination.page"
               :page-size="boardsPagination.page_size"
@@ -751,7 +777,11 @@ watch(
             <el-table-column prop="error_detail" label="错误" min-width="200">
               <template #default="{ row }">
                 <span v-if="row.error_detail" style="color: #f56c6c; word-break: break-all">
-                  {{ JSON.parse(row.error_detail).map((e: { error: string }) => e.error).join('; ') }}
+                  {{
+                    JSON.parse(row.error_detail)
+                      .map((e: { error: string }) => e.error)
+                      .join("; ")
+                  }}
                 </span>
                 <span v-else>-</span>
               </template>
@@ -801,7 +831,12 @@ watch(
   <el-dialog v-model="createBoardDialogVisible" title="创建看板" width="500px">
     <el-form :model="createBoardForm" label-position="top">
       <el-form-item label="名称" required>
-        <el-input v-model="createBoardForm.name" placeholder="请输入看板名称" maxlength="100" show-word-limit />
+        <el-input
+          v-model="createBoardForm.name"
+          placeholder="请输入看板名称"
+          maxlength="100"
+          show-word-limit
+        />
       </el-form-item>
       <el-form-item label="描述">
         <el-input
@@ -821,7 +856,11 @@ watch(
         </el-select>
       </el-form-item>
       <el-form-item label="训练计划" required>
-        <el-select v-model="createBoardForm.step_id" placeholder="请选择训练计划" style="width: 100%">
+        <el-select
+          v-model="createBoardForm.step_id"
+          placeholder="请选择训练计划"
+          style="width: 100%"
+        >
           <el-option
             v-for="step in availableSteps"
             :key="step.id"
@@ -833,14 +872,21 @@ watch(
     </el-form>
     <template #footer>
       <el-button @click="createBoardDialogVisible = false">取消</el-button>
-      <el-button type="primary" :loading="isCreatingBoard" @click="handleCreateBoard">创建</el-button>
+      <el-button type="primary" :loading="isCreatingBoard" @click="handleCreateBoard"
+        >创建</el-button
+      >
     </template>
   </el-dialog>
 
   <el-dialog v-model="editBoardDialogVisible" title="编辑看板" width="500px">
     <el-form :model="editBoardForm" label-position="top">
       <el-form-item label="名称" required>
-        <el-input v-model="editBoardForm.name" placeholder="请输入看板名称" maxlength="100" show-word-limit />
+        <el-input
+          v-model="editBoardForm.name"
+          placeholder="请输入看板名称"
+          maxlength="100"
+          show-word-limit
+        />
       </el-form-item>
       <el-form-item label="描述">
         <el-input
@@ -860,7 +906,11 @@ watch(
         </el-select>
       </el-form-item>
       <el-form-item label="训练计划">
-        <el-select v-model="editBoardForm.step_id" placeholder="请选择训练计划（不修改请留空）" style="width: 100%">
+        <el-select
+          v-model="editBoardForm.step_id"
+          placeholder="请选择训练计划（不修改请留空）"
+          style="width: 100%"
+        >
           <el-option :value="0" label="不修改" />
           <el-option
             v-for="step in availableSteps"
@@ -873,11 +923,17 @@ watch(
     </el-form>
     <template #footer>
       <el-button @click="editBoardDialogVisible = false">取消</el-button>
-      <el-button type="primary" :loading="isUpdatingBoard" @click="handleUpdateBoard">保存</el-button>
+      <el-button type="primary" :loading="isUpdatingBoard" @click="handleUpdateBoard"
+        >保存</el-button
+      >
     </template>
   </el-dialog>
 
-  <el-dialog v-model="manageBoardUsersDialogVisible" :title="`管理看板成员 - ${editingBoard?.name}`" width="600px">
+  <el-dialog
+    v-model="manageBoardUsersDialogVisible"
+    :title="`管理看板成员 - ${editingBoard?.name}`"
+    width="600px"
+  >
     <div style="margin-bottom: 16px">
       <el-select
         v-model="selectedUserIds"
@@ -892,7 +948,12 @@ watch(
           :value="user.id"
         />
       </el-select>
-      <el-button type="primary" style="margin-top: 8px" :loading="isManagingUsers" @click="handleAddBoardUsers">
+      <el-button
+        type="primary"
+        style="margin-top: 8px"
+        :loading="isManagingUsers"
+        @click="handleAddBoardUsers"
+      >
         添加选中用户
       </el-button>
     </div>
@@ -901,7 +962,7 @@ watch(
       <el-table-column prop="username" label="用户名" min-width="150" />
       <el-table-column prop="nickname" label="昵称" min-width="150">
         <template #default="{ row }">
-          {{ row.nickname || '-' }}
+          {{ row.nickname || "-" }}
         </template>
       </el-table-column>
       <el-table-column prop="created_at" label="添加时间" width="180">
@@ -911,7 +972,11 @@ watch(
       </el-table-column>
       <el-table-column label="操作" width="80" fixed="right">
         <template #default="{ row }">
-          <el-button type="danger" size="small" @click="handleRemoveBoardUser(row.user_id, row.username)">
+          <el-button
+            type="danger"
+            size="small"
+            @click="handleRemoveBoardUser(row.user_id, row.username)"
+          >
             移除
           </el-button>
         </template>
@@ -925,7 +990,16 @@ watch(
       <template #default>
         <div>上传Excel文件，格式如下：</div>
         <div style="margin-top: 8px">
-          <div style="display: flex; gap: 8px; font-weight: bold; border-bottom: 1px solid #dcdfe6; padding-bottom: 4px; margin-bottom: 4px">
+          <div
+            style="
+              display: flex;
+              gap: 8px;
+              font-weight: bold;
+              border-bottom: 1px solid #dcdfe6;
+              padding-bottom: 4px;
+              margin-bottom: 4px;
+            "
+          >
             <span style="width: 80px">source</span>
             <span style="flex: 1">username</span>
             <span style="flex: 1">nickname</span>
@@ -976,7 +1050,12 @@ watch(
 
       <div v-if="importResult.successList && importResult.successList.length">
         <div style="font-weight: bold; margin-bottom: 8px; color: #67c23a">成功导入的账号：</div>
-        <el-table :data="importResult.successList" size="small" max-height="200" style="margin-bottom: 16px">
+        <el-table
+          :data="importResult.successList"
+          size="small"
+          max-height="200"
+          style="margin-bottom: 16px"
+        >
           <el-table-column prop="source" label="平台" width="80">
             <template #default="{ row }">
               <el-tag size="small">{{ row.source.toUpperCase() }}</el-tag>
@@ -985,15 +1064,22 @@ watch(
           <el-table-column prop="username" label="用户名" />
           <el-table-column prop="nickname" label="昵称">
             <template #default="{ row }">
-              {{ row.nickname || '-' }}
+              {{ row.nickname || "-" }}
             </template>
           </el-table-column>
         </el-table>
       </div>
 
       <div v-if="importResult.skippedList && importResult.skippedList.length">
-        <div style="font-weight: bold; margin-bottom: 8px; color: #e6a23c">跳过的账号（已存在）：</div>
-        <el-table :data="importResult.skippedList" size="small" max-height="200" style="margin-bottom: 16px">
+        <div style="font-weight: bold; margin-bottom: 8px; color: #e6a23c">
+          跳过的账号（已存在）：
+        </div>
+        <el-table
+          :data="importResult.skippedList"
+          size="small"
+          max-height="200"
+          style="margin-bottom: 16px"
+        >
           <el-table-column prop="source" label="平台" width="80">
             <template #default="{ row }">
               <el-tag size="small">{{ row.source.toUpperCase() }}</el-tag>
@@ -1002,7 +1088,7 @@ watch(
           <el-table-column prop="username" label="用户名" />
           <el-table-column prop="nickname" label="昵称">
             <template #default="{ row }">
-              {{ row.nickname || '-' }}
+              {{ row.nickname || "-" }}
             </template>
           </el-table-column>
         </el-table>
@@ -1014,7 +1100,7 @@ watch(
           <el-table-column prop="row" label="行号" width="60" />
           <el-table-column prop="source" label="平台" width="80">
             <template #default="{ row }">
-              <el-tag size="small">{{ (row.source || '').toUpperCase() }}</el-tag>
+              <el-tag size="small">{{ (row.source || "").toUpperCase() }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column prop="username" label="用户名" />

@@ -1,68 +1,71 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import { ElDialog, ElForm, ElFormItem, ElInput, ElMessage } from 'element-plus'
-import { login, register, getCurrentUser, logout, type User } from './api/auth'
-import { useUserStore } from './stores/user'
+import { ref, computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { ElDialog, ElForm, ElFormItem, ElInput, ElMessage } from "element-plus";
+import { login, register, getCurrentUser, logout, type User } from "./api/auth";
+import { useUserStore } from "./stores/user";
 
-const route = useRoute()
-const userStore = useUserStore()
+const route = useRoute();
+const userStore = useUserStore();
 
-const loginDialogVisible = ref(false)
-const registerDialogVisible = ref(false)
+const loginDialogVisible = ref(false);
+const registerDialogVisible = ref(false);
 
 const loginForm = ref({
-  username: '',
-  password: '',
-})
+  username: "",
+  password: "",
+});
 
 const registerForm = ref({
-  username: '',
-  password: '',
-})
+  username: "",
+  password: "",
+});
 
-const isLoggedIn = computed(() => !!userStore.user)
-const isSuperAdmin = computed(() => userStore.isSuperAdmin)
-const activeIndex = computed(() => route.path)
+const isLoggedIn = computed(() => !!userStore.user);
+const isSuperAdmin = computed(() => userStore.isSuperAdmin);
+const activeIndex = computed(() => route.path);
 
 async function handleLogin() {
   try {
-    await login(loginForm.value)
-    await userStore.fetchUser()
-    loginDialogVisible.value = false
-    loginForm.value = { username: '', password: '' }
-    ElMessage.success('登录成功')
+    await login(loginForm.value);
+    await userStore.fetchUser();
+    loginDialogVisible.value = false;
+    loginForm.value = { username: "", password: "" };
+    ElMessage.success("登录成功");
   } catch (error: any) {
-    ElMessage.error(error.message || '登录失败')
+    ElMessage.error(error.message || "登录失败");
   }
 }
 
 async function handleRegister() {
   try {
-    await register(registerForm.value)
-    ElMessage.success('注册成功')
-    registerDialogVisible.value = false
-    loginForm.value = { username: registerForm.value.username, password: registerForm.value.password }
-    registerForm.value = { username: '', password: '' }
-    await handleLogin()
+    await register(registerForm.value);
+    ElMessage.success("注册成功");
+    registerDialogVisible.value = false;
+    loginForm.value = {
+      username: registerForm.value.username,
+      password: registerForm.value.password,
+    };
+    registerForm.value = { username: "", password: "" };
+    await handleLogin();
   } catch (error: any) {
-    ElMessage.error(error.message || '注册失败')
+    ElMessage.error(error.message || "注册失败");
   }
 }
 
 async function handleLogout() {
-  await logout()
-  userStore.clearUser()
-  ElMessage.success('已退出登录')
+  await logout();
+  userStore.clearUser();
+  ElMessage.success("已退出登录");
 }
 
 onMounted(async () => {
   try {
-    await userStore.fetchUser()
+    await userStore.fetchUser();
   } catch {
-    userStore.clearUser()
+    userStore.clearUser();
   }
-})
+});
 </script>
 
 <template>
@@ -73,26 +76,16 @@ onMounted(async () => {
     <el-menu-item index="/boards/public">公开看板</el-menu-item>
     <div style="flex: 1"></div>
     <template v-if="isLoggedIn">
-      <el-menu-item v-if="isSuperAdmin" index="/admin/users">
-        用户管理
-      </el-menu-item>
-      <el-menu-item index="/steps/create">
-        创建训练计划
-      </el-menu-item>
+      <el-menu-item v-if="isSuperAdmin" index="/admin/users"> 用户管理 </el-menu-item>
+      <el-menu-item index="/steps/create"> 创建训练计划 </el-menu-item>
       <el-menu-item index="/profile">
         {{ userStore.user?.username }}
       </el-menu-item>
-      <el-menu-item index="" @click="handleLogout">
-        退出登录
-      </el-menu-item>
+      <el-menu-item index="" @click="handleLogout"> 退出登录 </el-menu-item>
     </template>
     <template v-else>
-      <el-menu-item index="" @click="loginDialogVisible = true">
-        登录
-      </el-menu-item>
-      <el-menu-item index="" @click="registerDialogVisible = true">
-        注册
-      </el-menu-item>
+      <el-menu-item index="" @click="loginDialogVisible = true"> 登录 </el-menu-item>
+      <el-menu-item index="" @click="registerDialogVisible = true"> 注册 </el-menu-item>
     </template>
   </el-menu>
 
@@ -112,9 +105,7 @@ onMounted(async () => {
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" native-type="submit" style="width: 100%">
-          登录
-        </el-button>
+        <el-button type="primary" native-type="submit" style="width: 100%"> 登录 </el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -125,26 +116,20 @@ onMounted(async () => {
         <el-input v-model="registerForm.username" placeholder="请输入用户名" />
       </el-form-item>
       <el-form-item label="密码">
-        <el-input
-          v-model="registerForm.password"
-          type="password"
-          placeholder="请输入密码"
-        />
+        <el-input v-model="registerForm.password" type="password" placeholder="请输入密码" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" native-type="submit" style="width: 100%">
-          注册
-        </el-button>
+        <el-button type="primary" native-type="submit" style="width: 100%"> 注册 </el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 * {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 </style>
 

@@ -1,90 +1,90 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Profile from '../views/Profile.vue'
-import Steps from '../views/Steps.vue'
-import StepCreate from '../views/StepCreate.vue'
-import StepDetail from '../views/StepDetail.vue'
-import Groups from '../views/Groups.vue'
-import GroupDetail from '../views/GroupDetail.vue'
-import PublicBoards from '../views/PublicBoards.vue'
-import BoardDetail from '../views/BoardDetail.vue'
-import AdminUsers from '../views/AdminUsers.vue'
-import { getToken } from '../api/auth'
-import { useUserStore } from '../stores/user'
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "../views/Home.vue";
+import Profile from "../views/Profile.vue";
+import Steps from "../views/Steps.vue";
+import StepCreate from "../views/StepCreate.vue";
+import StepDetail from "../views/StepDetail.vue";
+import Groups from "../views/Groups.vue";
+import GroupDetail from "../views/GroupDetail.vue";
+import PublicBoards from "../views/PublicBoards.vue";
+import BoardDetail from "../views/BoardDetail.vue";
+import AdminUsers from "../views/AdminUsers.vue";
+import { getToken } from "../api/auth";
+import { useUserStore } from "../stores/user";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: "/",
+      name: "home",
       component: Home,
     },
     {
-      path: '/profile',
-      name: 'profile',
+      path: "/profile",
+      name: "profile",
       component: Profile,
       meta: { requiresAuth: true },
     },
     {
-      path: '/steps',
-      name: 'steps',
+      path: "/steps",
+      name: "steps",
       component: Steps,
     },
     {
-      path: '/steps/create',
-      name: 'step-create',
+      path: "/steps/create",
+      name: "step-create",
       component: StepCreate,
       meta: { requiresAuth: true },
     },
     {
-      path: '/steps/:id',
-      name: 'step-detail',
+      path: "/steps/:id",
+      name: "step-detail",
       component: StepDetail,
     },
     {
-      path: '/groups',
-      name: 'groups',
+      path: "/groups",
+      name: "groups",
       component: Groups,
     },
     {
-      path: '/groups/:id',
-      name: 'group-detail',
+      path: "/groups/:id",
+      name: "group-detail",
       component: GroupDetail,
     },
     {
-      path: '/boards/public',
-      name: 'public-boards',
+      path: "/boards/public",
+      name: "public-boards",
       component: PublicBoards,
     },
     {
-      path: '/boards/:id',
-      name: 'board-detail',
+      path: "/boards/:id",
+      name: "board-detail",
       component: BoardDetail,
     },
     {
-      path: '/admin/users',
-      name: 'admin-users',
+      path: "/admin/users",
+      name: "admin-users",
       component: AdminUsers,
       meta: { requiresAuth: true, requiresSuperAdmin: true },
     },
   ],
-})
+});
 
 router.beforeEach(async (to, _from, next) => {
-  const userStore = useUserStore()
+  const userStore = useUserStore();
 
   if (to.meta.requiresAuth && !getToken()) {
-    next('/')
-    return
+    next("/");
+    return;
   }
 
   if (to.meta.requiresSuperAdmin && !userStore.isSuperAdmin) {
-    next('/')
-    return
+    next("/");
+    return;
   }
 
-  next()
-})
+  next();
+});
 
-export default router
+export default router;

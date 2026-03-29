@@ -1,74 +1,74 @@
-import { getToken } from './auth'
+import { getToken } from "./auth";
 
 export interface Group {
-  id: number
-  name: string
-  description: string | null
-  creator_id: number | null
-  creator_username: string | null
-  created_at: string
-  updated_at: string
-  member_count: number
-  step_count: number
+  id: number;
+  name: string;
+  description: string | null;
+  creator_id: number | null;
+  creator_username: string | null;
+  created_at: string;
+  updated_at: string;
+  member_count: number;
+  step_count: number;
 }
 
 export interface GroupListItem {
-  id: number
-  name: string
-  description: string | null
-  creator_id: number | null
-  creator_username: string | null
-  created_at: string
-  updated_at: string
-  member_count: number
-  step_count: number
+  id: number;
+  name: string;
+  description: string | null;
+  creator_id: number | null;
+  creator_username: string | null;
+  created_at: string;
+  updated_at: string;
+  member_count: number;
+  step_count: number;
 }
 
 export interface GroupListResponse {
-  total: number
-  page: number
-  page_size: number
-  items: GroupListItem[]
+  total: number;
+  page: number;
+  page_size: number;
+  items: GroupListItem[];
 }
 
 export interface CreateGroupData {
-  name: string
-  description?: string
+  name: string;
+  description?: string;
 }
 
 export interface UpdateGroupData {
-  name?: string
-  description?: string
+  name?: string;
+  description?: string;
 }
 
 export interface GroupMember {
-  id: number
-  user_id: number
-  username: string
-  nickname: string | null
-  role: 'member' | 'admin'
-  joined_at: string
+  id: number;
+  user_id: number;
+  username: string;
+  nickname: string | null;
+  role: "member" | "admin";
+  joined_at: string;
 }
 
 export interface GroupMemberListResponse {
-  total: number
-  page: number
-  page_size: number
-  items: GroupMember[]
+  total: number;
+  page: number;
+  page_size: number;
+  items: GroupMember[];
 }
 
 export interface AddMemberData {
-  username: string
+  username: string;
 }
 
 export interface UpdateMemberData {
-  role: 'member' | 'admin'
+  role: "member" | "admin";
 }
 
 async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Response> {
-  const token = getToken()
+  const token = getToken();
   if (!token) {
-    throw new Error('No token found')
+    throw new Error("No token found");
   }
 
   const response = await fetch(url, {
@@ -77,66 +77,69 @@ async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Re
       ...options.headers,
       Authorization: `Bearer ${token}`,
     },
-  })
-  return response
+  });
+  return response;
 }
 
-export async function getGroups(page: number = 1, pageSize: number = 20): Promise<GroupListResponse> {
-  const response = await fetch(`/api/groups?page=${page}&page_size=${pageSize}`)
+export async function getGroups(
+  page: number = 1,
+  pageSize: number = 20
+): Promise<GroupListResponse> {
+  const response = await fetch(`/api/groups?page=${page}&page_size=${pageSize}`);
   if (!response.ok) {
-    throw new Error('Failed to get groups')
+    throw new Error("Failed to get groups");
   }
-  return await response.json()
+  return await response.json();
 }
 
 export async function getGroup(id: number): Promise<Group> {
-  const response = await fetch(`/api/groups/${id}`)
+  const response = await fetch(`/api/groups/${id}`);
   if (!response.ok) {
     if (response.status === 404) {
-      throw new Error('Group not found')
+      throw new Error("Group not found");
     }
-    throw new Error('Failed to get group')
+    throw new Error("Failed to get group");
   }
-  return await response.json()
+  return await response.json();
 }
 
 export async function createGroup(data: CreateGroupData): Promise<Group> {
-  const response = await fetchWithAuth('/api/groups', {
-    method: 'POST',
+  const response = await fetchWithAuth("/api/groups", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
+  });
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to create group')
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to create group");
   }
-  return await response.json()
+  return await response.json();
 }
 
 export async function updateGroup(id: number, data: UpdateGroupData): Promise<Group> {
   const response = await fetchWithAuth(`/api/groups/${id}`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
+  });
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to update group')
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to update group");
   }
-  return await response.json()
+  return await response.json();
 }
 
 export async function deleteGroup(id: number): Promise<void> {
   const response = await fetchWithAuth(`/api/groups/${id}`, {
-    method: 'DELETE',
-  })
+    method: "DELETE",
+  });
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to delete group')
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to delete group");
   }
 }
 
@@ -145,26 +148,26 @@ export async function getGroupMembers(
   page: number = 1,
   pageSize: number = 20
 ): Promise<GroupMemberListResponse> {
-  const response = await fetch(`/api/groups/${groupId}/members?page=${page}&page_size=${pageSize}`)
+  const response = await fetch(`/api/groups/${groupId}/members?page=${page}&page_size=${pageSize}`);
   if (!response.ok) {
-    throw new Error('Failed to get members')
+    throw new Error("Failed to get members");
   }
-  return await response.json()
+  return await response.json();
 }
 
 export async function addGroupMember(groupId: number, data: AddMemberData): Promise<GroupMember> {
   const response = await fetchWithAuth(`/api/groups/${groupId}/members`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
+  });
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to add member')
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to add member");
   }
-  return await response.json()
+  return await response.json();
 }
 
 export async function updateGroupMember(
@@ -173,111 +176,116 @@ export async function updateGroupMember(
   data: UpdateMemberData
 ): Promise<GroupMember> {
   const response = await fetchWithAuth(`/api/groups/${groupId}/members/${userId}`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
+  });
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to update member')
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to update member");
   }
-  return await response.json()
+  return await response.json();
 }
 
 export async function removeGroupMember(groupId: number, userId: number): Promise<void> {
   const response = await fetchWithAuth(`/api/groups/${groupId}/members/${userId}`, {
-    method: 'DELETE',
-  })
+    method: "DELETE",
+  });
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to remove member')
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to remove member");
   }
 }
 
 export interface ImportRecord {
-  id: number
-  group_id: number
-  imported_by: number | null
-  source: string
-  total_count: number
-  success_count: number
-  skip_count: number
-  error_detail: string | null
-  created_at: string
+  id: number;
+  group_id: number;
+  imported_by: number | null;
+  source: string;
+  total_count: number;
+  success_count: number;
+  skip_count: number;
+  error_detail: string | null;
+  created_at: string;
 }
 
 export interface ImportRecordListResponse {
-  items: ImportRecord[]
+  items: ImportRecord[];
 }
 
 export interface ImportResult {
-  total: number
-  success: number
-  skipped: number
-  success_list: Array<{ source: string; username: string; nickname: string | null }>
-  skipped_list: Array<{ source: string; username: string; nickname: string | null; reason: string }>
-  errors: Array<{ row: number; source: string; username: string; error: string }>
+  total: number;
+  success: number;
+  skipped: number;
+  success_list: Array<{ source: string; username: string; nickname: string | null }>;
+  skipped_list: Array<{
+    source: string;
+    username: string;
+    nickname: string | null;
+    reason: string;
+  }>;
+  errors: Array<{ row: number; source: string; username: string; error: string }>;
 }
 
 export async function getImportRecords(groupId: number): Promise<ImportRecordListResponse> {
-  const response = await fetchWithAuth(`/api/groups/${groupId}/import-records`)
+  const response = await fetchWithAuth(`/api/groups/${groupId}/import-records`);
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to get import records')
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to get import records");
   }
-  return await response.json()
+  return await response.json();
 }
 
 export async function downloadImportTemplate(groupId: number): Promise<void> {
-  const token = getToken()
+  const token = getToken();
   if (!token) {
-    throw new Error('No token found')
+    throw new Error("No token found");
   }
 
   const response = await fetch(`/api/groups/${groupId}/import-templates`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  })
+  });
 
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to download template')
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to download template");
   }
 
-  const blob = await response.blob()
-  const url = window.URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = 'import_template.xlsx'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  window.URL.revokeObjectURL(url)
+  const blob = await response.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "import_template.xlsx";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
 }
 
 export async function importOjAccounts(groupId: number, file: File): Promise<ImportResult> {
-  const token = getToken()
+  const token = getToken();
   if (!token) {
-    throw new Error('No token found')
+    throw new Error("No token found");
   }
 
-  const formData = new FormData()
-  formData.append('file', file)
+  const formData = new FormData();
+  formData.append("file", file);
 
   const response = await fetch(`/api/groups/${groupId}/import`, {
-    method: 'POST',
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
     },
     body: formData,
-  })
+  });
 
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Import failed')
+    const error = await response.json();
+    throw new Error(error.detail || "Import failed");
   }
-  return await response.json()
+  return await response.json();
 }

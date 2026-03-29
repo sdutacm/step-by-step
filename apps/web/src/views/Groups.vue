@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, watch } from "vue";
+import { useRouter } from "vue-router";
 import {
   ElCard,
   ElTable,
@@ -14,7 +14,7 @@ import {
   ElForm,
   ElFormItem,
   ElInput,
-} from 'element-plus'
+} from "element-plus";
 import {
   getGroups,
   deleteGroup,
@@ -22,114 +22,114 @@ import {
   type GroupListItem,
   type GroupListResponse,
   type CreateGroupData,
-} from '../api/group'
-import { useUserStore } from '../stores/user'
+} from "../api/group";
+import { useUserStore } from "../stores/user";
 
-const router = useRouter()
-const userStore = useUserStore()
+const router = useRouter();
+const userStore = useUserStore();
 
-const groups = ref<GroupListItem[]>([])
-const isLoading = ref(false)
+const groups = ref<GroupListItem[]>([]);
+const isLoading = ref(false);
 const pagination = ref({
   page: 1,
   page_size: 20,
   total: 0,
-})
+});
 
-const createDialogVisible = ref(false)
+const createDialogVisible = ref(false);
 const createForm = ref<CreateGroupData>({
-  name: '',
-  description: '',
-})
-const isCreating = ref(false)
+  name: "",
+  description: "",
+});
+const isCreating = ref(false);
 
 function formatTime(time: string) {
-  const d = new Date(time)
-  const pad = (n: number) => n.toString().padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+  const d = new Date(time);
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
 function isSuperAdmin() {
-  return userStore.isSuperAdmin
+  return userStore.isSuperAdmin;
 }
 
 async function fetchGroups() {
-  isLoading.value = true
+  isLoading.value = true;
   try {
     const data: GroupListResponse = await getGroups(
       pagination.value.page,
       pagination.value.page_size
-    )
-    groups.value = data.items
-    pagination.value.total = data.total
+    );
+    groups.value = data.items;
+    pagination.value.total = data.total;
   } catch {
-    ElMessage.error('获取组织列表失败')
+    ElMessage.error("获取组织列表失败");
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 }
 
 function handlePageChange(page: number) {
-  pagination.value.page = page
-  fetchGroups()
+  pagination.value.page = page;
+  fetchGroups();
 }
 
 function handleSizeChange(size: number) {
-  pagination.value.page_size = size
-  pagination.value.page = 1
-  fetchGroups()
+  pagination.value.page_size = size;
+  pagination.value.page = 1;
+  fetchGroups();
 }
 
 function goToGroupDetail(id: number) {
-  router.push(`/groups/${id}`)
+  router.push(`/groups/${id}`);
 }
 
 async function handleCreate() {
   if (!createForm.value.name.trim()) {
-    ElMessage.warning('请输入组织名称')
-    return
+    ElMessage.warning("请输入组织名称");
+    return;
   }
-  isCreating.value = true
+  isCreating.value = true;
   try {
-    await createGroup(createForm.value)
-    ElMessage.success('创建成功')
-    createDialogVisible.value = false
-    createForm.value = { name: '', description: '' }
-    await fetchGroups()
+    await createGroup(createForm.value);
+    ElMessage.success("创建成功");
+    createDialogVisible.value = false;
+    createForm.value = { name: "", description: "" };
+    await fetchGroups();
   } catch (e: unknown) {
-    ElMessage.error((e as Error).message || '创建失败')
+    ElMessage.error((e as Error).message || "创建失败");
   } finally {
-    isCreating.value = false
+    isCreating.value = false;
   }
 }
 
 async function handleDelete(id: number, name: string) {
   try {
-    await ElMessageBox.confirm(`确定要删除组织「${name}」吗？`, '删除确认', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-    await deleteGroup(id)
-    ElMessage.success('删除成功')
-    await fetchGroups()
+    await ElMessageBox.confirm(`确定要删除组织「${name}」吗？`, "删除确认", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    });
+    await deleteGroup(id);
+    ElMessage.success("删除成功");
+    await fetchGroups();
   } catch (e: unknown) {
-    if ((e as Error).message !== 'cancel') {
-      ElMessage.error((e as Error).message || '删除失败')
+    if ((e as Error).message !== "cancel") {
+      ElMessage.error((e as Error).message || "删除失败");
     }
   }
 }
 
 onMounted(() => {
-  fetchGroups()
-})
+  fetchGroups();
+});
 
 watch(
   () => userStore.user,
   () => {
     // userStore.isSuperAdmin will update reactively
   }
-)
+);
 </script>
 
 <template>
@@ -157,7 +157,7 @@ watch(
         </el-table-column>
         <el-table-column prop="description" label="描述" min-width="200">
           <template #default="{ row }">
-            {{ row.description || '-' }}
+            {{ row.description || "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="member_count" label="成员数" width="100" align="center" />
