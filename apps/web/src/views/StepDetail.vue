@@ -28,7 +28,7 @@ import {
   type StepProblemItem,
   type ProblemSimple,
 } from '../api/step'
-import { getToken } from '../api/auth'
+import { getCurrentUser } from '../api/auth'
 
 const router = useRouter()
 const route = useRoute()
@@ -43,6 +43,7 @@ const availableProblems = ref<ProblemSimple[]>([])
 const selectedProblems = ref<StepProblemItem[]>([])
 const problemsPagination = ref({ page: 1, page_size: 20, total: 0 })
 const problemsSearch = ref({ title: '', source: '' })
+const currentUserId = ref<number | null>(null)
 
 const stepId = computed(() => Number(route.params.id))
 
@@ -51,8 +52,17 @@ const editForm = ref({
   description: '',
 })
 
-function isLoggedIn() {
-  return !!getToken()
+async function fetchCurrentUser() {
+  try {
+    const user = await getCurrentUser()
+    currentUserId.value = user.id
+  } catch {
+    currentUserId.value = null
+  }
+}
+
+function isCreator() {
+  return step.value?.creator_id === currentUserId.value
 }
 
 function formatTime(time: string) {
@@ -66,7 +76,7 @@ function getProblemUrl(source: string, problemId: string): string {
     case 'vj':
       return `https://vjudge.net/problem/${problemId}`
     case 'sdut':
-      return `https://oj.sdutacm.cn/onlinejudde3/problems/${problemId}`
+      return `https://oj.sdutacm.cn/onlinejudge3/problems/${problemId}`
     default:
       return '#'
   }
@@ -184,7 +194,8 @@ async function handleRemoveProblem(problemId: number, title: string) {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await fetchCurrentUser()
   fetchStep()
 })
 </script>
@@ -197,7 +208,7 @@ onMounted(() => {
           <span>{{ step?.title || '训练计划详情' }}</span>
           <div style="display: flex; gap: 8px">
             <el-button @click="router.push('/steps')">返回列表</el-button>
-            <el-button v-if="!isEditing" type="primary" @click="isEditing = true">
+            <el-button v-if="isCreator() && !isEditing" type="primary" @click="isEditing = true">
               编辑信息
             </el-button>
           </div>
@@ -252,7 +263,7 @@ onMounted(() => {
       <template #header>
         <div style="display: flex; align-items: center; justify-content: space-between">
           <span>题目列表 ({{ step?.problem_count || 0 }})</span>
-          <el-button type="primary" @click="openAddProblemsDialog">添加题目</el-button>
+          <el-button v-if="isCreator()" type="primary" @click="openAddProblemsDialog">添加题目</el-button>
         </div>
       </template>
       <el-table v-if="step?.problems.length" :data="step.problems" style="width: 100%">
@@ -277,7 +288,7 @@ onMounted(() => {
         </el-table-column>
         <el-table-column label="操作" width="100" fixed="right">
           <template #default="{ row }">
-            <el-button type="danger" size="small" @click="handleRemoveProblem(row.id, row.title)">
+            <el-button v-if="isCreator()" type="danger" size="small" @click="handleRemoveProblem(row.id, row.title)">
               移除
             </el-button>
           </template>

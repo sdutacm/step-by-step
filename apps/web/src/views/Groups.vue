@@ -23,9 +23,10 @@ import {
   type GroupListResponse,
   type CreateGroupData,
 } from '../api/group'
-import { getToken } from '../api/auth'
+import { useUserStore } from '../stores/user'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 const groups = ref<GroupListItem[]>([])
 const isLoading = ref(false)
@@ -48,8 +49,8 @@ function formatTime(time: string) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
 }
 
-function isLoggedIn() {
-  return !!getToken()
+function isSuperAdmin() {
+  return userStore.isSuperAdmin
 }
 
 async function fetchGroups() {
@@ -130,7 +131,7 @@ onMounted(() => {
       <template #header>
         <div style="display: flex; align-items: center; justify-content: space-between">
           <span>组织</span>
-          <el-button v-if="isLoggedIn()" type="primary" @click="createDialogVisible = true">
+          <el-button v-if="isSuperAdmin()" type="primary" @click="createDialogVisible = true">
             创建组织
           </el-button>
         </div>
@@ -161,7 +162,7 @@ onMounted(() => {
         </el-table-column>
         <el-table-column label="操作" width="100" fixed="right">
           <template #default="{ row }">
-            <el-button type="danger" size="small" @click.stop="handleDelete(row.id, row.name)">
+            <el-button v-if="isSuperAdmin()" type="danger" size="small" @click.stop="handleDelete(row.id, row.name)">
               删除
             </el-button>
           </template>

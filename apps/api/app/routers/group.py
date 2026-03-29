@@ -39,7 +39,11 @@ def create_group(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Group name already exists",
         )
-    group = Group(name=group_data.name, description=group_data.description)
+    group = Group(
+        name=group_data.name,
+        description=group_data.description,
+        created_by=current_user.id,
+    )
     db.add(group)
     db.commit()
     db.refresh(group)
@@ -58,6 +62,8 @@ def create_group(
         id=group.id,
         name=group.name,
         description=group.description,
+        creator_id=group.created_by,
+        creator_username=current_user.username,
         created_at=group.created_at,
         updated_at=group.updated_at,
         member_count=1,
@@ -75,7 +81,11 @@ def list_groups(
     total = db.query(func.count(Group.id)).scalar()
     groups = (
         db.query(Group)
-        .options(joinedload(Group.group_users), joinedload(Group.steps))
+        .options(
+            joinedload(Group.group_users),
+            joinedload(Group.steps),
+            joinedload(Group.creator),
+        )
         .order_by(Group.created_at.desc())
         .offset((page - 1) * page_size)
         .limit(page_size)
@@ -86,6 +96,8 @@ def list_groups(
             id=g.id,
             name=g.name,
             description=g.description,
+            creator_id=g.created_by,
+            creator_username=g.creator.username if g.creator else None,
             created_at=g.created_at,
             updated_at=g.updated_at,
             member_count=len(g.group_users),
@@ -104,7 +116,11 @@ def get_group(
     logger.debug(f"Get group: id={group_id}")
     group = (
         db.query(Group)
-        .options(joinedload(Group.group_users), joinedload(Group.steps))
+        .options(
+            joinedload(Group.group_users),
+            joinedload(Group.steps),
+            joinedload(Group.creator),
+        )
         .filter(Group.id == group_id)
         .first()
     )
@@ -117,6 +133,8 @@ def get_group(
         id=group.id,
         name=group.name,
         description=group.description,
+        creator_id=group.created_by,
+        creator_username=group.creator.username if group.creator else None,
         created_at=group.created_at,
         updated_at=group.updated_at,
         member_count=len(group.group_users),
@@ -167,11 +185,18 @@ def update_group(
         group.description = update_data.description
     db.commit()
     db.refresh(group)
+    creator = (
+        db.query(User).filter(User.id == group.created_by).first()
+        if group.created_by
+        else None
+    )
     logger.success(f"Group {group_id} updated")
     return GroupResponse(
         id=group.id,
         name=group.name,
         description=group.description,
+        creator_id=group.created_by,
+        creator_username=creator.username if creator else None,
         created_at=group.created_at,
         updated_at=group.updated_at,
         member_count=len(group.group_users),

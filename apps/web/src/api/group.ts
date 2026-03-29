@@ -4,6 +4,8 @@ export interface Group {
   id: number
   name: string
   description: string | null
+  creator_id: number | null
+  creator_username: string | null
   created_at: string
   updated_at: string
   member_count: number
@@ -14,6 +16,8 @@ export interface GroupListItem {
   id: number
   name: string
   description: string | null
+  creator_id: number | null
+  creator_username: string | null
   created_at: string
   updated_at: string
   member_count: number

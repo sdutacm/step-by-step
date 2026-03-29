@@ -35,10 +35,12 @@ import {
   type GroupStepProgress,
   type UpdateMemberData,
 } from '../api/group'
-import { getCurrentUser, getToken } from '../api/auth'
+import { getCurrentUser } from '../api/auth'
+import { useUserStore } from '../stores/user'
 
 const router = useRouter()
 const route = useRoute()
+const userStore = useUserStore()
 
 const group = ref<Group | null>(null)
 const isLoading = ref(false)
@@ -70,10 +72,6 @@ const editForm = ref({
   name: '',
   description: '',
 })
-
-function isLoggedIn() {
-  return !!getToken()
-}
 
 function formatTime(time: string) {
   const d = new Date(time)
@@ -221,7 +219,7 @@ function handleMembersPageChange(page: number) {
 }
 
 function isAdmin() {
-  return groupMemberRole.value === 'admin'
+  return userStore.isSuperAdmin || groupMemberRole.value === 'admin'
 }
 
 function getStepProgressColor(percent: number): string {
