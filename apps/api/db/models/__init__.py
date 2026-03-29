@@ -1,6 +1,7 @@
 from db.models.board import Board, BoardUser, BoardVisibility
 from db.models.group import Group
 from db.models.group_user import GroupRole, GroupUser
+from db.models.import_record import ImportRecord
 from db.models.problem import Problem
 from db.models.solution import Solution
 from db.models.source_user import SourceUser
@@ -21,4 +22,5 @@ __all__ = [
     "Board",
     "BoardUser",
     "BoardVisibility",
+    "ImportRecord",
 ]

@@ -37,3 +37,25 @@ class UserUpdate(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class ClaimGhostRequest(BaseModel):
+    source: str
+    username: str
+    password: str
+
+
+class ClaimGhostResponse(BaseModel):
+    success: bool
+    message: str
+
+
+class GhostAccountResponse(BaseModel):
+    source: str
+    username: str
+    nickname: str | None = None
+    bound: bool = False
+
+
+class GhostAccountListResponse(BaseModel):
+    ghosts: list[GhostAccountResponse]

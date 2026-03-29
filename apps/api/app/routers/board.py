@@ -54,6 +54,22 @@ def check_board_visibility(
         return True
     if current_user is None:
         return False
+    if board.group_id is not None:
+        gu = (
+            db.query(GroupUser)
+            .filter(
+                GroupUser.group_id == board.group_id,
+                GroupUser.user_id == current_user.id,
+            )
+            .first()
+        )
+        if gu is not None:
+            return True
+        if board.visibility in (
+            BoardVisibilityModel.GROUP_MEMBER,
+            BoardVisibilityModel.BOARD_USER,
+        ):
+            return True
     if board.visibility == BoardVisibilityModel.BOARD_USER:
         bu = (
             db.query(BoardUser)
@@ -65,15 +81,7 @@ def check_board_visibility(
         )
         return bu is not None
     if board.visibility == BoardVisibilityModel.GROUP_MEMBER:
-        gu = (
-            db.query(GroupUser)
-            .filter(
-                GroupUser.group_id == board.group_id,
-                GroupUser.user_id == current_user.id,
-            )
-            .first()
-        )
-        return gu is not None
+        return False
     return False
 
 

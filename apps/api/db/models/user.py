@@ -21,6 +21,7 @@ class User(Base):
     nickname: Mapped[str | None] = mapped_column(nullable=True)
     avatar_url: Mapped[str | None] = mapped_column(nullable=True)
     is_super_admin: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_temp: Mapped[bool] = mapped_column(Boolean, default=False)
 
     source_users: Mapped[list["SourceUser"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
