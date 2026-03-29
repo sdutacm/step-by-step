@@ -62,6 +62,35 @@ async function fetchSteps() {
   }
 }
 
+function goToStepDetail(id: number) {
+  router.push(`/steps/${id}`)
+}
+
+function goToCreate() {
+  router.push('/steps/create')
+}
+
+async function handleDelete(id: number, title: string) {
+  try {
+    await ElMessageBox.confirm(
+      `确定要删除训练计划「${title}」吗？`,
+      '删除确认',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    )
+    await deleteStep(id)
+    ElMessage.success('删除成功')
+    await fetchSteps()
+  } catch (e: unknown) {
+    if ((e as Error).message !== 'cancel') {
+      ElMessage.error((e as Error).message || '删除失败')
+    }
+  }
+}
+
 onMounted(async () => {
   await Promise.all([fetchSteps(), fetchCurrentUser()])
 })
