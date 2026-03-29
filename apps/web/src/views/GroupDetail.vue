@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   ElCard,
@@ -236,6 +236,16 @@ onMounted(async () => {
   await fetchCurrentUser()
   await Promise.all([fetchGroup(), fetchMembers()])
 })
+
+watch(
+  () => userStore.user,
+  async (newUser, oldUser) => {
+    if (!oldUser && newUser) {
+      await fetchCurrentUser()
+      await fetchMembers()
+    }
+  }
+)
 </script>
 
 <template>

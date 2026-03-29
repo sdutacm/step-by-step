@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   ElCard,
@@ -30,9 +30,11 @@ import {
   type ProblemSimple,
 } from '../api/step'
 import { getCurrentUser } from '../api/auth'
+import { useUserStore } from '../stores/user'
 
 const router = useRouter()
 const route = useRoute()
+const userStore = useUserStore()
 
 const step = ref<Step | null>(null)
 const isLoading = ref(false)
@@ -199,6 +201,15 @@ onMounted(async () => {
   await fetchCurrentUser()
   fetchStep()
 })
+
+watch(
+  () => userStore.user,
+  async (newUser, oldUser) => {
+    if (!oldUser && newUser) {
+      await fetchCurrentUser()
+    }
+  }
+)
 </script>
 
 <template>
