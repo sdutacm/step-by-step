@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import Sortable from 'sortablejs'
 import {
   ElCard,
   ElButton,
@@ -19,11 +20,13 @@ import {
   ElPagination,
   ElSkeleton,
 } from 'element-plus'
+import type { ElTable as ElTableType } from 'element-plus'
 import {
   getStep,
   updateStep,
   addProblemsToStep,
   removeProblemFromStep,
+  reorderStepProblems,
   getProblems,
   type Step,
   type StepProblemItem,
@@ -47,6 +50,8 @@ const selectedProblems = ref<StepProblemItem[]>([])
 const problemsPagination = ref({ page: 1, page_size: 20, total: 0 })
 const problemsSearch = ref({ title: '', source: '' })
 const currentUserId = ref<number | null>(null)
+const problemsTableRef = ref<InstanceType<ElTableType> | null>(null)
+let sortableInstance: Sortable | null = null
 
 const stepId = computed(() => Number(route.params.id))
 
@@ -202,11 +207,57 @@ onMounted(async () => {
   fetchStep()
 })
 
+function initTableDrag() {
+  if (!isCreator()) return
+  const table = problemsTableRef.value?.$el
+  if (!table) {
+    setTimeout(initTableDrag, 100)
+    return
+  }
+  const tbody = table.querySelector('.el-table__body-wrapper tbody')
+  if (!tbody) {
+    return
+  }
+  if (sortableInstance) {
+    sortableInstance.destroy()
+  }
+  sortableInstance = Sortable.create(tbody as HTMLElement, {
+    animation: 150,
+    handle: '.el-table__row',
+    onEnd: async ({ oldIndex, newIndex }) => {
+      if (oldIndex === undefined || newIndex === undefined || !step.value || oldIndex === newIndex) {
+        return
+      }
+      const problems = [...step.value.problems]
+      const [removed] = problems.splice(oldIndex, 1)
+      problems.splice(newIndex, 0, removed)
+      step.value.problems = problems
+      const problemIds = problems.map((p) => p.id)
+      try {
+        await reorderStepProblems(stepId.value, problemIds)
+        ElMessage.success('排序已保存')
+      } catch (e: unknown) {
+        ElMessage.error((e as Error).message || '保存排序失败')
+        await fetchStep()
+      }
+    },
+  })
+}
+
 watch(
   () => userStore.user,
   async (newUser, oldUser) => {
     if (!oldUser && newUser) {
       await fetchCurrentUser()
+    }
+  }
+)
+
+watch(
+  () => step.value?.problems?.length,
+  (newLen) => {
+    if (newLen && newLen > 0) {
+      setTimeout(initTableDrag, 100)
     }
   }
 )
@@ -286,7 +337,13 @@ watch(
           <el-button v-if="isCreator()" type="primary" @click="openAddProblemsDialog">添加题目</el-button>
         </div>
       </template>
-      <el-table v-if="step.problems.length" :data="step.problems" style="width: 100%">
+      <el-table
+        v-if="step.problems.length"
+        ref="problemsTableRef"
+        :data="step.problems"
+        style="width: 100%"
+        row-key="id"
+      >
         <el-table-column prop="order" label="顺序" width="80" align="center" />
         <el-table-column prop="problem_id" label="题目ID" width="120" />
         <el-table-column prop="source" label="平台" width="100">

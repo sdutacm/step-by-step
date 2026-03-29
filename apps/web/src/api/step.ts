@@ -166,6 +166,21 @@ export async function removeProblemFromStep(stepId: number, problemId: number): 
   }
 }
 
+export async function reorderStepProblems(stepId: number, problemIds: number[]): Promise<Step> {
+  const response = await fetchWithAuth(`/api/steps/${stepId}/problems/reorder`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ problem_ids: problemIds }),
+  })
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.detail || 'Failed to reorder problems')
+  }
+  return await response.json()
+}
+
 export async function getProblems(
   page: number = 1,
   pageSize: number = 20,

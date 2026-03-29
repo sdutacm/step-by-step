@@ -30,6 +30,10 @@ class StepProblemAddRequest(BaseModel):
     problems: list[StepProblemItem]
 
 
+class StepProblemReorderRequest(BaseModel):
+    problem_ids: list[int]
+
+
 class StepResponse(BaseModel):
     id: int
     title: str

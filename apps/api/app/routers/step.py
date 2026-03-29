@@ -17,6 +17,7 @@ from schemas.step import (
     StepListItem,
     StepListResponse,
     StepProblemAddRequest,
+    StepProblemReorderRequest,
     StepResponse,
     StepUpdate,
 )
@@ -370,3 +371,90 @@ def remove_problem_from_step(
     db.delete(step_problem)
     db.commit()
     logger.success(f"Removed problem {problem_id} from step {step_id}")
+
+
+@router.put("/{step_id}/problems/reorder", response_model=StepResponse)
+def reorder_step_problems(
+    step_id: int,
+    request: StepProblemReorderRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    logger.info(
+        f"Reorder problems in step: step_id={step_id}, user={current_user.username}, order={request.problem_ids}"
+    )
+    step = (
+        db.query(Step)
+        .options(joinedload(Step.step_problems).joinedload(StepProblem.problem))
+        .filter(Step.id == step_id)
+        .first()
+    )
+    if not step:
+        logger.warning(f"Step {step_id} not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Step not found",
+        )
+    if step.created_by != current_user.id:
+        logger.warning(
+            f"Step {step_id}: user {current_user.username} is not the creator"
+        )
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You are not the creator of this step",
+        )
+    problem_id_set = set(request.problem_ids)
+    existing_problem_ids = {sp.problem_id for sp in step.step_problems}
+    if problem_id_set != existing_problem_ids:
+        logger.warning(
+            f"Step {step_id}: provided problem_ids {problem_id_set} do not match existing {existing_problem_ids}"
+        )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Problem IDs do not match existing problems in this step",
+        )
+    for new_order, problem_id in enumerate(request.problem_ids):
+        step_problem = (
+            db.query(StepProblem)
+            .filter(
+                StepProblem.step_id == step_id,
+                StepProblem.problem_id == problem_id,
+            )
+            .first()
+        )
+        if step_problem:
+            step_problem.order = new_order
+    db.commit()
+    db.refresh(step)
+    logger.success(f"Reordered problems in step {step_id}")
+    step = (
+        db.query(Step)
+        .options(joinedload(Step.step_problems).joinedload(StepProblem.problem))
+        .filter(Step.id == step_id)
+        .first()
+    )
+    problems = [
+        ProblemSimple(
+            id=sp.problem.id,
+            problem_id=sp.problem.problem_id,
+            source=sp.problem.source,
+            title=sp.problem.title,
+            order=sp.order,
+            specialty=sp.specialty,
+            topic=sp.topic,
+        )
+        for sp in sorted(step.step_problems, key=lambda x: x.order)
+    ]
+    return StepResponse(
+        id=step.id,
+        title=step.title,
+        description=step.description,
+        creator_id=step.created_by,
+        creator_username=step.creator.username if step.creator else "",
+        group_id=step.group_id,
+        group_name=step.group.name if step.group else None,
+        created_at=step.created_at,
+        updated_at=step.updated_at,
+        problems=problems,
+        problem_count=len(step.step_problems),
+    )
