@@ -9,6 +9,8 @@ class GroupProblemProgress(BaseModel):
     title: str
     ac_time: datetime
     order: int = 0
+    specialty: str | None = None
+    topic: str | None = None
 
 
 class GroupStepProgress(BaseModel):

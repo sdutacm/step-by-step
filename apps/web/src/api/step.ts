@@ -3,6 +3,8 @@ import { getToken } from './auth'
 export interface StepProblemItem {
   problem_id: number
   order: number
+  specialty: string | null
+  topic: string | null
 }
 
 export interface ProblemSimple {
@@ -11,6 +13,8 @@ export interface ProblemSimple {
   source: string
   title: string
   order: number
+  specialty: string | null
+  topic: string | null
 }
 
 export interface Step {

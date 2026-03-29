@@ -137,6 +137,8 @@ def get_step(
             source=sp.problem.source,
             title=sp.problem.title,
             order=sp.order,
+            specialty=sp.specialty,
+            topic=sp.topic,
         )
         for sp in sorted(step.step_problems, key=lambda x: x.order)
     ]
@@ -287,6 +289,8 @@ def add_problems_to_step(
             step_id=step_id,
             problem_id=item.problem_id,
             order=item.order,
+            specialty=item.specialty,
+            topic=item.topic,
         )
         db.add(step_problem)
     db.commit()
@@ -305,6 +309,8 @@ def add_problems_to_step(
             source=sp.problem.source,
             title=sp.problem.title,
             order=sp.order,
+            specialty=sp.specialty,
+            topic=sp.topic,
         )
         for sp in sorted(step.step_problems, key=lambda x: x.order)
     ]

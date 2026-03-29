@@ -22,6 +22,8 @@ class StepUpdate(BaseModel):
 class StepProblemItem(BaseModel):
     problem_id: int
     order: int = 0
+    specialty: str | None = None
+    topic: str | None = None
 
 
 class StepProblemAddRequest(BaseModel):

@@ -36,6 +36,8 @@ class ProblemSimple(BaseModel):
     source: str
     title: str
     order: int = 0
+    specialty: str | None = None
+    topic: str | None = None
 
     class Config:
         from_attributes = True

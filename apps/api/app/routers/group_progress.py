@@ -101,6 +101,8 @@ def get_group_progress(
                             title=step_problem.problem.title,
                             ac_time=rec.ac_time,
                             order=step_problem.order,
+                            specialty=step_problem.specialty,
+                            topic=step_problem.topic,
                         )
                     )
                     total_solved += 1
