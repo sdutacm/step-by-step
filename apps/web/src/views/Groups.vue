@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   ElCard,
@@ -123,6 +123,13 @@ async function handleDelete(id: number, name: string) {
 onMounted(() => {
   fetchGroups()
 })
+
+watch(
+  () => userStore.user,
+  () => {
+    // userStore.isSuperAdmin will update reactively
+  }
+)
 </script>
 
 <template>

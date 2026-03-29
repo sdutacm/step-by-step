@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   ElCard,
@@ -13,9 +13,11 @@ import {
   ElTag,
 } from 'element-plus'
 import { getSteps, deleteStep, type StepListItem, type StepListResponse } from '../api/step'
-import { getToken, getCurrentUser } from '../api/auth'
+import { getCurrentUser } from '../api/auth'
+import { useUserStore } from '../stores/user'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 const steps = ref<StepListItem[]>([])
 const isLoading = ref(false)
@@ -33,7 +35,18 @@ function formatTime(time: string) {
 }
 
 function isLoggedIn() {
-  return !!getToken()
+  return !!userStore.user
+}
+
+async function fetchCurrentUser() {
+  try {
+    const user = await getCurrentUser()
+    currentUserId.value = user.id
+    userStore.setUser(user)
+  } catch {
+    currentUserId.value = null
+    userStore.clearUser()
+  }
 }
 
 async function fetchSteps() {
@@ -49,58 +62,20 @@ async function fetchSteps() {
   }
 }
 
-async function fetchCurrentUser() {
-  try {
-    const user = await getCurrentUser()
-    currentUserId.value = user.id
-  } catch {
-    currentUserId.value = null
-  }
-}
-
-function handlePageChange(page: number) {
-  pagination.value.page = page
-  fetchSteps()
-}
-
-function handleSizeChange(size: number) {
-  pagination.value.page_size = size
-  pagination.value.page = 1
-  fetchSteps()
-}
-
-function goToStepDetail(id: number) {
-  router.push(`/steps/${id}`)
-}
-
-function goToCreate() {
-  router.push('/steps/create')
-}
-
-async function handleDelete(id: number, title: string) {
-  try {
-    await ElMessageBox.confirm(
-      `确定要删除训练计划「${title}」吗？`,
-      '删除确认',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }
-    )
-    await deleteStep(id)
-    ElMessage.success('删除成功')
-    await fetchSteps()
-  } catch (e: unknown) {
-    if ((e as Error).message !== 'cancel') {
-      ElMessage.error((e as Error).message || '删除失败')
-    }
-  }
-}
-
 onMounted(async () => {
   await Promise.all([fetchSteps(), fetchCurrentUser()])
 })
+
+watch(
+  () => userStore.user,
+  async (newUser, oldUser) => {
+    if (newUser && !oldUser) {
+      await fetchCurrentUser()
+    } else if (!newUser && oldUser) {
+      currentUserId.value = null
+    }
+  }
+)
 </script>
 
 <template>
