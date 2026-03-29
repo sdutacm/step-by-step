@@ -148,10 +148,10 @@ onMounted(async () => {
             {{ formatTime(row.updated_at) }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="100" fixed="right">
+        <el-table-column v-if="isLoggedIn() && currentUserId" label="操作" width="100" fixed="right">
           <template #default="{ row }">
             <el-button
-              v-if="isLoggedIn() && row.creator_id === currentUserId"
+              v-if="row.creator_id === currentUserId"
               type="danger"
               size="small"
               @click.stop="handleDelete(row.id, row.title)"

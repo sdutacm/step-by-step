@@ -160,9 +160,9 @@ onMounted(() => {
             {{ formatTime(row.created_at) }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="100" fixed="right">
+        <el-table-column v-if="isSuperAdmin()" label="操作" width="100" fixed="right">
           <template #default="{ row }">
-            <el-button v-if="isSuperAdmin()" type="danger" size="small" @click.stop="handleDelete(row.id, row.name)">
+            <el-button type="danger" size="small" @click.stop="handleDelete(row.id, row.name)">
               删除
             </el-button>
           </template>

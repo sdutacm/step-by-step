@@ -295,9 +295,9 @@ onMounted(async () => {
             </a>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="100" fixed="right">
+        <el-table-column v-if="isCreator()" label="操作" width="100" fixed="right">
           <template #default="{ row }">
-            <el-button v-if="isCreator()" type="danger" size="small" @click="handleRemoveProblem(row.id, row.title)">
+            <el-button type="danger" size="small" @click="handleRemoveProblem(row.id, row.title)">
               移除
             </el-button>
           </template>
