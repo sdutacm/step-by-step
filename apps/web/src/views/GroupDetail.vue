@@ -19,6 +19,10 @@ import {
   ElSelect,
   ElOption,
   ElSkeleton,
+  ElUpload,
+  ElProgress,
+  ElAlert,
+  type UploadInstance,
 } from 'element-plus'
 import {
   getGroup,
@@ -27,9 +31,13 @@ import {
   addGroupMember,
   updateGroupMember,
   removeGroupMember,
+  getImportRecords,
+  downloadImportTemplate,
+  importOjAccounts,
   type Group,
   type GroupMember,
   type UpdateMemberData,
+  type ImportRecord,
 } from '../api/group'
 import {
   getBoards,
@@ -101,6 +109,14 @@ const boardUsersLoading = ref(false)
 const availableUsers = ref<{ id: number; username: string; nickname: string | null }[]>([])
 const selectedUserIds = ref<number[]>([])
 const isManagingUsers = ref(false)
+
+const importDialogVisible = ref(false)
+const importRecords = ref<ImportRecord[]>([])
+const importLoading = ref(false)
+const isImporting = ref(false)
+const importResultDialogVisible = ref(false)
+const importResult = ref<{ total: number; success: number; skipped: number; errors: Array<{ row: number; username: string; error: string }> } | null>(null)
+const uploadRef = ref<UploadInstance | null>(null)
 
 const currentUser = ref<{ id: number } | null>(null)
 const groupMemberRole = ref<'admin' | 'member' | null>(null)
@@ -429,6 +445,59 @@ async function handleRemoveMember(member: GroupMember) {
   }
 }
 
+async function fetchImportRecords() {
+  importLoading.value = true
+  try {
+    const data = await getImportRecords(groupId.value)
+    importRecords.value = data.items
+  } catch {
+    ElMessage.error('获取导入记录失败')
+  } finally {
+    importLoading.value = false
+  }
+}
+
+async function handleDownloadTemplate() {
+  try {
+    await downloadImportTemplate(groupId.value)
+    ElMessage.success('模板下载成功')
+  } catch (e: unknown) {
+    ElMessage.error((e as Error).message || '下载失败')
+  }
+}
+
+async function handleImport(file: File) {
+  if (!file) {
+    ElMessage.error('请选择文件')
+    return
+  }
+  isImporting.value = true
+  try {
+    const result = await importOjAccounts(groupId.value, file)
+    importResult.value = result
+    importResultDialogVisible.value = true
+    uploadRef.value?.clearFiles()
+    await fetchImportRecords()
+    await fetchMembers()
+  } catch (e: unknown) {
+    ElMessage.error((e as Error).message || '导入失败')
+  } finally {
+    isImporting.value = false
+  }
+}
+
+function handleFileChange(uploadFile: { raw?: File }) {
+  if (uploadFile.raw) {
+    handleImport(uploadFile.raw)
+  }
+}
+
+function openImportDialog() {
+  importResult.value = null
+  importDialogVisible.value = true
+  fetchImportRecords()
+}
+
 function handleMembersPageChange(page: number) {
   membersPagination.value.page = page
   fetchMembers()
@@ -653,6 +722,48 @@ watch(
             />
           </div>
         </el-tab-pane>
+
+        <el-tab-pane v-if="isAdmin()" label="OJ账号导入">
+          <template #label>
+            <span>OJ账号导入</span>
+          </template>
+          <div style="margin-bottom: 16px; display: flex; justify-content: flex-end; gap: 8px">
+            <el-button @click="handleDownloadTemplate">下载模板</el-button>
+            <el-button type="primary" @click="openImportDialog">导入账号</el-button>
+          </div>
+          <el-table v-loading="importLoading" :data="importRecords" style="width: 100%">
+            <el-table-column prop="source" label="平台" width="100">
+              <template #default="{ row }">
+                <el-tag>{{ row.source.toUpperCase() }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="total_count" label="总数" width="80" />
+            <el-table-column prop="success_count" label="成功" width="80">
+              <template #default="{ row }">
+                <el-tag type="success">{{ row.success_count }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="skip_count" label="跳过" width="80">
+              <template #default="{ row }">
+                <el-tag type="warning">{{ row.skip_count }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="error_detail" label="错误" min-width="200">
+              <template #default="{ row }">
+                <span v-if="row.error_detail" style="color: #f56c6c; word-break: break-all">
+                  {{ JSON.parse(row.error_detail).map((e: { error: string }) => e.error).join('; ') }}
+                </span>
+                <span v-else>-</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="created_at" label="导入时间" width="180">
+              <template #default="{ row }">
+                {{ formatTime(row.created_at) }}
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-empty v-if="!importLoading && !importRecords.length" description="暂无导入记录" />
+        </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
@@ -807,5 +918,112 @@ watch(
       </el-table-column>
     </el-table>
     <el-empty v-if="!boardUsersLoading && !boardUsers.length" description="暂无成员" />
+  </el-dialog>
+
+  <el-dialog v-model="importDialogVisible" title="导入OJ账号" width="500px">
+    <el-alert title="Excel格式说明" type="info" :closable="false" style="margin-bottom: 16px">
+      <template #default>
+        <div>上传Excel文件，格式如下：</div>
+        <div style="margin-top: 8px">
+          <div style="display: flex; gap: 8px; font-weight: bold; border-bottom: 1px solid #dcdfe6; padding-bottom: 4px; margin-bottom: 4px">
+            <span style="width: 80px">source</span>
+            <span style="flex: 1">username</span>
+            <span style="flex: 1">nickname</span>
+          </div>
+          <div style="display: flex; gap: 8px; padding: 4px 0">
+            <span style="width: 80px; color: #67c23a">vj</span>
+            <span style="flex: 1">user_a</span>
+            <span style="flex: 1">张三</span>
+          </div>
+          <div style="display: flex; gap: 8px; padding: 4px 0">
+            <span style="width: 80px; color: #67c23a">sdut</span>
+            <span style="flex: 1">user_b</span>
+            <span style="flex: 1">-</span>
+          </div>
+        </div>
+      </template>
+    </el-alert>
+    <el-upload
+      ref="uploadRef"
+      :auto-upload="false"
+      :limit="1"
+      accept=".xlsx,.xls"
+      :on-change="handleFileChange"
+    >
+      <el-button type="primary">选择Excel文件</el-button>
+      <template #tip>
+        <div style="margin-top: 8px; color: #909399">只能上传xlsx/xls文件</div>
+      </template>
+    </el-upload>
+  </el-dialog>
+
+  <el-dialog v-model="importResultDialogVisible" title="导入结果" width="700px">
+    <div v-if="importResult">
+      <el-progress
+        :text-inside="true"
+        :stroke-width="20"
+        :percentage="Math.round((importResult.success / importResult.total) * 100)"
+        style="margin-bottom: 16px"
+      />
+      <el-descriptions :column="2" border style="margin-bottom: 16px">
+        <el-descriptions-item label="总数">{{ importResult.total }}</el-descriptions-item>
+        <el-descriptions-item label="失败">
+          <el-tag type="danger">{{ importResult.errors.length }}</el-tag>
+        </el-descriptions-item>
+      </el-descriptions>
+
+      <el-divider />
+
+      <div v-if="importResult.successList && importResult.successList.length">
+        <div style="font-weight: bold; margin-bottom: 8px; color: #67c23a">成功导入的账号：</div>
+        <el-table :data="importResult.successList" size="small" max-height="200" style="margin-bottom: 16px">
+          <el-table-column prop="source" label="平台" width="80">
+            <template #default="{ row }">
+              <el-tag size="small">{{ row.source.toUpperCase() }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="username" label="用户名" />
+          <el-table-column prop="nickname" label="昵称">
+            <template #default="{ row }">
+              {{ row.nickname || '-' }}
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+
+      <div v-if="importResult.skippedList && importResult.skippedList.length">
+        <div style="font-weight: bold; margin-bottom: 8px; color: #e6a23c">跳过的账号（已存在）：</div>
+        <el-table :data="importResult.skippedList" size="small" max-height="200" style="margin-bottom: 16px">
+          <el-table-column prop="source" label="平台" width="80">
+            <template #default="{ row }">
+              <el-tag size="small">{{ row.source.toUpperCase() }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="username" label="用户名" />
+          <el-table-column prop="nickname" label="昵称">
+            <template #default="{ row }">
+              {{ row.nickname || '-' }}
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+
+      <div v-if="importResult.errors.length">
+        <div style="font-weight: bold; margin-bottom: 8px; color: #f56c6c">导入失败的账号：</div>
+        <el-table :data="importResult.errors" size="small" max-height="200">
+          <el-table-column prop="row" label="行号" width="60" />
+          <el-table-column prop="source" label="平台" width="80">
+            <template #default="{ row }">
+              <el-tag size="small">{{ (row.source || '').toUpperCase() }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="username" label="用户名" />
+          <el-table-column prop="error" label="错误原因" />
+        </el-table>
+      </div>
+    </div>
+    <template #footer>
+      <el-button type="primary" @click="importResultDialogVisible = false">确定</el-button>
+    </template>
   </el-dialog>
 </template>

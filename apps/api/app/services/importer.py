@@ -1,3 +1,4 @@
+import io
 import json
 from dataclasses import dataclass, field
 
@@ -28,14 +29,25 @@ class ImportResult:
     total: int = 0
     success: int = 0
     skipped: int = 0
-    errors: list[ImportError] = field(default_factory=list)
+    success_list: list = field(default_factory=list)
+    skipped_list: list = field(default_factory=list)
+    errors: list = field(default_factory=list)
 
 
 VALID_SOURCES = {s.source for s in sources}
 
 
 def parse_excel(file_content: bytes) -> list[ImportRow]:
-    wb = openpyxl.load_workbook(file_content)
+    if not file_content:
+        raise ValueError("File content is empty")
+
+    if file_content[:2] == b"PK":
+        wb = openpyxl.load_workbook(io.BytesIO(file_content))
+    else:
+        raise ValueError(
+            f"Invalid file format. Expected xlsx (starts with PK), got: {file_content[:20]}"
+        )
+
     ws = wb.active
     rows: list[ImportRow] = []
 
@@ -61,15 +73,16 @@ def import_oj_accounts(
     import_rows = parse_excel(file_content)
     result = ImportResult(total=len(import_rows))
 
-    for row in import_rows:
+    for idx, row in enumerate(import_rows):
         try:
             if row.source not in VALID_SOURCES:
                 result.errors.append(
-                    ImportError(
-                        row=result.total - len(result.errors) - len(result.errors),
-                        username=row.username,
-                        error=f"Invalid source: {row.source}",
-                    )
+                    {
+                        "row": idx + 2,
+                        "source": row.source,
+                        "username": row.username,
+                        "error": f"Invalid source: {row.source}",
+                    }
                 )
                 continue
 
@@ -85,6 +98,14 @@ def import_oj_accounts(
                 existing_user = existing_source_user.user
                 if existing_user and not existing_user.is_temp:
                     result.skipped += 1
+                    result.skipped_list.append(
+                        {
+                            "source": row.source,
+                            "username": row.username,
+                            "nickname": row.nickname,
+                            "reason": "Already bound to a real user",
+                        }
+                    )
                     continue
 
                 if existing_user and existing_user.is_temp:
@@ -98,6 +119,14 @@ def import_oj_accounts(
                     )
                     if existing_group_user:
                         result.skipped += 1
+                        result.skipped_list.append(
+                            {
+                                "source": row.source,
+                                "username": row.username,
+                                "nickname": row.nickname,
+                                "reason": "Already in this group",
+                            }
+                        )
                         continue
 
                     new_group_user = GroupUser(
@@ -107,6 +136,14 @@ def import_oj_accounts(
                     )
                     db.add(new_group_user)
                     result.skipped += 1
+                    result.skipped_list.append(
+                        {
+                            "source": row.source,
+                            "username": row.username,
+                            "nickname": row.nickname,
+                            "reason": "Added to group (was ghost user)",
+                        }
+                    )
                     continue
 
             temp_user = User(
@@ -134,10 +171,22 @@ def import_oj_accounts(
             db.add(group_user)
 
             result.success += 1
+            result.success_list.append(
+                {
+                    "source": row.source,
+                    "username": row.username,
+                    "nickname": row.nickname,
+                }
+            )
 
         except Exception as e:
             result.errors.append(
-                ImportError(row=0, username=row.username, error=str(e))
+                {
+                    "row": idx + 2,
+                    "source": row.source,
+                    "username": row.username,
+                    "error": str(e),
+                }
             )
 
     import_record = ImportRecord(

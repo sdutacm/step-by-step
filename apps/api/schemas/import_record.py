@@ -22,10 +22,25 @@ class ImportRecordListResponse(BaseModel):
     items: list[ImportRecordResponse]
 
 
+class ImportResultSuccessItem(BaseModel):
+    source: str
+    username: str
+    nickname: str | None = None
+
+
+class ImportResultSkippedItem(BaseModel):
+    source: str
+    username: str
+    nickname: str | None = None
+    reason: str
+
+
 class ImportResult(BaseModel):
     total: int
     success: int
     skipped: int
+    success_list: list[ImportResultSuccessItem] = []
+    skipped_list: list[ImportResultSkippedItem] = []
     errors: list[dict] = []
 
 

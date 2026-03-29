@@ -195,3 +195,89 @@ export async function removeGroupMember(groupId: number, userId: number): Promis
     throw new Error(error.detail || 'Failed to remove member')
   }
 }
+
+export interface ImportRecord {
+  id: number
+  group_id: number
+  imported_by: number | null
+  source: string
+  total_count: number
+  success_count: number
+  skip_count: number
+  error_detail: string | null
+  created_at: string
+}
+
+export interface ImportRecordListResponse {
+  items: ImportRecord[]
+}
+
+export interface ImportResult {
+  total: number
+  success: number
+  skipped: number
+  success_list: Array<{ source: string; username: string; nickname: string | null }>
+  skipped_list: Array<{ source: string; username: string; nickname: string | null; reason: string }>
+  errors: Array<{ row: number; source: string; username: string; error: string }>
+}
+
+export async function getImportRecords(groupId: number): Promise<ImportRecordListResponse> {
+  const response = await fetchWithAuth(`/api/groups/${groupId}/import-records`)
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.detail || 'Failed to get import records')
+  }
+  return await response.json()
+}
+
+export async function downloadImportTemplate(groupId: number): Promise<void> {
+  const token = getToken()
+  if (!token) {
+    throw new Error('No token found')
+  }
+
+  const response = await fetch(`/api/groups/${groupId}/import-templates`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.detail || 'Failed to download template')
+  }
+
+  const blob = await response.blob()
+  const url = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'import_template.xlsx'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  window.URL.revokeObjectURL(url)
+}
+
+export async function importOjAccounts(groupId: number, file: File): Promise<ImportResult> {
+  const token = getToken()
+  if (!token) {
+    throw new Error('No token found')
+  }
+
+  const formData = new FormData()
+  formData.append('file', file)
+
+  const response = await fetch(`/api/groups/${groupId}/import`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.detail || 'Import failed')
+  }
+  return await response.json()
+}

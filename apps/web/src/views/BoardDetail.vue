@@ -2,10 +2,8 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
-  ElCard,
   ElButton,
   ElTag,
-  ElSkeleton,
   ElEmpty,
   ElMessage,
   ElLink,
@@ -18,11 +16,9 @@ import {
   getBoardProgress,
   type Board,
   type BoardProgressResponse,
-  type BoardVisibility,
   type ProblemProgress,
   type SubmissionRecord,
 } from '../api/board'
-import { getGroup, type Group } from '../api/group'
 import { getCurrentUser } from '../api/auth'
 import { useUserStore } from '../stores/user'
 
@@ -31,12 +27,8 @@ const route = useRoute()
 const userStore = useUserStore()
 
 const board = ref<Board | null>(null)
-const group = ref<Group | null>(null)
-const isLoading = ref(false)
-
 const progress = ref<BoardProgressResponse | null>(null)
 const progressLoading = ref(false)
-
 const currentUser = ref<{ id: number } | null>(null)
 
 const boardId = computed(() => Number(route.params.id))
@@ -54,17 +46,6 @@ interface CellData {
   result: number | null
   submissions: SubmissionRecord[]
 }
-
-const dialogVisible = ref(false)
-const dialogData = ref<{
-  problem: ProblemProgress | null
-  user: TableUser | null
-  cell: CellData | null
-}>({
-  problem: null,
-  user: null,
-  cell: null,
-})
 
 const submissionsDialogVisible = ref(false)
 const submissionsDialogData = ref<{
@@ -111,6 +92,18 @@ const cellMap = computed(() => {
   return map
 })
 
+const tableHeight = ref(window.innerHeight - 80)
+
+function updateTableHeight() {
+  tableHeight.value = window.innerHeight - 80
+}
+
+function getCellData(problemId: number, userId: number): CellData | null {
+  const userMap = cellMap.value.get(userId)
+  if (!userMap) return null
+  return userMap.get(problemId) || null
+}
+
 function isWithin7Days(dateStr: string | null): boolean {
   if (!dateStr) return false
   const date = new Date(dateStr)
@@ -120,18 +113,6 @@ function isWithin7Days(dateStr: string | null): boolean {
   return diffDays <= 7
 }
 
-const tableHeight = ref(window.innerHeight - 220)
-
-function updateTableHeight() {
-  tableHeight.value = window.innerHeight - 220
-}
-
-function getCellData(problemId: number, userId: number): CellData | null {
-  const userMap = cellMap.value.get(userId)
-  if (!userMap) return null
-  return userMap.get(problemId) || null
-}
-
 function getCellStyle(problemId: number, userId: number): string {
   const cell = getCellData(problemId, userId)
   if (!cell || cell.result === null) return ''
@@ -139,12 +120,12 @@ function getCellStyle(problemId: number, userId: number): string {
   const within7Days = isWithin7Days(timeToCheck)
   if (cell.result === 1) {
     return within7Days
-      ? 'background-color: #67c23a; color: #fff; text-align: center; line-height: inherit;'
-      : 'background-color: #e1f3d8; color: #67c23a; text-align: center; line-height: inherit;'
+      ? 'background-color: #67c23a; color: #fff;'
+      : 'background-color: #e1f3d8; color: #67c23a;'
   } else {
     return within7Days
-      ? 'background-color: #f56c6c; color: #fff; text-align: center; line-height: inherit;'
-      : 'background-color: #fde2e2; color: #f56c6c; text-align: center; line-height: inherit;'
+      ? 'background-color: #f56c6c; color: #fff;'
+      : 'background-color: #fde2e2; color: #f56c6c;'
   }
 }
 
@@ -153,19 +134,6 @@ function getCellTimeText(problemId: number, userId: number): string {
   if (!cell || cell.result === null) return ''
   const time = cell.result === 1 ? cell.ac_time : cell.failed_time
   return formatTime(time || '')
-}
-
-function openCellDialog(problemId: number, userId: number) {
-  const problem = problems.value.find(p => p.problem_id === problemId)
-  const user = users.value.find(u => u.user_id === userId)
-  const cell = getCellData(problemId, userId)
-
-  dialogData.value = {
-    problem: problem || null,
-    user: user || null,
-    cell: cell || null,
-  }
-  dialogVisible.value = true
 }
 
 function openSubmissionsDialog(problemId: number, userId: number) {
@@ -185,21 +153,6 @@ function formatTime(time: string) {
   const d = new Date(time)
   const pad = (n: number) => n.toString().padStart(2, '0')
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
-}
-
-function getVisibilityLabel(visibility: BoardVisibility): string {
-  const labels: Record<BoardVisibility, string> = {
-    public: '公开',
-    group_member: '组内可见',
-    board_user: '看板内可见',
-  }
-  return labels[visibility] || visibility
-}
-
-function getVisibilityType(visibility: BoardVisibility): string {
-  if (visibility === 'public') return 'success'
-  if (visibility === 'group_member') return 'warning'
-  return 'info'
 }
 
 function getResultLabel(result: number | null): string {
@@ -261,17 +214,11 @@ async function fetchCurrentUser() {
 }
 
 async function fetchBoard() {
-  isLoading.value = true
   try {
     board.value = await getBoard(boardId.value)
-    if (board.value.group_id) {
-      group.value = await getGroup(board.value.group_id)
-    }
   } catch {
     ElMessage.error('获取看板详情失败')
     router.push('/groups')
-  } finally {
-    isLoading.value = false
   }
 }
 
@@ -298,106 +245,44 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div style="padding: 20px; max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
-    <el-card>
-      <template #header>
-        <div style="display: flex; align-items: center; justify-content: space-between">
-          <span>学习进度</span>
-          <span v-if="progress" style="color: #606266; font-size: 14px">
-            {{ progress.step_title }} - {{ users.length }} 位用户，{{ problems.length }} 道题目
-          </span>
-        </div>
-      </template>
-      <div v-loading="progressLoading">
-        <div v-if="!progressLoading && (!progress || !progress.users.length)" style="padding: 40px 0">
-          <el-empty description="暂无学习进度数据" />
-        </div>
-        <div v-else class="table-wrapper">
-          <el-table
-            :data="problems"
-            border
-            :scrollbar-always-on="true"
-            :height="tableHeight"
-            class="board-table"
-          >
-            <el-table-column prop="specialty" label="专项" width="120" align="center" fixed show-overflow-tooltip />
-            <el-table-column prop="topic" label="专题" width="120" align="center" fixed show-overflow-tooltip />
-            <el-table-column prop="title" label="题目" width="180" fixed show-overflow-tooltip>
-              <template #default="{ row }">
-                <el-link type="primary" :href="getProblemUrl(row.source, row.oj_problem_id)" target="_blank">{{ row.title }}</el-link>
-              </template>
-            </el-table-column>
-            <el-table-column
-              v-for="user in users"
-              :key="user.user_id"
-              :label="user.nickname ? `${user.username} (${user.nickname})` : user.username"
-              width="220"
-              align="center"
-            >
-              <template #default="{ row }">
-                <div
-                  v-if="getCellData(row.problem_id, user.user_id)?.result !== null"
-                  :style="getCellStyle(row.problem_id, user.user_id)"
-                  class="cell-bg"
-                  @click="openSubmissionsDialog(row.problem_id, user.user_id)"
-                >
-                  {{ getCellTimeText(row.problem_id, user.user_id) }}
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </div>
-    </el-card>
-
-    <el-dialog
-      v-model="dialogVisible"
-      :title="dialogData.problem?.title || '题目详情'"
-      width="500px"
+  <div v-loading="progressLoading" style="height: 100%">
+    <el-table
+      v-if="problems.length"
+      :data="problems"
+      border
+      :scrollbar-always-on="true"
+      :height="tableHeight"
+      class="board-table"
     >
-      <div v-if="dialogData.problem" style="display: flex; flex-direction: column; gap: 16px">
-        <div>
-          <strong>OJ题目ID：</strong>
-          <span>{{ dialogData.problem.oj_problem_id }}</span>
-        </div>
-        <div>
-          <strong>提交时间：</strong>
-          <span v-if="dialogData.cell?.ac_time">{{ formatTime(dialogData.cell.ac_time) }}</span>
-          <span v-else>-</span>
-        </div>
-        <div>
-          <strong>提交结果：</strong>
-          <el-tag
-            :type="getResultType(dialogData.cell?.result ?? null)"
-            size="small"
+      <el-table-column prop="specialty" label="专项" width="120" align="center" fixed show-overflow-tooltip />
+      <el-table-column prop="topic" label="专题" width="120" align="center" fixed show-overflow-tooltip />
+      <el-table-column prop="title" label="题目" width="180" fixed show-overflow-tooltip>
+        <template #default="{ row }">
+          <el-link type="primary" :href="getProblemUrl(row.source, row.oj_problem_id)" target="_blank">{{ row.title }}</el-link>
+        </template>
+      </el-table-column>
+      <el-table-column
+        v-for="user in users"
+        :key="user.user_id"
+        :label="user.nickname ? `${user.username} (${user.nickname})` : user.username"
+        width="200"
+        align="center"
+      >
+        <template #default="{ row }">
+          <div
+            v-if="getCellData(row.problem_id, user.user_id)?.result !== null"
+            :style="getCellStyle(row.problem_id, user.user_id)"
+            class="cell-bg"
+            @click="openSubmissionsDialog(row.problem_id, user.user_id)"
           >
-            {{ getResultLabel(dialogData.cell?.result ?? null) }}
-          </el-tag>
-        </div>
-        <div v-if="dialogData.problem.specialty">
-          <strong>专项：</strong>
-          <span>{{ dialogData.problem.specialty }}</span>
-        </div>
-        <div v-if="dialogData.problem.topic">
-          <strong>主题：</strong>
-          <span>{{ dialogData.problem.topic }}</span>
-        </div>
-      </div>
-      <template #footer>
-        <div style="display: flex; justify-content: space-between">
-          <a
-            v-if="dialogData.problem"
-            :href="getProblemUrl(dialogData.problem.source || '', dialogData.problem.oj_problem_id)"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <el-button type="primary">在 OJ 查看</el-button>
-          </a>
-          <span v-else></span>
-          <el-button @click="dialogVisible = false">关闭</el-button>
-        </div>
-      </template>
-    </el-dialog>
+            {{ getCellTimeText(row.problem_id, user.user_id) }}
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div v-else style="padding: 100px 0">
+      <el-empty description="暂无数据" />
+    </div>
 
     <el-dialog
       v-model="submissionsDialogVisible"
@@ -428,11 +313,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.table-wrapper {
-  overflow-x: auto;
-  max-width: 100%;
-}
-
 .board-table :deep(.el-table__body-wrapper) {
   overflow-x: auto;
 }

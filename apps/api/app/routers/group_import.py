@@ -68,10 +68,9 @@ async def import_oj_accounts_to_group(
         total=result.total,
         success=result.success,
         skipped=result.skipped,
-        errors=[
-            {"row": e.row, "username": e.username, "error": e.error}
-            for e in result.errors
-        ],
+        success_list=result.success_list,
+        skipped_list=result.skipped_list,
+        errors=result.errors,
     )
 
 

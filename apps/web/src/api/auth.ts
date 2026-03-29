@@ -227,3 +227,65 @@ export async function getSolutions(params: GetSolutionsParams = {}): Promise<Pag
   }
   return await response.json()
 }
+
+export interface ClaimGhostData {
+  source: string
+  username: string
+  password: string
+}
+
+export interface ClaimGhostResult {
+  success: boolean
+  message: string
+}
+
+export interface GhostAccount {
+  source: string
+  username: string
+  nickname: string | null
+  bound: boolean
+}
+
+export interface GhostAccountListResponse {
+  ghosts: GhostAccount[]
+}
+
+export async function claimGhostAccount(data: ClaimGhostData): Promise<ClaimGhostResult> {
+  const token = getToken()
+  if (!token) {
+    throw new Error('No token found')
+  }
+
+  const response = await fetch('/api/auth/claim-ghost', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.detail || 'Claim failed')
+  }
+  return await response.json()
+}
+
+export async function getGhostAccounts(): Promise<GhostAccountListResponse> {
+  const token = getToken()
+  if (!token) {
+    throw new Error('No token found')
+  }
+
+  const response = await fetch('/api/auth/ghost-accounts', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to get ghost accounts')
+  }
+  return await response.json()
+}
