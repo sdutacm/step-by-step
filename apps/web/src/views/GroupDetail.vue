@@ -82,9 +82,12 @@ function formatTime(time: string) {
 
 async function fetchCurrentUser() {
   try {
-    currentUser.value = await getCurrentUser()
+    const user = await getCurrentUser()
+    currentUser.value = user
+    userStore.setUser(user)
   } catch {
     currentUser.value = null
+    userStore.clearUser()
   }
 }
 
