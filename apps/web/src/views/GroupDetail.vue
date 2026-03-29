@@ -76,7 +76,9 @@ function isLoggedIn() {
 }
 
 function formatTime(time: string) {
-  return new Date(time).toLocaleString('zh-CN')
+  const d = new Date(time)
+  const pad = (n: number) => n.toString().padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
 }
 
 async function fetchCurrentUser() {
@@ -347,7 +349,7 @@ onMounted(async () => {
               v-model:current-page="membersPagination.page"
               :page-size="membersPagination.page_size"
               :total="membersPagination.total"
-              layout="prev, pager, next"
+              layout="prev, pager, next, jumper"
               @current-change="handleMembersPageChange"
             />
           </div>

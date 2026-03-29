@@ -55,6 +55,12 @@ function isLoggedIn() {
   return !!getToken()
 }
 
+function formatTime(time: string) {
+  const d = new Date(time)
+  const pad = (n: number) => n.toString().padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+}
+
 function getProblemUrl(source: string, problemId: string): string {
   switch (source.toLowerCase()) {
     case 'vj':
@@ -232,11 +238,11 @@ onMounted(() => {
           </div>
           <div>
             <strong>创建时间：</strong>
-            <span>{{ step?.created_at ? new Date(step.created_at).toLocaleString('zh-CN') : '-' }}</span>
+            <span>{{ step?.created_at ? formatTime(step.created_at) : '-' }}</span>
           </div>
           <div>
             <strong>更新时间：</strong>
-            <span>{{ step?.updated_at ? new Date(step.updated_at).toLocaleString('zh-CN') : '-' }}</span>
+            <span>{{ step?.updated_at ? formatTime(step.updated_at) : '-' }}</span>
           </div>
         </div>
       </template>
@@ -322,7 +328,7 @@ onMounted(() => {
         v-model:current-page="problemsPagination.page"
         :page-size="problemsPagination.page_size"
         :total="problemsPagination.total"
-        layout="prev, pager, next"
+        layout="prev, pager, next, jumper"
         @current-change="handleProblemsPageChange"
       />
     </div>

@@ -27,7 +27,9 @@ const pagination = ref({
 })
 
 function formatTime(time: string) {
-  return new Date(time).toLocaleString('zh-CN')
+  const d = new Date(time)
+  const pad = (n: number) => n.toString().padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
 }
 
 function isLoggedIn() {
@@ -166,7 +168,7 @@ onMounted(async () => {
           v-model:page-size="pagination.page_size"
           :page-sizes="[10, 20, 50, 100]"
           :total="pagination.total"
-          layout="total, sizes, prev, pager, next"
+          layout="total, sizes, prev, pager, next, jumper"
           @current-change="handlePageChange"
           @size-change="handleSizeChange"
         />

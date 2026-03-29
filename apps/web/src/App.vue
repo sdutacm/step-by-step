@@ -139,6 +139,14 @@ onMounted(async () => {
   </el-dialog>
 </template>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+* {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+</style>
+
 <style scoped>
 .el-menu {
   display: flex;

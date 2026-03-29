@@ -134,6 +134,8 @@ async def fetch_solutions(
                 solution = existing
                 updated_count += 1
 
+            if "problemId" not in row["problem"]:
+                continue
             problem_id = str(row["problem"]["problemId"])
             problem_title = row["problem"]["title"]
             problem = (
@@ -169,6 +171,8 @@ async def fetch_solutions(
             ) + timedelta(hours=8)
             solution.source = "sdut"
             solution.problem = problem
+            if "userId" not in row["user"]:
+                continue
             solution.username = row["user"]["userId"]
             solution.nickname = row["user"]["nickname"]
 
@@ -212,7 +216,7 @@ async def solutions():
             csrf_token = await get_csrf(client)
             client.headers.update({"x-csrf-token": csrf_token})
             await login(client)
-            solus = await fetch_solutions(client, session)
+            await fetch_solutions(client, session)
         session.commit()
     logger.info("[SDUT] Solutions sync finished")
 
