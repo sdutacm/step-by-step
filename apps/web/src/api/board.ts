@@ -133,12 +133,12 @@ async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Re
     throw new Error("No token found");
   }
 
+  const headers = new Headers(options.headers as HeadersInit);
+  headers.set("Authorization", `Bearer ${token}`);
+
   const response = await fetch(url, {
     ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
   });
   return response;
 }
@@ -148,37 +148,41 @@ export async function getBoards(
   page: number = 1,
   pageSize: number = 20
 ): Promise<BoardListResponse> {
-  const response = await fetch(`/api/groups/${groupId}/boards?page=${page}&page_size=${pageSize}`);
+  const response = await fetch(
+    `/api/groups/${String(groupId)}/boards?page=${String(page)}&page_size=${String(pageSize)}`
+  );
   if (!response.ok) {
     throw new Error("Failed to get boards");
   }
-  return await response.json();
+  return (await response.json()) as BoardListResponse;
 }
 
 export async function getPublicBoards(
   page: number = 1,
   pageSize: number = 20
 ): Promise<PublicBoardListResponse> {
-  const response = await fetch(`/api/boards/public?page=${page}&page_size=${pageSize}`);
+  const response = await fetch(
+    `/api/boards/public?page=${String(page)}&page_size=${String(pageSize)}`
+  );
   if (!response.ok) {
     throw new Error("Failed to get public boards");
   }
-  return await response.json();
+  return (await response.json()) as PublicBoardListResponse;
 }
 
 export async function getBoard(id: number): Promise<Board> {
-  const response = await fetch(`/api/boards/${id}`);
+  const response = await fetch(`/api/boards/${String(id)}`);
   if (!response.ok) {
     if (response.status === 404) {
       throw new Error("Board not found");
     }
     throw new Error("Failed to get board");
   }
-  return await response.json();
+  return (await response.json()) as Board;
 }
 
 export async function createBoard(groupId: number, data: CreateBoardData): Promise<Board> {
-  const response = await fetchWithAuth(`/api/groups/${groupId}/boards`, {
+  const response = await fetchWithAuth(`/api/groups/${String(groupId)}/boards`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -186,14 +190,14 @@ export async function createBoard(groupId: number, data: CreateBoardData): Promi
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to create board");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to create board");
   }
-  return await response.json();
+  return (await response.json()) as Board;
 }
 
 export async function updateBoard(id: number, data: UpdateBoardData): Promise<Board> {
-  const response = await fetchWithAuth(`/api/boards/${id}`, {
+  const response = await fetchWithAuth(`/api/boards/${String(id)}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -201,35 +205,35 @@ export async function updateBoard(id: number, data: UpdateBoardData): Promise<Bo
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to update board");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to update board");
   }
-  return await response.json();
+  return (await response.json()) as Board;
 }
 
 export async function deleteBoard(id: number): Promise<void> {
-  const response = await fetchWithAuth(`/api/boards/${id}`, {
+  const response = await fetchWithAuth(`/api/boards/${String(id)}`, {
     method: "DELETE",
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to delete board");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to delete board");
   }
 }
 
 export async function getBoardUsers(boardId: number): Promise<BoardUserListResponse> {
-  const response = await fetchWithAuth(`/api/boards/${boardId}/users`);
+  const response = await fetchWithAuth(`/api/boards/${String(boardId)}/users`);
   if (!response.ok) {
     throw new Error("Failed to get board users");
   }
-  return await response.json();
+  return (await response.json()) as BoardUserListResponse;
 }
 
 export async function createBoardUsers(
   boardId: number,
   userIds: number[]
 ): Promise<BoardUserListResponse> {
-  const response = await fetchWithAuth(`/api/boards/${boardId}/users`, {
+  const response = await fetchWithAuth(`/api/boards/${String(boardId)}/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -237,27 +241,27 @@ export async function createBoardUsers(
     body: JSON.stringify(userIds),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to create board users");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to create board users");
   }
-  return await response.json();
+  return (await response.json()) as BoardUserListResponse;
 }
 
 export async function deleteBoardUser(boardId: number, userId: number): Promise<void> {
-  const response = await fetchWithAuth(`/api/boards/${boardId}/users/${userId}`, {
+  const response = await fetchWithAuth(`/api/boards/${String(boardId)}/users/${String(userId)}`, {
     method: "DELETE",
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to delete board user");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to delete board user");
   }
 }
 
 export async function getBoardProgress(boardId: number): Promise<BoardProgressResponse> {
-  const response = await fetchWithAuth(`/api/boards/${boardId}/progress`);
+  const response = await fetchWithAuth(`/api/boards/${String(boardId)}/progress`);
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to get board progress");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to get board progress");
   }
-  return await response.json();
+  return (await response.json()) as BoardProgressResponse;
 }

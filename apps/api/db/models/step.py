@@ -46,7 +46,6 @@ class Step(Base):
 
     @property
     def problems(self) -> list["Problem"]:
-        from db.models.problem import Problem
 
         return [sp.problem for sp in self.step_problems]
 

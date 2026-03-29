@@ -71,7 +71,7 @@ async function handleSubmit() {
       await createStep(data);
       ElMessage.success("创建成功");
     }
-    router.push("/steps");
+    void router.push("/steps");
   } catch (e: unknown) {
     ElMessage.error((e as Error).message || "操作失败");
   } finally {
@@ -89,11 +89,11 @@ onMounted(async () => {
     try {
       const step = await getStep(stepId.value);
       form.value.title = step.title;
-      form.value.description = step.description || "";
+      form.value.description = step.description ?? "";
       form.value.group_id = step.group_id;
     } catch {
       ElMessage.error("获取训练计划信息失败");
-      router.push("/steps");
+      void router.push("/steps");
     }
   }
 });

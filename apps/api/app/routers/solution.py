@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session, joinedload
 
-from db.models.problem import Problem
 from db.models.solution import Solution
 from db.session import get_db
 from schemas.solution import PaginatedSolutionsResponse, SolutionResponse

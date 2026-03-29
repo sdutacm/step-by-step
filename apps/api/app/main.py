@@ -15,7 +15,6 @@ from app.routers.problem import router as problem_router
 from app.routers.solution import router as solution_router
 from app.routers.source import router as source_router
 from app.routers.step import router as step_router
-from db.base import Base
 from sources import sources
 
 logger.remove()

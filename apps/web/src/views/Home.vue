@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import {
   ElCard,
   ElTable,
@@ -58,17 +58,23 @@ function formatResult(result: number, source?: string) {
   if (result === 999 && source?.toLowerCase() === "vj") {
     return { label: "Rejected", type: "danger" as const };
   }
-  return resultMap[result] || resultMap[999];
+  return resultMap[result] ?? resultMap[999];
 }
 
 function formatLanguage(language: number) {
-  return languageMap[language] || "Unknown";
+  return languageMap[language] ?? "Unknown";
 }
 
 function formatTime(time: string) {
   const d = new Date(time);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  const pad = (n: string): string => n.padStart(2, "0");
+  const year = d.getFullYear().toString();
+  const month = pad((d.getMonth() + 1).toString());
+  const day = pad(d.getDate().toString());
+  const hour = pad(d.getHours().toString());
+  const minute = pad(d.getMinutes().toString());
+  const second = pad(d.getSeconds().toString());
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 function getProblemUrl(source: string, ojProblemId: string | null): string {
@@ -112,20 +118,20 @@ async function fetchSolutions() {
 
 function handlePageChange(page: number) {
   pagination.value.page = page;
-  fetchSolutions();
+  void fetchSolutions();
 }
 
 function handleSizeChange(size: number) {
   pagination.value.page_size = size;
   pagination.value.page = 1;
-  fetchSolutions();
+  void fetchSolutions();
 }
 
 onMounted(async () => {
   if (getToken()) {
     await userStore.fetchUser();
   }
-  fetchSolutions();
+  void fetchSolutions();
 });
 </script>
 

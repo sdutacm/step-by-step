@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { ElDialog, ElForm, ElFormItem, ElInput, ElMessage } from "element-plus";
-import { login, register, getCurrentUser, logout, type User } from "./api/auth";
+import { login, register, logout } from "./api/auth";
 import { useUserStore } from "./stores/user";
 
 const route = useRoute();
@@ -32,8 +32,8 @@ async function handleLogin() {
     loginDialogVisible.value = false;
     loginForm.value = { username: "", password: "" };
     ElMessage.success("登录成功");
-  } catch (error: any) {
-    ElMessage.error(error.message || "登录失败");
+  } catch (error: unknown) {
+    ElMessage.error((error as Error).message || "登录失败");
   }
 }
 
@@ -48,13 +48,13 @@ async function handleRegister() {
     };
     registerForm.value = { username: "", password: "" };
     await handleLogin();
-  } catch (error: any) {
-    ElMessage.error(error.message || "注册失败");
+  } catch (error: unknown) {
+    ElMessage.error((error as Error).message || "注册失败");
   }
 }
 
-async function handleLogout() {
-  await logout();
+function handleLogout() {
+  logout();
   userStore.clearUser();
   ElMessage.success("已退出登录");
 }

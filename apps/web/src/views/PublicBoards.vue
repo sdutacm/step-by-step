@@ -1,15 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import {
-  ElCard,
-  ElTable,
-  ElTableColumn,
-  ElPagination,
-  ElEmpty,
-  ElMessage,
-  ElTag,
-} from "element-plus";
+import { ElCard, ElTable, ElTableColumn, ElPagination, ElEmpty, ElMessage } from "element-plus";
 import {
   getPublicBoards,
   type PublicBoardListItem,
@@ -28,20 +20,14 @@ const pagination = ref({
 
 function formatTime(time: string) {
   const d = new Date(time);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-}
-
-function getVisibilityLabel(visibility: string): string {
-  if (visibility === "public") return "公开";
-  if (visibility === "group_member") return "组内可见";
-  return "看板内可见";
-}
-
-function getVisibilityType(visibility: string): string {
-  if (visibility === "public") return "success";
-  if (visibility === "group_member") return "warning";
-  return "info";
+  const pad = (n: string): string => n.padStart(2, "0");
+  const year = d.getFullYear().toString();
+  const month = pad((d.getMonth() + 1).toString());
+  const day = pad(d.getDate().toString());
+  const hour = pad(d.getHours().toString());
+  const minute = pad(d.getMinutes().toString());
+  const second = pad(d.getSeconds().toString());
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 async function fetchBoards() {
@@ -62,21 +48,21 @@ async function fetchBoards() {
 
 function handlePageChange(page: number) {
   pagination.value.page = page;
-  fetchBoards();
+  void fetchBoards();
 }
 
 function handleSizeChange(size: number) {
   pagination.value.page_size = size;
   pagination.value.page = 1;
-  fetchBoards();
+  void fetchBoards();
 }
 
 function goToBoardDetail(id: number) {
-  router.push(`/boards/${id}`);
+  void router.push(`/boards/${String(id)}`);
 }
 
 onMounted(() => {
-  fetchBoards();
+  void fetchBoards();
 });
 </script>
 
@@ -101,17 +87,17 @@ onMounted(() => {
         </el-table-column>
         <el-table-column prop="description" label="描述" min-width="200">
           <template #default="{ row }">
-            {{ row.description || "-" }}
+            {{ row.description ?? "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="group_name" label="所属组织" width="150">
           <template #default="{ row }">
-            {{ row.group_name || "-" }}
+            {{ row.group_name ?? "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="step_title" label="训练计划" width="150">
           <template #default="{ row }">
-            {{ row.step_title || "-" }}
+            {{ row.step_title ?? "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="creator_username" label="创建者" width="120" />

@@ -7,7 +7,6 @@ from openpyxl import Workbook
 from sqlalchemy.orm import Session
 
 from app.dependencies.permissions import require_group_admin
-from app.routers.auth import get_current_user
 from app.services.importer import import_oj_accounts
 from db.models import Group, ImportRecord, User
 from db.session import get_db

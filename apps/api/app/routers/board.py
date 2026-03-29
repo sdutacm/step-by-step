@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from loguru import logger
@@ -17,7 +16,6 @@ from db.models.board import (
 )
 from db.models.group import Group
 from db.models.group_user import GroupUser
-from db.models.problem import Problem
 from db.models.solution import Solution
 from db.models.source_user import SourceUser
 from db.models.step import Step
@@ -36,7 +34,6 @@ from schemas.board import (
     ProblemProgress,
     PublicBoardListItem,
     PublicBoardListResponse,
-    StepProgress,
     SubmissionRecord,
     UserBoardProgress,
 )

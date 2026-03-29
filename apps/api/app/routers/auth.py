@@ -26,7 +26,7 @@ from schemas.user import (
     UserResponse,
     UserUpdate,
 )
-from sources import SDUT, VJ, sources
+from sources import SDUT, VJ
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")

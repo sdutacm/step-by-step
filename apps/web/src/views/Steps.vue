@@ -30,8 +30,14 @@ const pagination = ref({
 
 function formatTime(time: string) {
   const d = new Date(time);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  const pad = (n: string): string => n.padStart(2, "0");
+  const year = d.getFullYear().toString();
+  const month = pad((d.getMonth() + 1).toString());
+  const day = pad(d.getDate().toString());
+  const hour = pad(d.getHours().toString());
+  const minute = pad(d.getMinutes().toString());
+  const second = pad(d.getSeconds().toString());
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 function isLoggedIn() {
@@ -66,22 +72,22 @@ async function fetchSteps() {
 }
 
 function goToStepDetail(id: number) {
-  router.push(`/steps/${id}`);
+  void router.push(`/steps/${String(id)}`);
 }
 
 function handlePageChange(page: number) {
   pagination.value.page = page;
-  fetchSteps();
+  void fetchSteps();
 }
 
 function handleSizeChange(size: number) {
   pagination.value.page_size = size;
   pagination.value.page = 1;
-  fetchSteps();
+  void fetchSteps();
 }
 
 function goToCreate() {
-  router.push("/steps/create");
+  void router.push("/steps/create");
 }
 
 async function handleDelete(id: number, title: string) {
@@ -142,7 +148,7 @@ watch(
         </el-table-column>
         <el-table-column prop="description" label="描述" min-width="200">
           <template #default="{ row }">
-            {{ row.description || "-" }}
+            {{ row.description ?? "-" }}
           </template>
         </el-table-column>
         <el-table-column prop="group_name" label="组织" width="120">

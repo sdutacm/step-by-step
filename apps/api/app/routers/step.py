@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session, joinedload
 
 from app.routers.auth import get_current_user
 from db.models.group import Group
-from db.models.group_user import GroupRole, GroupUser
+from db.models.group_user import GroupUser
 from db.models.problem import Problem
 from db.models.step import Step
 from db.models.step_problem import StepProblem

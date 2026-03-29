@@ -23,7 +23,7 @@ async def login(client: httpx.AsyncClient):
     )
     success = resp.text == "success"
     if success:
-        logger.success(f"[VJ] Login successful")
+        logger.success("[VJ] Login successful")
     else:
         logger.error(f"[VJ] Login failed: {resp.text}")
     return success

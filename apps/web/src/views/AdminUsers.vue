@@ -5,7 +5,6 @@ import {
   ElTable,
   ElTableColumn,
   ElTag,
-  ElButton,
   ElMessage,
   ElSwitch,
   ElPagination,
@@ -44,11 +43,11 @@ async function handleToggleSuperAdmin(user: AdminUser) {
 
 function handlePageChange(newPage: number) {
   page.value = newPage;
-  refreshUsers();
+  void refreshUsers();
 }
 
 onMounted(() => {
-  refreshUsers();
+  void refreshUsers();
 });
 </script>
 

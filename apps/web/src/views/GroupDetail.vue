@@ -47,7 +47,6 @@ import {
   getBoardUsers,
   createBoardUsers,
   deleteBoardUser,
-  type Board,
   type BoardListItem,
   type BoardVisibility,
   type CreateBoardData,
@@ -135,8 +134,14 @@ const editForm = ref({
 
 function formatTime(time: string) {
   const d = new Date(time);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  const pad = (n: string): string => n.padStart(2, "0");
+  const year = d.getFullYear().toString();
+  const month = pad((d.getMonth() + 1).toString());
+  const day = pad(d.getDate().toString());
+  const hour = pad(d.getHours().toString());
+  const minute = pad(d.getMinutes().toString());
+  const second = pad(d.getSeconds().toString());
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 async function fetchCurrentUser() {
@@ -155,10 +160,10 @@ async function fetchGroup() {
   try {
     group.value = await getGroup(groupId.value);
     editForm.value.name = group.value.name;
-    editForm.value.description = group.value.description || "";
+    editForm.value.description = group.value.description ?? "";
   } catch {
     ElMessage.error("获取组织详情失败");
-    router.push("/groups");
+    void router.push("/groups");
   } finally {
     isLoading.value = false;
   }
@@ -175,8 +180,8 @@ async function fetchMembers() {
     members.value = data.items;
     membersPagination.value.total = data.total;
     if (currentUser.value) {
-      const myMembership = data.items.find(m => m.user_id === currentUser.value!.id);
-      groupMemberRole.value = myMembership?.role || null;
+      const myMembership = data.items.find(m => m.user_id === currentUser.value?.id);
+      groupMemberRole.value = myMembership?.role ?? null;
     }
   } catch {
     ElMessage.error("获取成员列表失败");
@@ -212,7 +217,7 @@ async function fetchAvailableSteps() {
 }
 
 function openCreateBoardDialog() {
-  fetchAvailableSteps();
+  void fetchAvailableSteps();
   createBoardForm.value = {
     name: "",
     description: "",
@@ -253,7 +258,7 @@ async function openEditBoardDialog(board: BoardListItem) {
   editingBoard.value = board;
   editBoardForm.value = {
     name: board.name,
-    description: board.description || "",
+    description: board.description ?? "",
     visibility: board.visibility,
     step_id: 0,
   };
@@ -270,9 +275,9 @@ async function handleUpdateBoard() {
   try {
     const updateData: UpdateBoardData = {
       name: editBoardForm.value.name,
-      description: editBoardForm.value.description || undefined,
+      description: editBoardForm.value.description,
       visibility: editBoardForm.value.visibility,
-      step_id: editBoardForm.value.step_id || undefined,
+      step_id: editBoardForm.value.step_id,
     };
     await updateBoard(editingBoard.value.id, updateData);
     ElMessage.success("更新成功");
@@ -366,7 +371,7 @@ async function handleRemoveBoardUser(userId: number, username: string) {
 
 function handleBoardsPageChange(page: number) {
   boardsPagination.value.page = page;
-  fetchBoards();
+  void fetchBoards();
 }
 
 async function handleUpdate() {
@@ -378,7 +383,7 @@ async function handleUpdate() {
   try {
     await updateGroup(groupId.value, {
       name: editForm.value.name,
-      description: editForm.value.description || undefined,
+      description: editForm.value.description,
     });
     ElMessage.success("更新成功");
     isEditing.value = false;
@@ -470,10 +475,6 @@ async function handleDownloadTemplate() {
 }
 
 async function handleImport(file: File) {
-  if (!file) {
-    ElMessage.error("请选择文件");
-    return;
-  }
   isImporting.value = true;
   try {
     const result = await importOjAccounts(groupId.value, file);
@@ -491,19 +492,19 @@ async function handleImport(file: File) {
 
 function handleFileChange(uploadFile: { raw?: File }) {
   if (uploadFile.raw) {
-    handleImport(uploadFile.raw);
+    void handleImport(uploadFile.raw);
   }
 }
 
 function openImportDialog() {
   importResult.value = null;
   importDialogVisible.value = true;
-  fetchImportRecords();
+  void fetchImportRecords();
 }
 
 function handleMembersPageChange(page: number) {
   membersPagination.value.page = page;
-  fetchMembers();
+  void fetchMembers();
 }
 
 function isAdmin() {
@@ -516,7 +517,7 @@ function getVisibilityLabel(visibility: BoardVisibility): string {
     group_member: "组内可见",
     board_user: "看板内可见",
   };
-  return labels[visibility] || visibility;
+  return labels[visibility];
 }
 
 function getVisibilityType(visibility: BoardVisibility): string {

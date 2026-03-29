@@ -71,12 +71,12 @@ async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Re
     throw new Error("No token found");
   }
 
+  const headers = new Headers(options.headers as HeadersInit);
+  headers.set("Authorization", `Bearer ${token}`);
+
   const response = await fetch(url, {
     ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
   });
   return response;
 }
@@ -85,22 +85,22 @@ export async function getGroups(
   page: number = 1,
   pageSize: number = 20
 ): Promise<GroupListResponse> {
-  const response = await fetch(`/api/groups?page=${page}&page_size=${pageSize}`);
+  const response = await fetch(`/api/groups?page=${String(page)}&page_size=${String(pageSize)}`);
   if (!response.ok) {
     throw new Error("Failed to get groups");
   }
-  return await response.json();
+  return (await response.json()) as GroupListResponse;
 }
 
 export async function getGroup(id: number): Promise<Group> {
-  const response = await fetch(`/api/groups/${id}`);
+  const response = await fetch(`/api/groups/${String(id)}`);
   if (!response.ok) {
     if (response.status === 404) {
       throw new Error("Group not found");
     }
     throw new Error("Failed to get group");
   }
-  return await response.json();
+  return (await response.json()) as Group;
 }
 
 export async function createGroup(data: CreateGroupData): Promise<Group> {
@@ -112,14 +112,14 @@ export async function createGroup(data: CreateGroupData): Promise<Group> {
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to create group");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to create group");
   }
-  return await response.json();
+  return (await response.json()) as Group;
 }
 
 export async function updateGroup(id: number, data: UpdateGroupData): Promise<Group> {
-  const response = await fetchWithAuth(`/api/groups/${id}`, {
+  const response = await fetchWithAuth(`/api/groups/${String(id)}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -127,19 +127,19 @@ export async function updateGroup(id: number, data: UpdateGroupData): Promise<Gr
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to update group");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to update group");
   }
-  return await response.json();
+  return (await response.json()) as Group;
 }
 
 export async function deleteGroup(id: number): Promise<void> {
-  const response = await fetchWithAuth(`/api/groups/${id}`, {
+  const response = await fetchWithAuth(`/api/groups/${String(id)}`, {
     method: "DELETE",
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to delete group");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to delete group");
   }
 }
 
@@ -148,15 +148,17 @@ export async function getGroupMembers(
   page: number = 1,
   pageSize: number = 20
 ): Promise<GroupMemberListResponse> {
-  const response = await fetch(`/api/groups/${groupId}/members?page=${page}&page_size=${pageSize}`);
+  const response = await fetch(
+    `/api/groups/${String(groupId)}/members?page=${String(page)}&page_size=${String(pageSize)}`
+  );
   if (!response.ok) {
     throw new Error("Failed to get members");
   }
-  return await response.json();
+  return (await response.json()) as GroupMemberListResponse;
 }
 
 export async function addGroupMember(groupId: number, data: AddMemberData): Promise<GroupMember> {
-  const response = await fetchWithAuth(`/api/groups/${groupId}/members`, {
+  const response = await fetchWithAuth(`/api/groups/${String(groupId)}/members`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -164,10 +166,10 @@ export async function addGroupMember(groupId: number, data: AddMemberData): Prom
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to add member");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to add member");
   }
-  return await response.json();
+  return (await response.json()) as GroupMember;
 }
 
 export async function updateGroupMember(
@@ -175,7 +177,7 @@ export async function updateGroupMember(
   userId: number,
   data: UpdateMemberData
 ): Promise<GroupMember> {
-  const response = await fetchWithAuth(`/api/groups/${groupId}/members/${userId}`, {
+  const response = await fetchWithAuth(`/api/groups/${String(groupId)}/members/${String(userId)}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -183,19 +185,19 @@ export async function updateGroupMember(
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to update member");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to update member");
   }
-  return await response.json();
+  return (await response.json()) as GroupMember;
 }
 
 export async function removeGroupMember(groupId: number, userId: number): Promise<void> {
-  const response = await fetchWithAuth(`/api/groups/${groupId}/members/${userId}`, {
+  const response = await fetchWithAuth(`/api/groups/${String(groupId)}/members/${String(userId)}`, {
     method: "DELETE",
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to remove member");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to remove member");
   }
 }
 
@@ -230,12 +232,12 @@ export interface ImportResult {
 }
 
 export async function getImportRecords(groupId: number): Promise<ImportRecordListResponse> {
-  const response = await fetchWithAuth(`/api/groups/${groupId}/import-records`);
+  const response = await fetchWithAuth(`/api/groups/${String(groupId)}/import-records`);
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to get import records");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to get import records");
   }
-  return await response.json();
+  return (await response.json()) as ImportRecordListResponse;
 }
 
 export async function downloadImportTemplate(groupId: number): Promise<void> {
@@ -244,15 +246,15 @@ export async function downloadImportTemplate(groupId: number): Promise<void> {
     throw new Error("No token found");
   }
 
-  const response = await fetch(`/api/groups/${groupId}/import-templates`, {
+  const response = await fetch(`/api/groups/${String(groupId)}/import-templates`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to download template");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to download template");
   }
 
   const blob = await response.blob();
@@ -275,7 +277,7 @@ export async function importOjAccounts(groupId: number, file: File): Promise<Imp
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch(`/api/groups/${groupId}/import`, {
+  const response = await fetch(`/api/groups/${String(groupId)}/import`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -284,8 +286,8 @@ export async function importOjAccounts(groupId: number, file: File): Promise<Imp
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Import failed");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Import failed");
   }
-  return await response.json();
+  return (await response.json()) as ImportResult;
 }

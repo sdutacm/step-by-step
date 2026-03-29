@@ -67,11 +67,11 @@ export async function login(data: LoginData): Promise<AuthResponse> {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "登录失败");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "登录失败");
   }
 
-  const result = await response.json();
+  const result = (await response.json()) as AuthResponse;
   setToken(result.access_token);
   return result;
 }
@@ -86,11 +86,11 @@ export async function register(data: RegisterData): Promise<User> {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "注册失败");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "注册失败");
   }
 
-  return await response.json();
+  return (await response.json()) as User;
 }
 
 export async function getCurrentUser(): Promise<User> {
@@ -110,7 +110,7 @@ export async function getCurrentUser(): Promise<User> {
     throw new Error("Failed to get current user");
   }
 
-  return await response.json();
+  return (await response.json()) as User;
 }
 
 export async function updateCurrentUser(data: UserUpdateData): Promise<User> {
@@ -132,10 +132,10 @@ export async function updateCurrentUser(data: UserUpdateData): Promise<User> {
     throw new Error("Failed to update user");
   }
 
-  return await response.json();
+  return (await response.json()) as User;
 }
 
-export async function logout(): Promise<void> {
+export function logout(): void {
   removeToken();
 }
 
@@ -148,7 +148,7 @@ export async function getSources(): Promise<Source[]> {
   if (!response.ok) {
     throw new Error("Failed to get sources");
   }
-  return await response.json();
+  return (await response.json()) as Source[];
 }
 
 export async function bindSource(data: SourceBindingData): Promise<SourceUser> {
@@ -167,11 +167,11 @@ export async function bindSource(data: SourceBindingData): Promise<SourceUser> {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "绑定失败");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "绑定失败");
   }
 
-  return await response.json();
+  return (await response.json()) as SourceUser;
 }
 
 export async function unbindSource(bindingId: number): Promise<void> {
@@ -180,7 +180,7 @@ export async function unbindSource(bindingId: number): Promise<void> {
     throw new Error("No token found");
   }
 
-  const response = await fetch(`/api/sources/unbind/${bindingId}`, {
+  const response = await fetch(`/api/sources/unbind/${String(bindingId)}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -188,8 +188,8 @@ export async function unbindSource(bindingId: number): Promise<void> {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "解绑失败");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "解绑失败");
   }
 }
 
@@ -221,11 +221,13 @@ export interface GetSolutionsParams {
 
 export async function getSolutions(params: GetSolutionsParams = {}): Promise<PaginatedSolutions> {
   const { page = 1, page_size = 20 } = params;
-  const response = await fetch(`/api/solutions/?page=${page}&page_size=${page_size}`);
+  const response = await fetch(
+    `/api/solutions/?page=${String(page)}&page_size=${String(page_size)}`
+  );
   if (!response.ok) {
     throw new Error("Failed to get solutions");
   }
-  return await response.json();
+  return (await response.json()) as PaginatedSolutions;
 }
 
 export interface ClaimGhostData {
@@ -266,10 +268,10 @@ export async function claimGhostAccount(data: ClaimGhostData): Promise<ClaimGhos
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Claim failed");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Claim failed");
   }
-  return await response.json();
+  return (await response.json()) as ClaimGhostResult;
 }
 
 export async function getGhostAccounts(): Promise<GhostAccountListResponse> {
@@ -287,5 +289,5 @@ export async function getGhostAccounts(): Promise<GhostAccountListResponse> {
   if (!response.ok) {
     throw new Error("Failed to get ghost accounts");
   }
-  return await response.json();
+  return (await response.json()) as GhostAccountListResponse;
 }

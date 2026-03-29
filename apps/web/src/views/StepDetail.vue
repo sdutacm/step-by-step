@@ -20,7 +20,7 @@ import {
   ElPagination,
   ElSkeleton,
 } from "element-plus";
-import type { ElTable as ElTableType } from "element-plus";
+
 import {
   getStep,
   updateStep,
@@ -50,8 +50,10 @@ const selectedProblems = ref<StepProblemItem[]>([]);
 const problemsPagination = ref({ page: 1, page_size: 20, total: 0 });
 const problemsSearch = ref({ title: "", source: "" });
 const currentUserId = ref<number | null>(null);
-const problemsTableRef = ref<InstanceType<ElTableType> | null>(null);
-let sortableInstance: Sortable | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const problemsTableRef = ref<any>(null);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let sortableInstance: any = null;
 
 const stepId = computed(() => Number(route.params.id));
 
@@ -75,8 +77,14 @@ function isCreator() {
 
 function formatTime(time: string) {
   const d = new Date(time);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  const pad = (n: string): string => n.padStart(2, "0");
+  const year = d.getFullYear().toString();
+  const month = pad((d.getMonth() + 1).toString());
+  const day = pad(d.getDate().toString());
+  const hour = pad(d.getHours().toString());
+  const minute = pad(d.getMinutes().toString());
+  const second = pad(d.getSeconds().toString());
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 function getProblemUrl(source: string, problemId: string): string {
@@ -95,10 +103,10 @@ async function fetchStep() {
   try {
     step.value = await getStep(stepId.value);
     editForm.value.title = step.value.title;
-    editForm.value.description = step.value.description || "";
+    editForm.value.description = step.value.description ?? "";
   } catch {
     ElMessage.error("获取训练计划详情失败");
-    router.push("/steps");
+    void router.push("/steps");
   } finally {
     isLoading.value = false;
   }
@@ -200,16 +208,18 @@ async function handleRemoveProblem(problemId: number, title: string) {
 
 onMounted(async () => {
   await fetchCurrentUser();
-  fetchStep();
+  void fetchStep();
 });
 
 function initTableDrag() {
   if (!isCreator()) return;
+
   const table = problemsTableRef.value?.$el;
   if (!table) {
     setTimeout(initTableDrag, 100);
     return;
   }
+
   const tbody = table.querySelector(".el-table__body-wrapper tbody");
   if (!tbody) {
     return;
@@ -217,10 +227,18 @@ function initTableDrag() {
   if (sortableInstance) {
     sortableInstance.destroy();
   }
-  sortableInstance = Sortable.create(tbody as HTMLElement, {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sortableInstance = (Sortable as any).create(tbody as HTMLElement, {
     animation: 150,
     handle: ".el-table__row",
-    onEnd: async ({ oldIndex, newIndex }) => {
+
+    onEnd: async ({
+      oldIndex,
+      newIndex,
+    }: {
+      oldIndex: number | undefined;
+      newIndex: number | undefined;
+    }) => {
       if (
         oldIndex === undefined ||
         newIndex === undefined ||
@@ -255,7 +273,7 @@ watch(
 );
 
 watch(
-  () => step.value?.problems?.length,
+  () => step.value?.problems.length,
   newLen => {
     if (newLen && newLen > 0) {
       setTimeout(initTableDrag, 100);

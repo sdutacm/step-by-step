@@ -37,7 +37,6 @@ const user = ref<User | null>(null);
 const editDialogVisible = ref(false);
 const bindDialogVisible = ref(false);
 const claimDialogVisible = ref(false);
-const isEditing = ref(false);
 const isBinding = ref(false);
 const isClaiming = ref(false);
 const sources = ref<Source[]>([]);
@@ -80,8 +79,8 @@ async function refreshSources() {
 
 function openEditDialog() {
   editForm.value = {
-    nickname: user.value?.nickname || "",
-    avatar_url: user.value?.avatar_url || "",
+    nickname: user.value?.nickname ?? "",
+    avatar_url: user.value?.avatar_url ?? "",
   };
   editDialogVisible.value = true;
 }
@@ -171,7 +170,7 @@ function openClaimDialog() {
     password: "",
   };
   claimDialogVisible.value = true;
-  fetchGhostAccounts();
+  void fetchGhostAccounts();
 }
 
 async function handleClaimGhost() {

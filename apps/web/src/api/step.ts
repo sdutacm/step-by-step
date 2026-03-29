@@ -72,33 +72,33 @@ async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Re
     throw new Error("No token found");
   }
 
+  const headers = new Headers(options.headers as HeadersInit);
+  headers.set("Authorization", `Bearer ${token}`);
+
   const response = await fetch(url, {
     ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
   });
   return response;
 }
 
 export async function getSteps(page: number = 1, pageSize: number = 20): Promise<StepListResponse> {
-  const response = await fetch(`/api/steps?page=${page}&page_size=${pageSize}`);
+  const response = await fetch(`/api/steps?page=${String(page)}&page_size=${String(pageSize)}`);
   if (!response.ok) {
     throw new Error("Failed to get steps");
   }
-  return await response.json();
+  return (await response.json()) as StepListResponse;
 }
 
 export async function getStep(id: number): Promise<Step> {
-  const response = await fetch(`/api/steps/${id}`);
+  const response = await fetch(`/api/steps/${String(id)}`);
   if (!response.ok) {
     if (response.status === 404) {
       throw new Error("Step not found");
     }
     throw new Error("Failed to get step");
   }
-  return await response.json();
+  return (await response.json()) as Step;
 }
 
 export async function createStep(data: CreateStepData): Promise<Step> {
@@ -110,14 +110,14 @@ export async function createStep(data: CreateStepData): Promise<Step> {
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to create step");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to create step");
   }
-  return await response.json();
+  return (await response.json()) as Step;
 }
 
 export async function updateStep(id: number, data: UpdateStepData): Promise<Step> {
-  const response = await fetchWithAuth(`/api/steps/${id}`, {
+  const response = await fetchWithAuth(`/api/steps/${String(id)}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -125,24 +125,24 @@ export async function updateStep(id: number, data: UpdateStepData): Promise<Step
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to update step");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to update step");
   }
-  return await response.json();
+  return (await response.json()) as Step;
 }
 
 export async function deleteStep(id: number): Promise<void> {
-  const response = await fetchWithAuth(`/api/steps/${id}`, {
+  const response = await fetchWithAuth(`/api/steps/${String(id)}`, {
     method: "DELETE",
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to delete step");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to delete step");
   }
 }
 
 export async function addProblemsToStep(stepId: number, data: AddProblemsData): Promise<Step> {
-  const response = await fetchWithAuth(`/api/steps/${stepId}/problems`, {
+  const response = await fetchWithAuth(`/api/steps/${String(stepId)}/problems`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -150,24 +150,27 @@ export async function addProblemsToStep(stepId: number, data: AddProblemsData): 
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to add problems");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to add problems");
   }
-  return await response.json();
+  return (await response.json()) as Step;
 }
 
 export async function removeProblemFromStep(stepId: number, problemId: number): Promise<void> {
-  const response = await fetchWithAuth(`/api/steps/${stepId}/problems/${problemId}`, {
-    method: "DELETE",
-  });
+  const response = await fetchWithAuth(
+    `/api/steps/${String(stepId)}/problems/${String(problemId)}`,
+    {
+      method: "DELETE",
+    }
+  );
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to remove problem");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to remove problem");
   }
 }
 
 export async function reorderStepProblems(stepId: number, problemIds: number[]): Promise<Step> {
-  const response = await fetchWithAuth(`/api/steps/${stepId}/problems/reorder`, {
+  const response = await fetchWithAuth(`/api/steps/${String(stepId)}/problems/reorder`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -175,10 +178,10 @@ export async function reorderStepProblems(stepId: number, problemIds: number[]):
     body: JSON.stringify({ problem_ids: problemIds }),
   });
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || "Failed to reorder problems");
+    const error = (await response.json()) as { detail?: string };
+    throw new Error(error.detail ?? "Failed to reorder problems");
   }
-  return await response.json();
+  return (await response.json()) as Step;
 }
 
 export async function getProblems(
@@ -187,7 +190,7 @@ export async function getProblems(
   title?: string,
   source?: string
 ): Promise<{ items: ProblemSimple[]; total: number }> {
-  let url = `/api/problems?page=${page}&page_size=${pageSize}`;
+  let url = `/api/problems?page=${String(page)}&page_size=${String(pageSize)}`;
   if (title) {
     url += `&title=${encodeURIComponent(title)}`;
   }
@@ -198,5 +201,5 @@ export async function getProblems(
   if (!response.ok) {
     throw new Error("Failed to get problems");
   }
-  return await response.json();
+  return (await response.json()) as { items: ProblemSimple[]; total: number };
 }

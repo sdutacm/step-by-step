@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
 from db.models.problem import Problem

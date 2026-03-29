@@ -1,16 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import {
-  ElButton,
-  ElTag,
-  ElEmpty,
-  ElMessage,
-  ElLink,
-  ElTable,
-  ElTableColumn,
-  ElDialog,
-} from "element-plus";
+import { ElTag, ElEmpty, ElMessage, ElLink, ElTable, ElTableColumn, ElDialog } from "element-plus";
 import {
   getBoard,
   getBoardProgress,
@@ -101,7 +92,7 @@ function updateTableHeight() {
 function getCellData(problemId: number, userId: number): CellData | null {
   const userMap = cellMap.value.get(userId);
   if (!userMap) return null;
-  return userMap.get(problemId) || null;
+  return userMap.get(problemId) ?? null;
 }
 
 function isWithin7Days(dateStr: string | null): boolean {
@@ -115,7 +106,7 @@ function isWithin7Days(dateStr: string | null): boolean {
 
 function getCellStyle(problemId: number, userId: number): string {
   const cell = getCellData(problemId, userId);
-  if (!cell || cell.result === null) return "";
+  if (!cell?.result) return "";
   const timeToCheck = cell.result === 1 ? cell.ac_time : cell.failed_time;
   const within7Days = isWithin7Days(timeToCheck);
   if (cell.result === 1) {
@@ -131,9 +122,9 @@ function getCellStyle(problemId: number, userId: number): string {
 
 function getCellTimeText(problemId: number, userId: number): string {
   const cell = getCellData(problemId, userId);
-  if (!cell || cell.result === null) return "";
+  if (!cell?.result) return "";
   const time = cell.result === 1 ? cell.ac_time : cell.failed_time;
-  return formatTime(time || "");
+  return formatTime(time ?? "");
 }
 
 function openSubmissionsDialog(problemId: number, userId: number) {
@@ -142,17 +133,23 @@ function openSubmissionsDialog(problemId: number, userId: number) {
   const cell = getCellData(problemId, userId);
 
   submissionsDialogData.value = {
-    problem: problem || null,
-    user: user || null,
-    submissions: cell?.submissions || [],
+    problem: problem ?? null,
+    user: user ?? null,
+    submissions: cell?.submissions ?? [],
   };
   submissionsDialogVisible.value = true;
 }
 
 function formatTime(time: string) {
   const d = new Date(time);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  const pad = (n: string): string => n.padStart(2, "0");
+  const year = d.getFullYear().toString();
+  const month = pad((d.getMonth() + 1).toString());
+  const day = pad(d.getDate().toString());
+  const hour = pad(d.getHours().toString());
+  const minute = pad(d.getMinutes().toString());
+  const second = pad(d.getSeconds().toString());
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 function getResultLabel(result: number | null): string {
@@ -169,7 +166,7 @@ function getResultLabel(result: number | null): string {
     9: "System Error",
     999: "Unknown",
   };
-  return results[result] || "Unknown";
+  return results[result] ?? "Unknown";
 }
 
 function getResultType(result: number | null): string {
@@ -193,7 +190,7 @@ function getLanguageLabel(language: number): string {
     11: "Fortran",
     999: "Unknown",
   };
-  return languages[language] || "Unknown";
+  return languages[language] ?? "Unknown";
 }
 
 function getProblemUrl(source: string, problemId: string): string {
@@ -218,7 +215,7 @@ async function fetchBoard() {
     board.value = await getBoard(boardId.value);
   } catch {
     ElMessage.error("获取看板详情失败");
-    router.push("/groups");
+    void router.push("/groups");
   }
 }
 

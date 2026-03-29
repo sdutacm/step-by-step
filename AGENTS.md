@@ -165,7 +165,19 @@ uv run alembic downgrade base
 - 平台适配器位于 `sources/` 目录，需实现 `login`、`problems`、`solutions` 静态方法
 - 代码修改后使用工具进行规范格式化
   - 后端：`cd apps/api && uv run ruff check --select I --fix && uv run ruff format`
-  - 前端：`cd apps/web && npm run format && npm run lint`
+  - 前端：`cd apps/web && npm run format`
+- 代码必须符合规范，在修改后需要进行检查
+  - 后端：`cd apps/api && uv run ruff check`
+  - 前端：`cd apps/web && npm run lint`
+
+如果后端代码在规范检查时，有些 import 需要循环引用才能实现，那么可以通过 `TYPE_CHECKING` 导入来规避
+
+```python
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from db.models.solution import Solution
+```
 
 ## 开发命令
 

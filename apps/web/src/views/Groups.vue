@@ -45,8 +45,14 @@ const isCreating = ref(false);
 
 function formatTime(time: string) {
   const d = new Date(time);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  const pad = (n: string): string => n.padStart(2, "0");
+  const year = d.getFullYear().toString();
+  const month = pad((d.getMonth() + 1).toString());
+  const day = pad(d.getDate().toString());
+  const hour = pad(d.getHours().toString());
+  const minute = pad(d.getMinutes().toString());
+  const second = pad(d.getSeconds().toString());
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 function isSuperAdmin() {
@@ -71,17 +77,17 @@ async function fetchGroups() {
 
 function handlePageChange(page: number) {
   pagination.value.page = page;
-  fetchGroups();
+  void fetchGroups();
 }
 
 function handleSizeChange(size: number) {
   pagination.value.page_size = size;
   pagination.value.page = 1;
-  fetchGroups();
+  void fetchGroups();
 }
 
 function goToGroupDetail(id: number) {
-  router.push(`/groups/${id}`);
+  void router.push(`/groups/${String(id)}`);
 }
 
 async function handleCreate() {
@@ -121,7 +127,7 @@ async function handleDelete(id: number, name: string) {
 }
 
 onMounted(() => {
-  fetchGroups();
+  void fetchGroups();
 });
 
 watch(
