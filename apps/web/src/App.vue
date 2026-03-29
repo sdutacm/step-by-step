@@ -70,6 +70,7 @@ onMounted(async () => {
     <el-menu-item index="/">提交记录</el-menu-item>
     <el-menu-item index="/steps">训练计划</el-menu-item>
     <el-menu-item index="/groups">组织</el-menu-item>
+    <el-menu-item index="/boards/public">公开看板</el-menu-item>
     <div style="flex: 1"></div>
     <template v-if="isLoggedIn">
       <el-menu-item v-if="isSuperAdmin" index="/admin/users">

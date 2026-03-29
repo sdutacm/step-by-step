@@ -30,6 +30,28 @@ export interface BoardListItem {
   updated_at: string
 }
 
+export interface PublicBoardListItem {
+  id: number
+  name: string
+  description: string | null
+  visibility: BoardVisibility
+  group_id: number
+  group_name: string | null
+  step_id: number
+  step_title: string
+  created_by: number
+  creator_username: string
+  created_at: string
+  updated_at: string
+}
+
+export interface PublicBoardListResponse {
+  total: number
+  page: number
+  page_size: number
+  items: PublicBoardListItem[]
+}
+
 export interface BoardListResponse {
   total: number
   page: number
@@ -68,6 +90,7 @@ export interface BoardUserListResponse {
 export interface ProblemProgress {
   problem_id: number
   oj_problem_id: string
+  source: string
   title: string
   order: number
   specialty: string | null
@@ -119,6 +142,17 @@ export async function getBoards(
   const response = await fetch(`/api/groups/${groupId}/boards?page=${page}&page_size=${pageSize}`)
   if (!response.ok) {
     throw new Error('Failed to get boards')
+  }
+  return await response.json()
+}
+
+export async function getPublicBoards(
+  page: number = 1,
+  pageSize: number = 20
+): Promise<PublicBoardListResponse> {
+  const response = await fetch(`/api/boards/public?page=${page}&page_size=${pageSize}`)
+  if (!response.ok) {
+    throw new Error('Failed to get public boards')
   }
   return await response.json()
 }

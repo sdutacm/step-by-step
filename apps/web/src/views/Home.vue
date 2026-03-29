@@ -144,7 +144,7 @@ onMounted(async () => {
             <el-tag>{{ row.source.toUpperCase() }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="用户" width="120" show-overflow-tooltip>
+        <el-table-column label="用户" width="160" show-overflow-tooltip>
           <template #default="{ row }">
             <a :href="getUserUrl(row.source, row.username)" target="_blank" rel="noopener noreferrer"
               style="color: #409eff; text-decoration: none">
@@ -160,7 +160,7 @@ onMounted(async () => {
             </a>
           </template>
         </el-table-column>
-        <el-table-column prop="result" label="结果" width="120" show-overflow-tooltip>
+        <el-table-column prop="result" label="结果" width="140" show-overflow-tooltip>
           <template #default="{ row }">
             <el-tag size="small" :type="formatResult(row.result, row.source).type">
               {{ formatResult(row.result, row.source).label }}

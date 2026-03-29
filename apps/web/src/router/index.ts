@@ -6,6 +6,7 @@ import StepCreate from '../views/StepCreate.vue'
 import StepDetail from '../views/StepDetail.vue'
 import Groups from '../views/Groups.vue'
 import GroupDetail from '../views/GroupDetail.vue'
+import PublicBoards from '../views/PublicBoards.vue'
 import BoardDetail from '../views/BoardDetail.vue'
 import AdminUsers from '../views/AdminUsers.vue'
 import { getToken } from '../api/auth'
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/groups/:id',
       name: 'group-detail',
       component: GroupDetail,
+    },
+    {
+      path: '/boards/public',
+      name: 'public-boards',
+      component: PublicBoards,
     },
     {
       path: '/boards/:id',

@@ -134,7 +134,7 @@ async def fetch_solutions(
                 solution = existing
                 updated_count += 1
 
-            if "problemId" not in row["problem"]:
+            if "problemId" not in row["problem"] or "title" not in row["problem"]:
                 continue
             problem_id = str(row["problem"]["problemId"])
             problem_title = row["problem"]["title"]

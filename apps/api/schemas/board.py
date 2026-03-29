@@ -61,6 +61,31 @@ class BoardListItem(BaseModel):
         from_attributes = True
 
 
+class PublicBoardListItem(BaseModel):
+    id: int
+    name: str
+    description: str | None = None
+    visibility: BoardVisibility
+    group_id: int
+    group_name: str | None = None
+    step_id: int
+    step_title: str
+    created_by: int
+    creator_username: str
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class PublicBoardListResponse(BaseModel):
+    total: int
+    page: int
+    page_size: int
+    items: list[PublicBoardListItem]
+
+
 class BoardListResponse(BaseModel):
     total: int
     page: int
@@ -88,6 +113,7 @@ class BoardUserListResponse(BaseModel):
 class ProblemProgress(BaseModel):
     problem_id: int
     oj_problem_id: str
+    source: str
     title: str
     order: int = 0
     specialty: str | None = None

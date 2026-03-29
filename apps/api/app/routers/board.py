@@ -34,6 +34,8 @@ from schemas.board import (
     BoardUserListResponse,
     BoardUserResponse,
     ProblemProgress,
+    PublicBoardListItem,
+    PublicBoardListResponse,
     StepProgress,
     UserBoardProgress,
 )
@@ -122,6 +124,7 @@ def calculate_user_step_progress(
             ProblemProgress(
                 problem_id=sp.problem_id,
                 oj_problem_id=problem.problem_id,
+                source=problem.source,
                 title=problem.title,
                 order=sp.order,
                 specialty=sp.specialty,
@@ -249,6 +252,58 @@ def list_boards(
         page=page,
         page_size=page_size,
         items=visible_items,
+    )
+
+
+@router.get("/boards/public", response_model=PublicBoardListResponse)
+def list_public_boards(
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=20, ge=1, le=100),
+    db: Session = Depends(get_db),
+):
+    logger.debug(f"List public boards: page={page}, page_size={page_size}")
+
+    total = (
+        db.query(func.count(Board.id))
+        .filter(Board.visibility == BoardVisibilityModel.PUBLIC)
+        .scalar()
+    )
+
+    boards = (
+        db.query(Board)
+        .options(
+            joinedload(Board.creator), joinedload(Board.group), joinedload(Board.step)
+        )
+        .filter(Board.visibility == BoardVisibilityModel.PUBLIC)
+        .order_by(Board.created_at.desc())
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .all()
+    )
+
+    items = [
+        PublicBoardListItem(
+            id=board.id,
+            name=board.name,
+            description=board.description,
+            visibility=board.visibility,
+            group_id=board.group_id,
+            group_name=board.group.name if board.group else None,
+            step_id=board.step_id,
+            step_title=board.step.title if board.step else "",
+            created_by=board.created_by,
+            creator_username=board.creator.username if board.creator else "",
+            created_at=board.created_at,
+            updated_at=board.updated_at,
+        )
+        for board in boards
+    ]
+
+    return PublicBoardListResponse(
+        total=total,
+        page=page,
+        page_size=page_size,
+        items=items,
     )
 
 
