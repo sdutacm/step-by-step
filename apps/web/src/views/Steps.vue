@@ -66,6 +66,17 @@ function goToStepDetail(id: number) {
   router.push(`/steps/${id}`)
 }
 
+function handlePageChange(page: number) {
+  pagination.value.page = page
+  fetchSteps()
+}
+
+function handleSizeChange(size: number) {
+  pagination.value.page_size = size
+  pagination.value.page = 1
+  fetchSteps()
+}
+
 function goToCreate() {
   router.push('/steps/create')
 }
