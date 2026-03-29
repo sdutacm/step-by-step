@@ -1,6 +1,5 @@
 from db.models.board import Board, BoardUser, BoardVisibility
 from db.models.group import Group
-from db.models.group_step_progress import GroupStepProgress
 from db.models.group_user import GroupRole, GroupUser
 from db.models.problem import Problem
 from db.models.solution import Solution
@@ -19,7 +18,6 @@ __all__ = [
     "Group",
     "GroupUser",
     "GroupRole",
-    "GroupStepProgress",
     "Board",
     "BoardUser",
     "BoardVisibility",

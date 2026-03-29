@@ -18,7 +18,6 @@ import {
   ElTabPane,
   ElSelect,
   ElOption,
-  ElProgress,
   ElSkeleton,
 } from 'element-plus'
 import {
@@ -28,10 +27,8 @@ import {
   addGroupMember,
   updateGroupMember,
   removeGroupMember,
-  getGroupProgress,
   type Group,
   type GroupMember,
-  type GroupUserProgress,
   type UpdateMemberData,
 } from '../api/group'
 import {
@@ -73,9 +70,6 @@ const isAddingMember = ref(false)
 const editMemberDialogVisible = ref(false)
 const editMemberForm = ref<UpdateMemberData>({ role: 'member' })
 const editingMember = ref<GroupMember | null>(null)
-
-const progress = ref<GroupUserProgress[]>([])
-const progressLoading = ref(false)
 
 const boards = ref<BoardListItem[]>([])
 const boardsPagination = ref({ page: 1, page_size: 20, total: 0 })
@@ -163,18 +157,6 @@ async function fetchMembers() {
     ElMessage.error('获取成员列表失败')
   } finally {
     membersLoading.value = false
-  }
-}
-
-async function fetchProgress() {
-  progressLoading.value = true
-  try {
-    const data = await getGroupProgress(groupId.value)
-    progress.value = data.members
-  } catch {
-    ElMessage.error('获取学习进度失败')
-  } finally {
-    progressLoading.value = false
   }
 }
 
@@ -456,12 +438,6 @@ function isAdmin() {
   return userStore.isSuperAdmin || groupMemberRole.value === 'admin'
 }
 
-function getStepProgressColor(percent: number): string {
-  if (percent >= 100) return '#67c23a'
-  if (percent >= 50) return '#e6a23c'
-  return '#909399'
-}
-
 function getVisibilityLabel(visibility: BoardVisibility): string {
   const labels: Record<BoardVisibility, string> = {
     public: '公开',
@@ -617,62 +593,6 @@ watch(
               layout="prev, pager, next, jumper"
               @current-change="handleMembersPageChange"
             />
-          </div>
-        </el-tab-pane>
-
-        <el-tab-pane label="学习进度">
-          <template #label>
-            <span>学习进度</span>
-          </template>
-          <div v-loading="progressLoading">
-            <div v-if="!progressLoading && !progress.length" style="padding: 40px 0">
-              <el-empty description="暂无学习进度数据" />
-            </div>
-            <div v-else style="display: flex; flex-direction: column; gap: 20px">
-              <el-card v-for="userProgress in progress" :key="userProgress.user_id" shadow="hover">
-                <template #header>
-                  <div style="display: flex; align-items: center; justify-content: space-between">
-                    <span>
-                      {{ userProgress.username }}
-                      <el-tag v-if="userProgress.nickname" size="small" style="margin-left: 8px">
-                        {{ userProgress.nickname }}
-                      </el-tag>
-                    </span>
-                    <span style="color: #67c23a; font-weight: bold">
-                      总计 {{ userProgress.total_solved }} 道
-                    </span>
-                  </div>
-                </template>
-                <div v-if="userProgress.steps.length === 0" style="padding: 20px; text-align: center; color: #909399">
-                  暂无训练计划进度
-                </div>
-                <div v-else style="display: flex; flex-direction: column; gap: 16px">
-                  <div v-for="stepProgress in userProgress.steps" :key="stepProgress.step_id">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px">
-                      <span style="font-weight: 500">{{ stepProgress.step_title }}</span>
-                      <span style="color: #606266">
-                        {{ stepProgress.solved_problems }}/{{ stepProgress.total_problems }}
-                        ({{ stepProgress.progress_percent.toFixed(1) }}%)
-                      </span>
-                    </div>
-                    <el-progress
-                      :percentage="stepProgress.progress_percent"
-                      :color="getStepProgressColor(stepProgress.progress_percent)"
-                      :stroke-width="10"
-                    />
-                    <div v-if="stepProgress.problems.length" style="margin-top: 8px; padding-left: 12px">
-                      <div
-                        v-for="problem in stepProgress.problems"
-                        :key="problem.problem_id"
-                        style="font-size: 12px; color: #67c23a; margin: 4px 0"
-                      >
-                        ✓ {{ problem.title }} ({{ formatTime(problem.ac_time) }})
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </el-card>
-            </div>
           </div>
         </el-tab-pane>
 

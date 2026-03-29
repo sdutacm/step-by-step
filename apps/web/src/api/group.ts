@@ -65,37 +65,6 @@ export interface UpdateMemberData {
   role: 'member' | 'admin'
 }
 
-export interface GroupProblemProgress {
-  problem_id: number
-  oj_problem_id: string
-  title: string
-  ac_time: string
-  order: number
-}
-
-export interface GroupStepProgress {
-  step_id: number
-  step_title: string
-  total_problems: number
-  solved_problems: number
-  progress_percent: number
-  problems: GroupProblemProgress[]
-}
-
-export interface GroupUserProgress {
-  user_id: number
-  username: string
-  nickname: string | null
-  steps: GroupStepProgress[]
-  total_solved: number
-}
-
-export interface GroupProgressResponse {
-  group_id: number
-  group_name: string
-  members: GroupUserProgress[]
-}
-
 async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Response> {
   const token = getToken()
   if (!token) {
@@ -225,22 +194,4 @@ export async function removeGroupMember(groupId: number, userId: number): Promis
     const error = await response.json()
     throw new Error(error.detail || 'Failed to remove member')
   }
-}
-
-export async function getGroupProgress(groupId: number): Promise<GroupProgressResponse> {
-  const response = await fetchWithAuth(`/api/groups/${groupId}/progress`)
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to get progress')
-  }
-  return await response.json()
-}
-
-export async function getUserProgress(groupId: number, userId: number): Promise<GroupUserProgress> {
-  const response = await fetchWithAuth(`/api/groups/${groupId}/progress/${userId}`)
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.detail || 'Failed to get user progress')
-  }
-  return await response.json()
 }
