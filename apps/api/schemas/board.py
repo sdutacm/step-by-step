@@ -110,6 +110,12 @@ class BoardUserListResponse(BaseModel):
     items: list[BoardUserResponse]
 
 
+class SubmissionRecord(BaseModel):
+    result: int
+    submitted_at: datetime
+    language: int
+
+
 class ProblemProgress(BaseModel):
     problem_id: int
     oj_problem_id: str
@@ -121,6 +127,7 @@ class ProblemProgress(BaseModel):
     ac_time: datetime | None = None
     failed_time: datetime | None = None
     result: int | None = None
+    submissions: list[SubmissionRecord] = []
 
 
 class StepProgress(BaseModel):

@@ -20,6 +20,7 @@ import {
   type BoardProgressResponse,
   type BoardVisibility,
   type ProblemProgress,
+  type SubmissionRecord,
 } from '../api/board'
 import { getGroup, type Group } from '../api/group'
 import { getCurrentUser } from '../api/auth'
@@ -51,6 +52,7 @@ interface CellData {
   ac_time: string | null
   failed_time: string | null
   result: number | null
+  submissions: SubmissionRecord[]
 }
 
 const dialogVisible = ref(false)
@@ -62,6 +64,17 @@ const dialogData = ref<{
   problem: null,
   user: null,
   cell: null,
+})
+
+const submissionsDialogVisible = ref(false)
+const submissionsDialogData = ref<{
+  problem: ProblemProgress | null
+  user: TableUser | null
+  submissions: SubmissionRecord[]
+}>({
+  problem: null,
+  user: null,
+  submissions: [],
 })
 
 const users = computed<TableUser[]>(() => {
@@ -90,6 +103,7 @@ const cellMap = computed(() => {
         ac_time: problem.ac_time,
         failed_time: problem.failed_time,
         result: problem.result,
+        submissions: problem.submissions,
       })
     }
     map.set(user.user_id, userMap)
@@ -154,6 +168,19 @@ function openCellDialog(problemId: number, userId: number) {
   dialogVisible.value = true
 }
 
+function openSubmissionsDialog(problemId: number, userId: number) {
+  const problem = problems.value.find(p => p.problem_id === problemId)
+  const user = users.value.find(u => u.user_id === userId)
+  const cell = getCellData(problemId, userId)
+
+  submissionsDialogData.value = {
+    problem: problem || null,
+    user: user || null,
+    submissions: cell?.submissions || [],
+  }
+  submissionsDialogVisible.value = true
+}
+
 function formatTime(time: string) {
   const d = new Date(time)
   const pad = (n: number) => n.toString().padStart(2, '0')
@@ -196,6 +223,24 @@ function getResultType(result: number | null): string {
   if (result === 1) return 'success'
   if (result === null) return 'info'
   return 'danger'
+}
+
+function getLanguageLabel(language: number): string {
+  const languages: Record<number, string> = {
+    1: 'C',
+    2: 'C++',
+    3: 'Python',
+    4: 'Java',
+    5: 'Go',
+    6: 'Rust',
+    7: 'JavaScript',
+    8: 'TypeScript',
+    9: 'C#',
+    10: 'Pascal',
+    11: 'Fortran',
+    999: 'Unknown',
+  }
+  return languages[language] || 'Unknown'
 }
 
 function getProblemUrl(source: string, problemId: string): string {
@@ -294,7 +339,7 @@ onUnmounted(() => {
                   v-if="getCellData(row.problem_id, user.user_id)?.result !== null"
                   :style="getCellStyle(row.problem_id, user.user_id)"
                   class="cell-bg"
-                  @click="openCellDialog(row.problem_id, user.user_id)"
+                  @click="openSubmissionsDialog(row.problem_id, user.user_id)"
                 >
                   {{ getCellTimeText(row.problem_id, user.user_id) }}
                 </div>
@@ -352,6 +397,32 @@ onUnmounted(() => {
           <el-button @click="dialogVisible = false">关闭</el-button>
         </div>
       </template>
+    </el-dialog>
+
+    <el-dialog
+      v-model="submissionsDialogVisible"
+      :title="`${submissionsDialogData.user?.nickname || submissionsDialogData.user?.username} - ${submissionsDialogData.problem?.title} 提交记录`"
+      width="600px"
+    >
+      <el-table :data="submissionsDialogData.submissions" max-height="400">
+        <el-table-column prop="submitted_at" label="提交时间" width="220">
+          <template #default="{ row }">
+            {{ formatTime(row.submitted_at) }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="result" label="结果" width="150">
+          <template #default="{ row }">
+            <el-tag :type="getResultType(row.result)" size="small">
+              {{ getResultLabel(row.result) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="language" label="语言" width="100">
+          <template #default="{ row }">
+            {{ getLanguageLabel(row.language) }}
+          </template>
+        </el-table-column>
+      </el-table>
     </el-dialog>
   </div>
 </template>

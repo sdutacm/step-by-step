@@ -87,6 +87,12 @@ export interface BoardUserListResponse {
   items: BoardUser[]
 }
 
+export interface SubmissionRecord {
+  result: number
+  submitted_at: string
+  language: number
+}
+
 export interface ProblemProgress {
   problem_id: number
   oj_problem_id: string
@@ -98,6 +104,7 @@ export interface ProblemProgress {
   ac_time: string | null
   failed_time: string | null
   result: number | null
+  submissions: SubmissionRecord[]
 }
 
 export interface UserBoardProgress {

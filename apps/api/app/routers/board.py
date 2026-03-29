@@ -37,6 +37,7 @@ from schemas.board import (
     PublicBoardListItem,
     PublicBoardListResponse,
     StepProgress,
+    SubmissionRecord,
     UserBoardProgress,
 )
 from schemas.result import ResultEnum
@@ -98,8 +99,8 @@ def calculate_user_step_progress(
         .all()
     )
 
+    all_submissions: dict[int, list[Solution]] = {}
     solved_map: dict[int, datetime] = {}
-    attempted_map: dict[int, int] = {}
     failed_time_map: dict[int, datetime] = {}
     for sp in step_problems:
         solutions = (
@@ -109,18 +110,19 @@ def calculate_user_step_progress(
             )
             .all()
         )
+        problem_id = sp.problem_id
+        all_submissions[problem_id] = []
         for sol in solutions:
             src_username = source_usernames.get(sol.source)
             if src_username and sol.username == src_username:
-                problem_id = sp.problem_id
+                all_submissions[problem_id].append(sol)
                 if sol.result == ResultEnum.Accepted:
                     if problem_id not in solved_map:
                         solved_map[problem_id] = sol.submitted_at
                     elif sol.submitted_at < solved_map[problem_id]:
                         solved_map[problem_id] = sol.submitted_at
                 else:
-                    if problem_id not in attempted_map:
-                        attempted_map[problem_id] = sol.result.value
+                    if problem_id not in failed_time_map:
                         failed_time_map[problem_id] = sol.submitted_at
                     elif sol.submitted_at > failed_time_map[problem_id]:
                         failed_time_map[problem_id] = sol.submitted_at
@@ -128,16 +130,26 @@ def calculate_user_step_progress(
     problems: list[ProblemProgress] = []
     for sp in step_problems:
         problem = sp.problem
-        ac_time = solved_map.get(sp.problem_id)
-        failed_time = failed_time_map.get(sp.problem_id)
+        problem_id = sp.problem_id
+        submissions = all_submissions.get(problem_id, [])
+        ac_time = solved_map.get(problem_id)
+        failed_time = failed_time_map.get(problem_id)
         result = (
             ResultEnum.Accepted.value
-            if sp.problem_id in solved_map
-            else attempted_map.get(sp.problem_id)
+            if problem_id in solved_map
+            else (submissions[-1].result.value if submissions else None)
         )
+        submission_records = [
+            SubmissionRecord(
+                result=sol.result.value,
+                submitted_at=sol.submitted_at,
+                language=sol.language.value,
+            )
+            for sol in submissions
+        ]
         problems.append(
             ProblemProgress(
-                problem_id=sp.problem_id,
+                problem_id=problem_id,
                 oj_problem_id=problem.problem_id,
                 source=problem.source,
                 title=problem.title,
@@ -147,6 +159,7 @@ def calculate_user_step_progress(
                 ac_time=ac_time,
                 failed_time=failed_time,
                 result=result,
+                submissions=submission_records,
             )
         )
 
