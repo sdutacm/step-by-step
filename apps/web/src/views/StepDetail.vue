@@ -17,6 +17,7 @@ import {
   ElSelect,
   ElOption,
   ElPagination,
+  ElSkeleton,
 } from 'element-plus'
 import {
   getStep,
@@ -202,10 +203,10 @@ onMounted(async () => {
 
 <template>
   <div style="padding: 20px; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
-    <el-card v-loading="isLoading">
+    <el-card v-if="!isLoading && step">
       <template #header>
         <div style="display: flex; align-items: center; justify-content: space-between">
-          <span>{{ step?.title || '训练计划详情' }}</span>
+          <span>{{ step.title }}</span>
           <div style="display: flex; gap: 8px">
             <el-button @click="router.push('/steps')">返回列表</el-button>
             <el-button v-if="isCreator() && !isEditing" type="primary" @click="isEditing = true">
@@ -241,32 +242,40 @@ onMounted(async () => {
         <div style="display: flex; flex-direction: column; gap: 16px">
           <div>
             <strong>描述：</strong>
-            <span>{{ step?.description || '暂无描述' }}</span>
+            <span>{{ step.description || '暂无描述' }}</span>
           </div>
           <div>
             <strong>创建者：</strong>
-            <span>{{ step?.creator_username }}</span>
+            <span>{{ step.creator_username }}</span>
           </div>
           <div>
             <strong>创建时间：</strong>
-            <span>{{ step?.created_at ? formatTime(step.created_at) : '-' }}</span>
+            <span>{{ formatTime(step.created_at) }}</span>
           </div>
           <div>
             <strong>更新时间：</strong>
-            <span>{{ step?.updated_at ? formatTime(step.updated_at) : '-' }}</span>
+            <span>{{ formatTime(step.updated_at) }}</span>
           </div>
         </div>
       </template>
     </el-card>
-
-    <el-card>
+    <el-card v-else>
       <template #header>
         <div style="display: flex; align-items: center; justify-content: space-between">
-          <span>题目列表 ({{ step?.problem_count || 0 }})</span>
+          <span>训练计划详情</span>
+        </div>
+      </template>
+      <el-skeleton :rows="4" animated />
+    </el-card>
+
+    <el-card v-if="!isLoading && step">
+      <template #header>
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <span>题目列表 ({{ step.problem_count }})</span>
           <el-button v-if="isCreator()" type="primary" @click="openAddProblemsDialog">添加题目</el-button>
         </div>
       </template>
-      <el-table v-if="step?.problems.length" :data="step.problems" style="width: 100%">
+      <el-table v-if="step.problems.length" :data="step.problems" style="width: 100%">
         <el-table-column prop="order" label="顺序" width="80" align="center" />
         <el-table-column prop="problem_id" label="题目ID" width="120" />
         <el-table-column prop="source" label="平台" width="100">

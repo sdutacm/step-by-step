@@ -20,6 +20,7 @@ import {
   ElOption,
   ElProgress,
   ElBadge,
+  ElSkeleton,
 } from 'element-plus'
 import {
   getGroup,
@@ -236,10 +237,10 @@ onMounted(async () => {
 
 <template>
   <div style="padding: 20px; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
-    <el-card v-loading="isLoading">
+    <el-card v-if="!isLoading && group">
       <template #header>
         <div style="display: flex; align-items: center; justify-content: space-between">
-          <span>{{ group?.name || '组织详情' }}</span>
+          <span>{{ group.name }}</span>
           <div style="display: flex; gap: 8px">
             <el-button @click="router.push('/groups')">返回列表</el-button>
             <el-button v-if="isAdmin() && !isEditing" type="primary" @click="isEditing = true">
@@ -275,22 +276,30 @@ onMounted(async () => {
         <div style="display: flex; flex-direction: column; gap: 16px">
           <div>
             <strong>描述：</strong>
-            <span>{{ group?.description || '暂无描述' }}</span>
+            <span>{{ group.description || '暂无描述' }}</span>
           </div>
           <div>
             <strong>成员数：</strong>
-            <span>{{ group?.member_count }}</span>
+            <span>{{ group.member_count }}</span>
           </div>
           <div>
             <strong>训练计划数：</strong>
-            <span>{{ group?.step_count }}</span>
+            <span>{{ group.step_count }}</span>
           </div>
           <div>
             <strong>创建时间：</strong>
-            <span>{{ group?.created_at ? formatTime(group.created_at) : '-' }}</span>
+            <span>{{ formatTime(group.created_at) }}</span>
           </div>
         </div>
       </template>
+    </el-card>
+    <el-card v-else>
+      <template #header>
+        <div style="display: flex; align-items: center; justify-content: space-between">
+          <span>组织详情</span>
+        </div>
+      </template>
+      <el-skeleton :rows="4" animated />
     </el-card>
 
     <el-card>
