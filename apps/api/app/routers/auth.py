@@ -297,7 +297,7 @@ async def get_ghost_accounts(
     source_users = (
         db.query(SourceUser)
         .join(User, SourceUser.user_id == User.id)
-        .filter(User.is_temp == True)
+        .filter(User.is_temp)
         .all()
     )
 
