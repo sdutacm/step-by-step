@@ -25,6 +25,7 @@ export interface User {
   nickname: string | null
   avatar_url: string | null
   source_users: SourceUser[]
+  is_super_admin?: boolean
 }
 
 export interface UserUpdateData {

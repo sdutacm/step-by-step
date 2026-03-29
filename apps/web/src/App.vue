@@ -3,10 +3,11 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElDialog, ElForm, ElFormItem, ElInput, ElMessage } from 'element-plus'
 import { login, register, getCurrentUser, logout, type User } from './api/auth'
+import { useUserStore } from './stores/user'
 
 const route = useRoute()
+const userStore = useUserStore()
 
-const user = ref<User | null>(null)
 const loginDialogVisible = ref(false)
 const registerDialogVisible = ref(false)
 
@@ -20,13 +21,14 @@ const registerForm = ref({
   password: '',
 })
 
-const isLoggedIn = computed(() => !!user.value)
+const isLoggedIn = computed(() => !!userStore.user)
+const isSuperAdmin = computed(() => userStore.isSuperAdmin)
 const activeIndex = computed(() => route.path)
 
 async function handleLogin() {
   try {
     await login(loginForm.value)
-    user.value = await getCurrentUser()
+    await userStore.fetchUser()
     loginDialogVisible.value = false
     loginForm.value = { username: '', password: '' }
     ElMessage.success('登录成功')
@@ -50,15 +52,15 @@ async function handleRegister() {
 
 async function handleLogout() {
   await logout()
-  user.value = null
+  userStore.clearUser()
   ElMessage.success('已退出登录')
 }
 
 onMounted(async () => {
   try {
-    user.value = await getCurrentUser()
+    await userStore.fetchUser()
   } catch {
-    user.value = null
+    userStore.clearUser()
   }
 })
 </script>
@@ -70,11 +72,14 @@ onMounted(async () => {
     <el-menu-item index="/groups">组织</el-menu-item>
     <div style="flex: 1"></div>
     <template v-if="isLoggedIn">
+      <el-menu-item v-if="isSuperAdmin" index="/admin/users">
+        用户管理
+      </el-menu-item>
       <el-menu-item index="/steps/create">
         创建训练计划
       </el-menu-item>
       <el-menu-item index="/profile">
-        {{ user?.username }}
+        {{ userStore.user?.username }}
       </el-menu-item>
       <el-menu-item index="" @click="handleLogout">
         退出登录

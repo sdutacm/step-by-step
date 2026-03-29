@@ -3,6 +3,7 @@ from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from loguru import logger
+from sqlalchemy import func
 from sqlalchemy.orm import Session, joinedload
 
 from app.core.config import settings
@@ -47,16 +48,20 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
             detail="Username already registered",
         )
 
+    user_count = db.query(func.count(User.id)).scalar()
+    is_first_user = user_count == 0
+
     hashed_password = get_password_hash(user_data.password)
     new_user = User(
         username=user_data.username,
         hashed_password=hashed_password,
+        is_super_admin=is_first_user,
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     logger.success(
-        f"User '{user_data.username}' registered successfully with id={new_user.id}"
+        f"User '{user_data.username}' registered successfully with id={new_user.id}, is_super_admin={new_user.is_super_admin}"
     )
     return new_user
 

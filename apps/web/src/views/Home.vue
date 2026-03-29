@@ -10,6 +10,8 @@ import {
   ElMessage,
 } from 'element-plus'
 import { getSolutions, type Solution, type PaginatedSolutions } from '../api/auth'
+import { useUserStore } from '../stores/user'
+import { getToken } from '../api/auth'
 
 const solutions = ref<Solution[]>([])
 const isLoading = ref(false)
@@ -18,6 +20,8 @@ const pagination = ref({
   page_size: 20,
   total: 0,
 })
+
+const userStore = useUserStore()
 
 const resultMap: Record<number, { label: string; type: 'success' | 'danger' | 'warning' | 'info' }> = {
   1: { label: 'Accepted', type: 'success' },
@@ -98,7 +102,10 @@ function handleSizeChange(size: number) {
   fetchSolutions()
 }
 
-onMounted(() => {
+onMounted(async () => {
+  if (getToken()) {
+    await userStore.fetchUser()
+  }
   fetchSolutions()
 })
 </script>

@@ -27,7 +27,9 @@ import {
   type User,
   type Source,
 } from '../api/auth'
+import { useUserStore } from '../stores/user'
 
+const userStore = useUserStore()
 const user = ref<User | null>(null)
 const editDialogVisible = ref(false)
 const bindDialogVisible = ref(false)
@@ -49,6 +51,7 @@ const bindForm = ref({
 async function refreshUser() {
   try {
     user.value = await getCurrentUser()
+    userStore.setUser(user.value)
   } catch {
     ElMessage.error('获取用户信息失败')
   }
@@ -152,7 +155,10 @@ onMounted(async () => {
               {{ user?.username?.charAt(0).toUpperCase() }}
             </el-avatar>
             <div>
-              <h2 style="margin: 0">{{ user?.nickname || user?.username }}</h2>
+              <div style="display: flex; align-items: center; gap: 8px">
+                <h2 style="margin: 0">{{ user?.nickname || user?.username }}</h2>
+                <el-tag v-if="user?.is_super_admin" type="danger" size="small">超级管理员</el-tag>
+              </div>
               <span style="color: #999">个人信息</span>
             </div>
           </div>

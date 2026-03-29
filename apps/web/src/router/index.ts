@@ -6,7 +6,9 @@ import StepCreate from '../views/StepCreate.vue'
 import StepDetail from '../views/StepDetail.vue'
 import Groups from '../views/Groups.vue'
 import GroupDetail from '../views/GroupDetail.vue'
+import AdminUsers from '../views/AdminUsers.vue'
 import { getToken } from '../api/auth'
+import { useUserStore } from '../stores/user'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -48,15 +50,29 @@ const router = createRouter({
       name: 'group-detail',
       component: GroupDetail,
     },
+    {
+      path: '/admin/users',
+      name: 'admin-users',
+      component: AdminUsers,
+      meta: { requiresAuth: true, requiresSuperAdmin: true },
+    },
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  const userStore = useUserStore()
+
   if (to.meta.requiresAuth && !getToken()) {
     next('/')
-  } else {
-    next()
+    return
   }
+
+  if (to.meta.requiresSuperAdmin && !userStore.isSuperAdmin) {
+    next('/')
+    return
+  }
+
+  next()
 })
 
 export default router

@@ -3,10 +3,10 @@ from loguru import logger
 from sqlalchemy import func
 from sqlalchemy.orm import Session, joinedload
 
+from app.dependencies.permissions import require_super_admin
 from app.routers.auth import get_current_user
 from db.models.group import Group
 from db.models.group_user import GroupRole, GroupUser
-from db.models.step import Step
 from db.models.user import User
 from db.session import get_db
 from schemas.group import (
@@ -26,40 +26,13 @@ from schemas.group_user import (
 router = APIRouter(prefix="/api/groups", tags=["groups"])
 
 
-def is_super_admin(user: User) -> bool:
-    return False
-
-
-def is_group_admin(db: Session, user_id: int, group_id: int) -> bool:
-    gu = (
-        db.query(GroupUser)
-        .filter(GroupUser.user_id == user_id, GroupUser.group_id == group_id)
-        .first()
-    )
-    return gu is not None and gu.role == GroupRole.ADMIN
-
-
-def is_group_member(db: Session, user_id: int, group_id: int) -> bool:
-    gu = (
-        db.query(GroupUser)
-        .filter(GroupUser.user_id == user_id, GroupUser.group_id == group_id)
-        .first()
-    )
-    return gu is not None
-
-
 @router.post("", response_model=GroupResponse, status_code=status.HTTP_201_CREATED)
 def create_group(
     group_data: GroupCreate,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     logger.info(f"Create group: user={current_user.username}, name={group_data.name}")
-    if not is_super_admin(current_user):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only super admin can create groups",
-        )
     existing = db.query(Group).filter(Group.name == group_data.name).first()
     if existing:
         raise HTTPException(
@@ -159,11 +132,23 @@ def update_group(
     db: Session = Depends(get_db),
 ):
     logger.info(f"Update group: id={group_id}, user={current_user.username}")
-    if not is_group_admin(db, current_user.id, group_id):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only group admin can update group",
+    if current_user.is_super_admin:
+        pass
+    else:
+        gu = (
+            db.query(GroupUser)
+            .filter(
+                GroupUser.group_id == group_id,
+                GroupUser.user_id == current_user.id,
+                GroupUser.role == GroupRole.ADMIN,
+            )
+            .first()
         )
+        if gu is None:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Only group admin can update group",
+            )
     group = db.query(Group).filter(Group.id == group_id).first()
     if not group:
         raise HTTPException(
@@ -197,15 +182,10 @@ def update_group(
 @router.delete("/{group_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_group(
     group_id: int,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     logger.info(f"Delete group: id={group_id}, user={current_user.username}")
-    if not is_super_admin(current_user):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only super admin can delete groups",
-        )
     group = db.query(Group).filter(Group.id == group_id).first()
     if not group:
         raise HTTPException(
@@ -231,11 +211,21 @@ def add_member(
     logger.info(
         f"Add member: group_id={group_id}, admin={current_user.username}, target={request.username}"
     )
-    if not is_group_admin(db, current_user.id, group_id):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only group admin can add members",
+    if not current_user.is_super_admin:
+        gu = (
+            db.query(GroupUser)
+            .filter(
+                GroupUser.group_id == group_id,
+                GroupUser.user_id == current_user.id,
+                GroupUser.role == GroupRole.ADMIN,
+            )
+            .first()
         )
+        if gu is None:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Only group admin can add members",
+            )
     group = db.query(Group).filter(Group.id == group_id).first()
     if not group:
         raise HTTPException(
@@ -334,11 +324,21 @@ def update_member(
     logger.info(
         f"Update member: group_id={group_id}, user_id={user_id}, admin={current_user.username}"
     )
-    if not is_group_admin(db, current_user.id, group_id):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only group admin can update members",
+    if not current_user.is_super_admin:
+        gu = (
+            db.query(GroupUser)
+            .filter(
+                GroupUser.group_id == group_id,
+                GroupUser.user_id == current_user.id,
+                GroupUser.role == GroupRole.ADMIN,
+            )
+            .first()
         )
+        if gu is None:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Only group admin can update members",
+            )
     group_user = (
         db.query(GroupUser)
         .options(joinedload(GroupUser.user))
@@ -374,11 +374,21 @@ def remove_member(
     logger.info(
         f"Remove member: group_id={group_id}, user_id={user_id}, admin={current_user.username}"
     )
-    if not is_group_admin(db, current_user.id, group_id):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only group admin can remove members",
+    if not current_user.is_super_admin:
+        gu = (
+            db.query(GroupUser)
+            .filter(
+                GroupUser.group_id == group_id,
+                GroupUser.user_id == current_user.id,
+                GroupUser.role == GroupRole.ADMIN,
+            )
+            .first()
         )
+        if gu is None:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Only group admin can remove members",
+            )
     group_user = (
         db.query(GroupUser)
         .filter(GroupUser.group_id == group_id, GroupUser.user_id == user_id)
