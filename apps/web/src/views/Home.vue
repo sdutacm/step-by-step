@@ -128,7 +128,11 @@ onMounted(async () => {
             <el-tag>{{ row.source.toUpperCase() }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="用户" width="120" />
+        <el-table-column label="用户" width="120">
+          <template #default="{ row }">
+            {{ row.nickname || row.username }}
+          </template>
+        </el-table-column>
         <el-table-column prop="problem_title" label="题目" min-width="200">
           <template #default="{ row }">
             <a :href="getProblemUrl(row.source, row.oj_problem_id)" target="_blank" rel="noopener noreferrer"

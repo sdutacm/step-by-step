@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import httpx
+from loguru import logger
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
@@ -15,11 +16,16 @@ async def login(client: httpx.AsyncClient):
     username = settings.VJ_SPIDER_USER
     password = settings.VJ_SPIDER_PASS
     login_url = "https://vjudge.net/user/login"
+    logger.info(f"[VJ] Logging in as {username}")
     resp = await client.post(
         login_url,
         data={"username": username, "password": password},
     )
     success = resp.text == "success"
+    if success:
+        logger.success(f"[VJ] Login successful")
+    else:
+        logger.error(f"[VJ] Login failed: {resp.text}")
     return success
 
 
@@ -46,16 +52,21 @@ def vj_item_to_solution(user: str, item: dict) -> dict:
 
 
 async def fetch_solutions(client: httpx.AsyncClient, session: Session):
-    # 根据 VJ 说明，此接口用于获取当前 group（sdutsbs） 一天内登录过的用户的所有 AC 数据
+    logger.info("[VJ] Fetching solutions from group sdutsbs")
     url = "https://vjudge.net/group/solveEntries/sdutsbs?queryWindowMillis=7200000"
     resp = await client.get(url)
-    for user, rows in resp.json().items():
-        # vj 的返回数据中没有 solution id，因此我们无法进行更新，只能全量覆盖
+    data = resp.json()
+    user_count = len(data)
+    total_solutions = sum(len(rows) for rows in data.values())
+    logger.info(f"[VJ] Found {user_count} users with {total_solutions} total solutions")
+
+    for user, rows in data.items():
+        logger.debug(f"[VJ] Processing user {user}: {len(rows)} solutions")
         session.query(Solution).where(
             Solution.source == "vj", Solution.username == user
         ).delete()
+        new_count = 0
         for row in rows:
-            # 因为 VJ 限制题目获取，此处的题目可能不在 problems 中，所以需要更新 problems
             params = vj_item_to_solution(user, row)
             problem = (
                 session.query(Problem)
@@ -65,10 +76,11 @@ async def fetch_solutions(client: httpx.AsyncClient, session: Session):
             if problem is None:
                 problem = Problem()
                 problem.problem_id = params["problem"]
-                # 因为数据里没有，所以用 pid 填充
                 problem.title = params["problem"]
+                problem.source = "vj"
                 session.add(problem)
                 session.commit()
+                logger.debug(f"[VJ] Created new problem: {problem.problem_id}")
             solution = Solution()
             solution.source = "vj"
             solution.username = user
@@ -79,12 +91,25 @@ async def fetch_solutions(client: httpx.AsyncClient, session: Session):
             solution.submitted_at = params["submitted_at"]
             solution.problem = problem
             session.add(solution)
+            new_count += 1
         session.commit()
+        logger.info(f"[VJ] Saved {new_count} solutions for user {user}")
+    logger.success(
+        f"[VJ] Solutions sync completed: {total_solutions} solutions processed"
+    )
 
 
 async def solutions():
+    logger.info("[VJ] Starting solutions sync")
     with SessionLocal() as session:
         async with httpx.AsyncClient() as client:
             await login(client)
             await fetch_solutions(client, session)
         session.commit()
+    logger.info("[VJ] Solutions sync finished")
+
+
+if __name__ == "__main__":
+    import asyncio
+
+    asyncio.run(solutions())

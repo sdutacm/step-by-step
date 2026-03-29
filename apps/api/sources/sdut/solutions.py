@@ -80,11 +80,16 @@ async def login(client: httpx.AsyncClient):
     username = settings.SDUT_SPIDER_USER
     password = settings.SDUT_SPIDER_PASS
     login_url = "https://oj.sdutacm.cn/onlinejudge3/api/login"
+    logger.info(f"[SDUT] Logging in as {username}")
     resp = await client.post(
         login_url,
         json={"loginName": username, "password": password},
     )
     success = resp.json()["success"] is True
+    if success:
+        logger.success("[SDUT] Login successful")
+    else:
+        logger.error(f"[SDUT] Login failed: {resp.json()}")
     return success
 
 
@@ -92,26 +97,38 @@ async def fetch_solutions(
     client: httpx.AsyncClient, session: Session
 ) -> List[Solution]:
     url = "https://oj.sdutacm.cn/onlinejudge3/api/getSolutionList"
-    # 从已有数据中找出已获取的 solution id 最高的
     solution = session.query(Solution).order_by(-Solution.solution_id).first()
     sid = int(solution.solution_id) if solution is not None else 0
-    # 从上次获取到的位置开始，更新数据
+    logger.info(f"[SDUT] Starting solutions sync from solution_id > {sid}")
     params = {"gt": sid, "limit": 1000, "order": [["solutionId", "DESC"]]}
 
+    total_new = 0
+    total_updated = 0
+    page = 0
+
     while True:
+        page += 1
         resp = await client.post(url, json=params)
         resp = resp.json()
         rows = resp["data"]["rows"]
         need_break = False
+        new_count = 0
+        updated_count = 0
 
         for row in rows:
-            solution = (
+            existing = (
                 session.query(Solution)
                 .filter(Solution.solution_id == str(row["solutionId"]))
                 .first()
             )
-            if solution is None:
+            is_new = existing is None
+            if is_new:
                 solution = Solution()
+                new_count += 1
+            else:
+                solution = existing
+                updated_count += 1
+
             problem_id = str(row["problem"]["problemId"])
             problem = (
                 session.query(Problem)
@@ -122,16 +139,18 @@ async def fetch_solutions(
                 .first()
             )
             if problem is None:
-                logger.warning(f"problem {problem_id} not found!")
+                logger.warning(
+                    f"[SDUT] Problem {problem_id} not found, skipping solution"
+                )
                 continue
 
             solution.solution_id = str(row["solutionId"])
             result = to_result_enum(row["result"])
             if result == ResultEnum.Unknown:
-                logger.warning(f"result {row['result']} unknown")
+                logger.warning(f"[SDUT] Unknown result code: {row['result']}")
             language = to_language_enum(row["language"])
             if language == LanguageEnum.Unknown:
-                logger.warning(f"language {row['language']} unknown")
+                logger.warning(f"[SDUT] Unknown language: {row['language']}")
             solution.result = result
             solution.language = language
             solution.submitted_at = datetime.strptime(
@@ -139,32 +158,39 @@ async def fetch_solutions(
             ) + timedelta(hours=8)
             solution.source = "sdut"
             solution.problem = problem
-
-            # sdut 平台的 username 使用 user id
             solution.username = row["user"]["userId"]
             solution.nickname = row["user"]["nickname"]
 
             session.add(solution)
 
-            # 如果状态为评测中，且提交时间在一天内，则退出获取
             if row["result"] == -1 and (
                 datetime.now() - solution.submitted_at
             ) < timedelta(days=1):
                 need_break = True
                 break
 
-        # 如果数量不够，认为是获取结束了
+        total_new += new_count
+        total_updated += updated_count
+
         if len(rows) < 1000:
             need_break = True
+
+        logger.info(
+            f"[SDUT] Page {page}: processed {new_count} new, {updated_count} updated"
+        )
 
         if need_break is True:
             break
         session.commit()
 
+    logger.info(
+        f"[SDUT] Solutions sync completed: {total_new} new, {total_updated} updated"
+    )
     return []
 
 
 async def solutions():
+    logger.info("[SDUT] Starting solutions sync")
     with SessionLocal() as session:
         async with httpx.AsyncClient() as client:
             csrf_token = await get_csrf(client)
@@ -172,4 +198,10 @@ async def solutions():
             await login(client)
             solus = await fetch_solutions(client, session)
         session.commit()
-        logger.info(f"本次抓取 solutions count = {len(solus)}")
+    logger.info("[SDUT] Solutions sync finished")
+
+
+if __name__ == "__main__":
+    import asyncio
+
+    asyncio.run(solutions())

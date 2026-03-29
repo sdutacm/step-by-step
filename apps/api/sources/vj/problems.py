@@ -13,20 +13,28 @@ async def login(client: httpx.AsyncClient):
     username = settings.VJ_SPIDER_USER
     password = settings.VJ_SPIDER_PASS
     login_url = "https://vjudge.net/user/login"
+    logger.info(f"[VJ] Logging in as {username}")
     resp = await client.post(
         login_url,
         data={"username": username, "password": password},
     )
-    print(resp.text)
     success = resp.text == "success"
+    if success:
+        logger.success("[VJ] Login successful")
+    else:
+        logger.error(f"[VJ] Login failed: {resp.text}")
     return success
 
 
 async def fetch_problems(client: httpx.AsyncClient, session: Session) -> List[Problem]:
+    logger.info("[VJ] Fetching problems list")
     url = "https://vjudge.net/problem/data"
     page = 0
     probs = []
+    total_fetched = 0
+
     while True:
+        page += 1
         resp = await client.get(
             url,
             params={
@@ -36,8 +44,11 @@ async def fetch_problems(client: httpx.AsyncClient, session: Session) -> List[Pr
                 "category": "all",
             },
         )
-        page += 1
         rows = resp.json()["data"]
+        row_count = len(rows)
+        total_fetched += row_count
+        logger.debug(f"[VJ] Page {page}: fetched {row_count} problems")
+
         for row in rows:
             title = row["title"]
             problem_id = f"{row['originOJ']}-{row['originProb']}"
@@ -52,21 +63,31 @@ async def fetch_problems(client: httpx.AsyncClient, session: Session) -> List[Pr
             if prob is None:
                 prob = Problem()
                 probs.append(prob)
+                logger.debug(f"[VJ] New problem: {problem_id}")
             prob.problem_id = problem_id
             prob.title = title
             prob.source = "vj"
             session.add(prob)
-            logger.info(f"update vj problem title = {prob.title}")
         session.commit()
-        if len(rows) < 100:
+
+        if row_count < 100:
             break
+
+    logger.info(f"[VJ] Problems fetched: {total_fetched} total, {len(probs)} new")
     return probs
 
 
 async def problems():
+    logger.info("[VJ] Starting problems sync")
     with SessionLocal() as session:
         async with httpx.AsyncClient() as client:
             await login(client)
             probs = await fetch_problems(client, session)
         session.commit()
-        logger.info(f"本次抓取 problems count = {len(probs)}")
+    logger.success(f"[VJ] Problems sync completed: {len(probs)} new problems")
+
+
+if __name__ == "__main__":
+    import asyncio
+
+    asyncio.run(problems())
