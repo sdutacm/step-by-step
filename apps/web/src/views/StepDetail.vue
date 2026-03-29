@@ -214,6 +214,7 @@ onMounted(async () => {
 function initTableDrag() {
   if (!isCreator()) return;
 
+  /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call */
   const table = problemsTableRef.value?.$el;
   if (!table) {
     setTimeout(initTableDrag, 100);
@@ -227,8 +228,8 @@ function initTableDrag() {
   if (sortableInstance) {
     sortableInstance.destroy();
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sortableInstance = (Sortable as any).create(tbody as HTMLElement, {
+    /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call */
     animation: 150,
     handle: ".el-table__row",
 
