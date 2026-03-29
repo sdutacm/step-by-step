@@ -4,6 +4,8 @@ import Profile from '../views/Profile.vue'
 import Steps from '../views/Steps.vue'
 import StepCreate from '../views/StepCreate.vue'
 import StepDetail from '../views/StepDetail.vue'
+import Groups from '../views/Groups.vue'
+import GroupDetail from '../views/GroupDetail.vue'
 import { getToken } from '../api/auth'
 
 const router = createRouter({
@@ -35,6 +37,16 @@ const router = createRouter({
       path: '/steps/:id',
       name: 'step-detail',
       component: StepDetail,
+    },
+    {
+      path: '/groups',
+      name: 'groups',
+      component: Groups,
+    },
+    {
+      path: '/groups/:id',
+      name: 'group-detail',
+      component: GroupDetail,
     },
   ],
 })

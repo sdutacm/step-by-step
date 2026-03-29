@@ -7,6 +7,8 @@ from fastapi import FastAPI, Request
 from loguru import logger
 
 from app.routers.auth import router as auth_router
+from app.routers.group import router as group_router
+from app.routers.group_progress import router as group_progress_router
 from app.routers.problem import router as problem_router
 from app.routers.solution import router as solution_router
 from app.routers.source import router as source_router
@@ -103,6 +105,8 @@ app.include_router(source_router)
 app.include_router(solution_router)
 app.include_router(step_router)
 app.include_router(problem_router)
+app.include_router(group_router)
+app.include_router(group_progress_router)
 
 
 @app.get("/")

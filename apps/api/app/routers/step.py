@@ -4,6 +4,8 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session, joinedload
 
 from app.routers.auth import get_current_user
+from db.models.group import Group
+from db.models.group_user import GroupRole, GroupUser
 from db.models.problem import Problem
 from db.models.step import Step
 from db.models.step_problem import StepProblem
@@ -29,10 +31,32 @@ def create_step(
     db: Session = Depends(get_db),
 ):
     logger.info(f"Create step: user={current_user.username}, title={step_data.title}")
+    group = None
+    if step_data.group_id is not None:
+        group = db.query(Group).filter(Group.id == step_data.group_id).first()
+        if not group:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Group not found",
+            )
+        gu = (
+            db.query(GroupUser)
+            .filter(
+                GroupUser.group_id == step_data.group_id,
+                GroupUser.user_id == current_user.id,
+            )
+            .first()
+        )
+        if not gu:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="You are not a member of this group",
+            )
     step = Step(
         title=step_data.title,
         description=step_data.description,
         created_by=current_user.id,
+        group_id=step_data.group_id,
     )
     db.add(step)
     db.commit()
@@ -44,6 +68,8 @@ def create_step(
         description=step.description,
         creator_id=step.created_by,
         creator_username=current_user.username,
+        group_id=step.group_id,
+        group_name=group.name if group else None,
         created_at=step.created_at,
         updated_at=step.updated_at,
         problems=[],
@@ -61,7 +87,7 @@ def list_steps(
     total = db.query(func.count(Step.id)).scalar()
     steps = (
         db.query(Step)
-        .options(joinedload(Step.step_problems))
+        .options(joinedload(Step.step_problems), joinedload(Step.group))
         .order_by(Step.updated_at.desc())
         .offset((page - 1) * page_size)
         .limit(page_size)
@@ -74,6 +100,8 @@ def list_steps(
             description=step.description,
             creator_id=step.created_by,
             creator_username=step.creator.username if step.creator else "",
+            group_id=step.group_id,
+            group_name=step.group.name if step.group else None,
             created_at=step.created_at,
             updated_at=step.updated_at,
             problem_count=len(step.step_problems),
@@ -118,6 +146,8 @@ def get_step(
         description=step.description,
         creator_id=step.created_by,
         creator_username=step.creator.username if step.creator else "",
+        group_id=step.group_id,
+        group_name=step.group.name if step.group else None,
         created_at=step.created_at,
         updated_at=step.updated_at,
         problems=problems,
@@ -161,6 +191,8 @@ def update_step(
         description=step.description,
         creator_id=step.created_by,
         creator_username=step.creator.username if step.creator else "",
+        group_id=step.group_id,
+        group_name=step.group.name if step.group else None,
         created_at=step.created_at,
         updated_at=step.updated_at,
         problems=[],
@@ -282,6 +314,8 @@ def add_problems_to_step(
         description=step.description,
         creator_id=step.created_by,
         creator_username=step.creator.username if step.creator else "",
+        group_id=step.group_id,
+        group_name=step.group.name if step.group else None,
         created_at=step.created_at,
         updated_at=step.updated_at,
         problems=problems,

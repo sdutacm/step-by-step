@@ -11,7 +11,7 @@ class StepBase(BaseModel):
 
 
 class StepCreate(StepBase):
-    pass
+    group_id: int | None = None
 
 
 class StepUpdate(BaseModel):
@@ -34,6 +34,8 @@ class StepResponse(BaseModel):
     description: str | None = None
     creator_id: int
     creator_username: str
+    group_id: int | None = None
+    group_name: str | None = None
     created_at: datetime
     updated_at: datetime
     problems: list[ProblemSimple] = []
@@ -49,6 +51,8 @@ class StepListItem(BaseModel):
     description: str | None = None
     creator_id: int
     creator_username: str
+    group_id: int | None = None
+    group_name: str | None = None
     created_at: datetime
     updated_at: datetime
     problem_count: int = 0

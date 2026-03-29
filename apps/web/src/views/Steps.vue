@@ -10,14 +10,16 @@ import {
   ElEmpty,
   ElMessage,
   ElMessageBox,
+  ElTag,
 } from 'element-plus'
 import { getSteps, deleteStep, type StepListItem, type StepListResponse } from '../api/step'
-import { getToken } from '../api/auth'
+import { getToken, getCurrentUser } from '../api/auth'
 
 const router = useRouter()
 
 const steps = ref<StepListItem[]>([])
 const isLoading = ref(false)
+const currentUserId = ref<number | null>(null)
 const pagination = ref({
   page: 1,
   page_size: 20,
@@ -42,6 +44,15 @@ async function fetchSteps() {
     ElMessage.error('获取训练计划列表失败')
   } finally {
     isLoading.value = false
+  }
+}
+
+async function fetchCurrentUser() {
+  try {
+    const user = await getCurrentUser()
+    currentUserId.value = user.id
+  } catch {
+    currentUserId.value = null
   }
 }
 
@@ -85,8 +96,8 @@ async function handleDelete(id: number, title: string) {
   }
 }
 
-onMounted(() => {
-  fetchSteps()
+onMounted(async () => {
+  await Promise.all([fetchSteps(), fetchCurrentUser()])
 })
 </script>
 
@@ -118,6 +129,12 @@ onMounted(() => {
             {{ row.description || '-' }}
           </template>
         </el-table-column>
+        <el-table-column prop="group_name" label="组织" width="120">
+          <template #default="{ row }">
+            <el-tag v-if="row.group_name" type="success" size="small">{{ row.group_name }}</el-tag>
+            <span v-else style="color: #909399">-</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="creator_username" label="创建者" width="120" />
         <el-table-column prop="problem_count" label="题目数" width="100" align="center">
           <template #default="{ row }">
@@ -132,6 +149,7 @@ onMounted(() => {
         <el-table-column label="操作" width="100" fixed="right">
           <template #default="{ row }">
             <el-button
+              v-if="isLoggedIn() && row.creator_id === currentUserId"
               type="danger"
               size="small"
               @click.stop="handleDelete(row.id, row.title)"
