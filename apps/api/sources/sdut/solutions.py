@@ -135,6 +135,7 @@ async def fetch_solutions(
                 updated_count += 1
 
             problem_id = str(row["problem"]["problemId"])
+            problem_title = row["problem"]["title"]
             problem = (
                 session.query(Problem)
                 .filter(
@@ -144,10 +145,15 @@ async def fetch_solutions(
                 .first()
             )
             if problem is None:
-                logger.warning(
-                    f"[SDUT] Problem {problem_id} not found, skipping solution"
+                problem = Problem()
+                problem.problem_id = problem_id
+                problem.title = problem_title
+                problem.source = "sdut"
+                session.add(problem)
+                session.commit()
+                logger.info(
+                    f"[SDUT] Created new problem: {problem_id} - {problem_title}"
                 )
-                continue
 
             solution.solution_id = str(row["solutionId"])
             result = to_result_enum(row["result"])
