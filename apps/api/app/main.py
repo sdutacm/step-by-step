@@ -15,7 +15,6 @@ from app.routers.solution import router as solution_router
 from app.routers.source import router as source_router
 from app.routers.step import router as step_router
 from db.base import Base
-from db.session import engine
 from sources import sources
 
 logger.remove()
@@ -31,8 +30,6 @@ logger.add(
     format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
     level="DEBUG",
 )
-
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

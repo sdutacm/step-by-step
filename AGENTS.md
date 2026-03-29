@@ -61,6 +61,33 @@ apps/
 | Problem | problems | OJ 题目 |
 | Solution | solutions | 提交记录 |
 
+## 数据库迁移
+
+使用 Alembic 进行数据库迁移管理。
+
+```bash
+# 进入后端目录
+cd apps/api
+
+# 生成新迁移（模型变更后）
+uv run alembic revision --autogenerate -m "migration description"
+
+# 应用所有迁移
+uv run alembic upgrade head
+
+# 查看当前版本
+uv run alembic current
+
+# 查看迁移历史
+uv run alembic history
+
+# 回滚一个迁移
+uv run alembic downgrade -1
+
+# 回滚到初始状态
+uv run alembic downgrade base
+```
+
 ## API 路由
 
 | 前缀 | 路由 | 说明 |
