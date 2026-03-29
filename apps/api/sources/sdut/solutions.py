@@ -97,7 +97,12 @@ async def fetch_solutions(
     client: httpx.AsyncClient, session: Session
 ) -> List[Solution]:
     url = "https://oj.sdutacm.cn/onlinejudge3/api/getSolutionList"
-    solution = session.query(Solution).order_by(-Solution.solution_id).first()
+    solution = (
+        session.query(Solution)
+        .filter(Solution.source == "sdut")
+        .order_by(-Solution.solution_id)
+        .first()
+    )
     sid = int(solution.solution_id) if solution is not None else 0
     logger.info(f"[SDUT] Starting solutions sync from solution_id > {sid}")
     params = {"gt": sid, "limit": 1000, "order": [["solutionId", "DESC"]]}
@@ -174,6 +179,11 @@ async def fetch_solutions(
 
         if len(rows) < 1000:
             need_break = True
+
+        if rows:
+            last_solution_id = int(rows[0]["solutionId"])
+            params["gt"] = last_solution_id
+            logger.debug(f"[SDUT] Page {page}: last solution_id = {last_solution_id}")
 
         logger.info(
             f"[SDUT] Page {page}: processed {new_count} new, {updated_count} updated"
