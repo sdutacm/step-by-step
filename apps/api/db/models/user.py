@@ -28,3 +28,7 @@ class User(Base):
     group_users: Mapped[list["GroupUser"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
+    board_step_users: Mapped[list["BoardStepUser"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )

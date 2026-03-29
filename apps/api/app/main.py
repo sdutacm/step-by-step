@@ -8,6 +8,7 @@ from loguru import logger
 
 from app.routers.admin import router as admin_router
 from app.routers.auth import router as auth_router
+from app.routers.board import router as board_router
 from app.routers.group import router as group_router
 from app.routers.group_progress import router as group_progress_router
 from app.routers.problem import router as problem_router
@@ -106,6 +107,7 @@ app.include_router(problem_router)
 app.include_router(group_router)
 app.include_router(group_progress_router)
 app.include_router(admin_router)
+app.include_router(board_router)
 
 
 @app.get("/")

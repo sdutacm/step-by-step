@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session, joinedload
 from app.core.config import settings
 from app.core.security import (
     create_access_token,
+    decode_access_token,
     get_password_hash,
     verify_password,
 )
@@ -91,8 +92,6 @@ def login(
 async def get_current_user(
     token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
 ) -> User:
-    from app.core.security import decode_access_token
-
     logger.debug("Decoding access token")
     payload = decode_access_token(token)
     if payload is None:
@@ -127,6 +126,23 @@ async def get_current_user(
         )
     logger.debug(f"Current user resolved: {username} (id={user.id})")
     return user
+
+
+oauth2_scheme_optional = OAuth2PasswordBearer(
+    tokenUrl="/api/auth/login", auto_error=False
+)
+
+
+async def get_current_user_optional(
+    token: str | None = Depends(oauth2_scheme_optional),
+    db: Session = Depends(get_db),
+) -> User | None:
+    if token is None:
+        return None
+    try:
+        return await get_current_user(token, db)
+    except HTTPException:
+        return None
 
 
 @router.get("/me", response_model=UserResponse)

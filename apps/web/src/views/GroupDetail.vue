@@ -36,6 +36,14 @@ import {
   type GroupStepProgress,
   type UpdateMemberData,
 } from '../api/group'
+import {
+  getBoards,
+  createBoard,
+  type Board,
+  type BoardListItem,
+  type BoardVisibility,
+  type CreateBoardData,
+} from '../api/board'
 import { getCurrentUser } from '../api/auth'
 import { useUserStore } from '../stores/user'
 
@@ -63,6 +71,18 @@ const editingMember = ref<GroupMember | null>(null)
 const progress = ref<GroupUserProgress[]>([])
 const progressLoading = ref(false)
 const selectedUserId = ref<number | null>(null)
+
+const boards = ref<BoardListItem[]>([])
+const boardsPagination = ref({ page: 1, page_size: 20, total: 0 })
+const boardsLoading = ref(false)
+
+const createBoardDialogVisible = ref(false)
+const createBoardForm = ref<CreateBoardData>({
+  name: '',
+  description: '',
+  visibility: 'board_user',
+})
+const isCreatingBoard = ref(false)
 
 const currentUser = ref<{ id: number } | null>(null)
 const groupMemberRole = ref<'admin' | 'member' | null>(null)
@@ -132,6 +152,45 @@ async function fetchProgress() {
   } finally {
     progressLoading.value = false
   }
+}
+
+async function fetchBoards() {
+  boardsLoading.value = true
+  try {
+    const data = await getBoards(groupId.value, boardsPagination.value.page, boardsPagination.value.page_size)
+    boards.value = data.items
+    boardsPagination.value.total = data.total
+  } catch {
+    ElMessage.error('获取看板列表失败')
+  } finally {
+    boardsLoading.value = false
+  }
+}
+
+async function handleCreateBoard() {
+  if (!createBoardForm.value.name.trim()) {
+    ElMessage.warning('请输入看板名称')
+    return
+  }
+  isCreatingBoard.value = true
+  try {
+    await createBoard(groupId.value, createBoardForm.value)
+    ElMessage.success('创建成功')
+    createBoardDialogVisible.value = false
+    createBoardForm.value.name = ''
+    createBoardForm.value.description = ''
+    createBoardForm.value.visibility = 'board_user'
+    await fetchBoards()
+  } catch (e: unknown) {
+    ElMessage.error((e as Error).message || '创建失败')
+  } finally {
+    isCreatingBoard.value = false
+  }
+}
+
+function handleBoardsPageChange(page: number) {
+  boardsPagination.value.page = page
+  fetchBoards()
 }
 
 async function handleUpdate() {
@@ -232,9 +291,24 @@ function getStepProgressColor(percent: number): string {
   return '#909399'
 }
 
+function getVisibilityLabel(visibility: BoardVisibility): string {
+  const labels: Record<BoardVisibility, string> = {
+    public: '公开',
+    group_member: '组内可见',
+    board_user: '看板内可见',
+  }
+  return labels[visibility] || visibility
+}
+
+function getVisibilityType(visibility: BoardVisibility): string {
+  if (visibility === 'public') return 'success'
+  if (visibility === 'group_member') return 'warning'
+  return 'info'
+}
+
 onMounted(async () => {
   await fetchCurrentUser()
-  await Promise.all([fetchGroup(), fetchMembers()])
+  await Promise.all([fetchGroup(), fetchMembers(), fetchBoards()])
 })
 
 watch(
@@ -242,7 +316,7 @@ watch(
   async (newUser, oldUser) => {
     if (!oldUser && newUser) {
       await fetchCurrentUser()
-      await fetchMembers()
+      await Promise.all([fetchMembers(), fetchBoards()])
     }
   }
 )
@@ -430,6 +504,55 @@ watch(
             </div>
           </div>
         </el-tab-pane>
+
+        <el-tab-pane v-if="isAdmin()" label="看板管理">
+          <template #label>
+            <span>看板管理 ({{ boardsPagination.total }})</span>
+          </template>
+          <div style="margin-bottom: 16px; display: flex; justify-content: flex-end">
+            <el-button type="primary" @click="createBoardDialogVisible = true">
+              创建看板
+            </el-button>
+          </div>
+          <el-table v-loading="boardsLoading" :data="boards" style="width: 100%">
+            <el-table-column prop="name" label="名称" min-width="150" />
+            <el-table-column prop="description" label="描述" min-width="200">
+              <template #default="{ row }">
+                {{ row.description || '-' }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="visibility" label="可见性" width="120">
+              <template #default="{ row }">
+                <el-tag :type="getVisibilityType(row.visibility)" size="small">
+                  {{ getVisibilityLabel(row.visibility) }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="creator_username" label="创建者" width="120" />
+            <el-table-column prop="created_at" label="创建时间" width="180">
+              <template #default="{ row }">
+                {{ formatTime(row.created_at) }}
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="120" fixed="right">
+              <template #default="{ row }">
+                <el-button type="primary" size="small" @click="router.push(`/boards/${row.id}`)">
+                  查看
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-empty v-if="!boardsLoading && !boards.length" description="暂无看板" />
+          <div v-if="boardsPagination.total > boardsPagination.page_size" style="margin-top: 16px; display: flex; justify-content: flex-end">
+            <el-pagination
+              v-model:current-page="boardsPagination.page"
+              :page-size="boardsPagination.page_size"
+              :total="boardsPagination.total"
+              layout="prev, pager, next, jumper"
+              @current-change="handleBoardsPageChange"
+            />
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
@@ -461,6 +584,35 @@ watch(
     <template #footer>
       <el-button @click="editMemberDialogVisible = false">取消</el-button>
       <el-button type="primary" :loading="isSubmitting" @click="handleUpdateMember">保存</el-button>
+    </template>
+  </el-dialog>
+
+  <el-dialog v-model="createBoardDialogVisible" title="创建看板" width="500px">
+    <el-form :model="createBoardForm" label-position="top">
+      <el-form-item label="名称" required>
+        <el-input v-model="createBoardForm.name" placeholder="请输入看板名称" maxlength="100" show-word-limit />
+      </el-form-item>
+      <el-form-item label="描述">
+        <el-input
+          v-model="createBoardForm.description"
+          type="textarea"
+          placeholder="请输入描述"
+          :rows="3"
+          maxlength="500"
+          show-word-limit
+        />
+      </el-form-item>
+      <el-form-item label="可见性">
+        <el-select v-model="createBoardForm.visibility" style="width: 100%">
+          <el-option label="公开" value="public" />
+          <el-option label="组内可见" value="group_member" />
+          <el-option label="看板内可见" value="board_user" />
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <el-button @click="createBoardDialogVisible = false">取消</el-button>
+      <el-button type="primary" :loading="isCreatingBoard" @click="handleCreateBoard">创建</el-button>
     </template>
   </el-dialog>
 </template>

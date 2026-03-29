@@ -32,6 +32,10 @@ class Step(Base):
         cascade="all, delete-orphan",
         order_by="StepProblem.order",
     )
+    board_step_users: Mapped[list["BoardStepUser"]] = relationship(
+        back_populates="step",
+        cascade="all, delete-orphan",
+    )
 
     @property
     def problems(self) -> list["Problem"]:

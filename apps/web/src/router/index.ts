@@ -6,6 +6,7 @@ import StepCreate from '../views/StepCreate.vue'
 import StepDetail from '../views/StepDetail.vue'
 import Groups from '../views/Groups.vue'
 import GroupDetail from '../views/GroupDetail.vue'
+import BoardDetail from '../views/BoardDetail.vue'
 import AdminUsers from '../views/AdminUsers.vue'
 import { getToken } from '../api/auth'
 import { useUserStore } from '../stores/user'
@@ -51,6 +52,11 @@ const router = createRouter({
       component: GroupDetail,
     },
     {
+      path: '/boards/:id',
+      name: 'board-detail',
+      component: BoardDetail,
+    },
+    {
       path: '/admin/users',
       name: 'admin-users',
       component: AdminUsers,
@@ -59,7 +65,7 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   const userStore = useUserStore()
 
   if (to.meta.requiresAuth && !getToken()) {
