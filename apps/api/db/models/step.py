@@ -1,9 +1,17 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.base import Base
+
+if TYPE_CHECKING:
+    from db.models.board import Board
+    from db.models.group import Group
+    from db.models.problem import Problem
+    from db.models.step_problem import StepProblem
+    from db.models.user import User
 
 
 class Step(Base):
@@ -32,9 +40,8 @@ class Step(Base):
         cascade="all, delete-orphan",
         order_by="StepProblem.order",
     )
-    board_step_users: Mapped[list["BoardStepUser"]] = relationship(
+    boards: Mapped[list["Board"]] = relationship(
         back_populates="step",
-        cascade="all, delete-orphan",
     )
 
     @property

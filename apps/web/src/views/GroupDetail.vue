@@ -19,7 +19,6 @@ import {
   ElSelect,
   ElOption,
   ElProgress,
-  ElBadge,
   ElSkeleton,
 } from 'element-plus'
 import {
@@ -33,17 +32,24 @@ import {
   type Group,
   type GroupMember,
   type GroupUserProgress,
-  type GroupStepProgress,
   type UpdateMemberData,
 } from '../api/group'
 import {
   getBoards,
   createBoard,
+  updateBoard,
+  deleteBoard,
+  getBoardUsers,
+  createBoardUsers,
+  deleteBoardUser,
   type Board,
   type BoardListItem,
   type BoardVisibility,
   type CreateBoardData,
+  type UpdateBoardData,
+  type BoardUser,
 } from '../api/board'
+import { getSteps, type StepListItem } from '../api/step'
 import { getCurrentUser } from '../api/auth'
 import { useUserStore } from '../stores/user'
 
@@ -70,19 +76,37 @@ const editingMember = ref<GroupMember | null>(null)
 
 const progress = ref<GroupUserProgress[]>([])
 const progressLoading = ref(false)
-const selectedUserId = ref<number | null>(null)
 
 const boards = ref<BoardListItem[]>([])
 const boardsPagination = ref({ page: 1, page_size: 20, total: 0 })
 const boardsLoading = ref(false)
 
 const createBoardDialogVisible = ref(false)
-const createBoardForm = ref<CreateBoardData>({
+const availableSteps = ref<StepListItem[]>([])
+const createBoardForm = ref<CreateBoardData & { step_id: number }>({
   name: '',
   description: '',
   visibility: 'board_user',
+  step_id: 0,
 })
 const isCreatingBoard = ref(false)
+
+const editBoardDialogVisible = ref(false)
+const editBoardForm = ref<UpdateBoardData & { step_id: number }>({
+  name: '',
+  description: '',
+  visibility: 'board_user',
+  step_id: 0,
+})
+const editingBoard = ref<BoardListItem | null>(null)
+const isUpdatingBoard = ref(false)
+
+const manageBoardUsersDialogVisible = ref(false)
+const boardUsers = ref<BoardUser[]>([])
+const boardUsersLoading = ref(false)
+const availableUsers = ref<{ id: number; username: string; nickname: string | null }[]>([])
+const selectedUserIds = ref<number[]>([])
+const isManagingUsers = ref(false)
 
 const currentUser = ref<{ id: number } | null>(null)
 const groupMemberRole = ref<'admin' | 'member' | null>(null)
@@ -167,9 +191,33 @@ async function fetchBoards() {
   }
 }
 
+async function fetchAvailableSteps() {
+  try {
+    const stepsRes = await getSteps(1, 100)
+    availableSteps.value = stepsRes.items
+  } catch {
+    ElMessage.error('获取训练计划列表失败')
+  }
+}
+
+function openCreateBoardDialog() {
+  fetchAvailableSteps()
+  createBoardForm.value = {
+    name: '',
+    description: '',
+    visibility: 'board_user',
+    step_id: 0,
+  }
+  createBoardDialogVisible.value = true
+}
+
 async function handleCreateBoard() {
   if (!createBoardForm.value.name.trim()) {
     ElMessage.warning('请输入看板名称')
+    return
+  }
+  if (!createBoardForm.value.step_id) {
+    ElMessage.warning('请选择训练计划')
     return
   }
   isCreatingBoard.value = true
@@ -177,14 +225,137 @@ async function handleCreateBoard() {
     await createBoard(groupId.value, createBoardForm.value)
     ElMessage.success('创建成功')
     createBoardDialogVisible.value = false
-    createBoardForm.value.name = ''
-    createBoardForm.value.description = ''
-    createBoardForm.value.visibility = 'board_user'
     await fetchBoards()
   } catch (e: unknown) {
     ElMessage.error((e as Error).message || '创建失败')
   } finally {
     isCreatingBoard.value = false
+  }
+}
+
+async function openEditBoardDialog(board: BoardListItem) {
+  const fullBoard = await getBoards(groupId.value).then(res => res.items.find(b => b.id === board.id))
+  if (!fullBoard) return
+  await fetchAvailableSteps()
+  editingBoard.value = board
+  editBoardForm.value = {
+    name: board.name,
+    description: board.description || '',
+    visibility: board.visibility,
+    step_id: 0,
+  }
+  editBoardDialogVisible.value = true
+}
+
+async function handleUpdateBoard() {
+  if (!editingBoard.value) return
+  if (!editBoardForm.value.name?.trim()) {
+    ElMessage.warning('请输入看板名称')
+    return
+  }
+  isUpdatingBoard.value = true
+  try {
+    const updateData: UpdateBoardData = {
+      name: editBoardForm.value.name,
+      description: editBoardForm.value.description || undefined,
+      visibility: editBoardForm.value.visibility,
+      step_id: editBoardForm.value.step_id || undefined,
+    }
+    await updateBoard(editingBoard.value.id, updateData)
+    ElMessage.success('更新成功')
+    editBoardDialogVisible.value = false
+    editingBoard.value = null
+    await fetchBoards()
+  } catch (e: unknown) {
+    ElMessage.error((e as Error).message || '更新失败')
+  } finally {
+    isUpdatingBoard.value = false
+  }
+}
+
+async function handleDeleteBoard(board: BoardListItem) {
+  try {
+    await ElMessageBox.confirm(
+      `确定要删除看板「${board.name}」吗？`,
+      '删除确认',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    )
+    await deleteBoard(board.id)
+    ElMessage.success('删除成功')
+    await fetchBoards()
+  } catch (e: unknown) {
+    if ((e as Error).message !== 'cancel') {
+      ElMessage.error((e as Error).message || '删除失败')
+    }
+  }
+}
+
+async function openManageBoardUsersDialog(board: BoardListItem) {
+  editingBoard.value = board
+  manageBoardUsersDialogVisible.value = true
+  await fetchBoardUsers(board.id)
+  const membersRes = await getGroupMembers(groupId.value, 1, 100)
+  availableUsers.value = membersRes.items.map(m => ({
+    id: m.user_id,
+    username: m.username,
+    nickname: m.nickname,
+  }))
+  selectedUserIds.value = []
+}
+
+async function fetchBoardUsers(boardId: number) {
+  boardUsersLoading.value = true
+  try {
+    const data = await getBoardUsers(boardId)
+    boardUsers.value = data.items
+  } catch {
+    ElMessage.error('获取成员列表失败')
+  } finally {
+    boardUsersLoading.value = false
+  }
+}
+
+async function handleAddBoardUsers() {
+  if (!editingBoard.value || !selectedUserIds.value.length) {
+    ElMessage.warning('请选择用户')
+    return
+  }
+  isManagingUsers.value = true
+  try {
+    await createBoardUsers(editingBoard.value.id, selectedUserIds.value)
+    ElMessage.success('添加成功')
+    selectedUserIds.value = []
+    await fetchBoardUsers(editingBoard.value.id)
+  } catch (e: unknown) {
+    ElMessage.error((e as Error).message || '添加失败')
+  } finally {
+    isManagingUsers.value = false
+  }
+}
+
+async function handleRemoveBoardUser(userId: number, username: string) {
+  if (!editingBoard.value) return
+  try {
+    await ElMessageBox.confirm(
+      `确定要移除「${username}」吗？`,
+      '移除确认',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    )
+    await deleteBoardUser(editingBoard.value.id, userId)
+    ElMessage.success('移除成功')
+    await fetchBoardUsers(editingBoard.value.id)
+  } catch (e: unknown) {
+    if ((e as Error).message !== 'cancel') {
+      ElMessage.error((e as Error).message || '移除失败')
+    }
   }
 }
 
@@ -510,7 +681,7 @@ watch(
             <span>看板管理 ({{ boardsPagination.total }})</span>
           </template>
           <div style="margin-bottom: 16px; display: flex; justify-content: flex-end">
-            <el-button type="primary" @click="createBoardDialogVisible = true">
+            <el-button type="primary" @click="openCreateBoardDialog">
               创建看板
             </el-button>
           </div>
@@ -534,10 +705,19 @@ watch(
                 {{ formatTime(row.created_at) }}
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="120" fixed="right">
+            <el-table-column label="操作" width="200" fixed="right">
               <template #default="{ row }">
                 <el-button type="primary" size="small" @click="router.push(`/boards/${row.id}`)">
                   查看
+                </el-button>
+                <el-button type="primary" size="small" @click="openManageBoardUsersDialog(row)">
+                  成员
+                </el-button>
+                <el-button type="warning" size="small" @click="openEditBoardDialog(row)">
+                  编辑
+                </el-button>
+                <el-button type="danger" size="small" @click="handleDeleteBoard(row)">
+                  删除
                 </el-button>
               </template>
             </el-table-column>
@@ -609,10 +789,103 @@ watch(
           <el-option label="看板内可见" value="board_user" />
         </el-select>
       </el-form-item>
+      <el-form-item label="训练计划" required>
+        <el-select v-model="createBoardForm.step_id" placeholder="请选择训练计划" style="width: 100%">
+          <el-option
+            v-for="step in availableSteps"
+            :key="step.id"
+            :label="step.title"
+            :value="step.id"
+          />
+        </el-select>
+      </el-form-item>
     </el-form>
     <template #footer>
       <el-button @click="createBoardDialogVisible = false">取消</el-button>
       <el-button type="primary" :loading="isCreatingBoard" @click="handleCreateBoard">创建</el-button>
     </template>
+  </el-dialog>
+
+  <el-dialog v-model="editBoardDialogVisible" title="编辑看板" width="500px">
+    <el-form :model="editBoardForm" label-position="top">
+      <el-form-item label="名称" required>
+        <el-input v-model="editBoardForm.name" placeholder="请输入看板名称" maxlength="100" show-word-limit />
+      </el-form-item>
+      <el-form-item label="描述">
+        <el-input
+          v-model="editBoardForm.description"
+          type="textarea"
+          placeholder="请输入描述"
+          :rows="3"
+          maxlength="500"
+          show-word-limit
+        />
+      </el-form-item>
+      <el-form-item label="可见性">
+        <el-select v-model="editBoardForm.visibility" style="width: 100%">
+          <el-option label="公开" value="public" />
+          <el-option label="组内可见" value="group_member" />
+          <el-option label="看板内可见" value="board_user" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="训练计划">
+        <el-select v-model="editBoardForm.step_id" placeholder="请选择训练计划（不修改请留空）" style="width: 100%">
+          <el-option :value="0" label="不修改" />
+          <el-option
+            v-for="step in availableSteps"
+            :key="step.id"
+            :label="step.title"
+            :value="step.id"
+          />
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <el-button @click="editBoardDialogVisible = false">取消</el-button>
+      <el-button type="primary" :loading="isUpdatingBoard" @click="handleUpdateBoard">保存</el-button>
+    </template>
+  </el-dialog>
+
+  <el-dialog v-model="manageBoardUsersDialogVisible" :title="`管理看板成员 - ${editingBoard?.name}`" width="600px">
+    <div style="margin-bottom: 16px">
+      <el-select
+        v-model="selectedUserIds"
+        multiple
+        placeholder="选择要添加的用户"
+        style="width: 100%"
+      >
+        <el-option
+          v-for="user in availableUsers"
+          :key="user.id"
+          :label="user.username + (user.nickname ? ` (${user.nickname})` : '')"
+          :value="user.id"
+        />
+      </el-select>
+      <el-button type="primary" style="margin-top: 8px" :loading="isManagingUsers" @click="handleAddBoardUsers">
+        添加选中用户
+      </el-button>
+    </div>
+    <el-divider />
+    <el-table v-loading="boardUsersLoading" :data="boardUsers" style="width: 100%">
+      <el-table-column prop="username" label="用户名" min-width="150" />
+      <el-table-column prop="nickname" label="昵称" min-width="150">
+        <template #default="{ row }">
+          {{ row.nickname || '-' }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="created_at" label="添加时间" width="180">
+        <template #default="{ row }">
+          {{ formatTime(row.created_at) }}
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="80" fixed="right">
+        <template #default="{ row }">
+          <el-button type="danger" size="small" @click="handleRemoveBoardUser(row.user_id, row.username)">
+            移除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-empty v-if="!boardUsersLoading && !boardUsers.length" description="暂无成员" />
   </el-dialog>
 </template>

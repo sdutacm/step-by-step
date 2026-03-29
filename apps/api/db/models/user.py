@@ -6,6 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db.base import Base
 
 if TYPE_CHECKING:
+    from db.models.board import BoardUser
     from db.models.group_user import GroupUser
     from db.models.source_user import SourceUser
     from db.models.step import Step
@@ -28,7 +29,7 @@ class User(Base):
     group_users: Mapped[list["GroupUser"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
-    board_step_users: Mapped[list["BoardStepUser"]] = relationship(
+    board_users: Mapped[list["BoardUser"]] = relationship(
         back_populates="user",
         cascade="all, delete-orphan",
     )

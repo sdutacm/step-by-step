@@ -34,6 +34,9 @@ class Board(Base):
     created_by: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"), index=True
     )
+    step_id: Mapped[int] = mapped_column(
+        ForeignKey("steps.id", ondelete="CASCADE"), index=True
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=datetime.utcnow, nullable=False
     )
@@ -43,24 +46,20 @@ class Board(Base):
 
     group: Mapped["Group"] = relationship(back_populates="boards")
     creator: Mapped["User"] = relationship("User", foreign_keys=[created_by])
-    board_step_users: Mapped[list["BoardStepUser"]] = relationship(
+    step: Mapped["Step"] = relationship(back_populates="boards")
+    board_users: Mapped[list["BoardUser"]] = relationship(
         back_populates="board",
         cascade="all, delete-orphan",
     )
 
 
-class BoardStepUser(Base):
-    __tablename__ = "board_step_users"
-    __table_args__ = (
-        UniqueConstraint("board_id", "step_id", "user_id", name="uq_board_step_user"),
-    )
+class BoardUser(Base):
+    __tablename__ = "board_users"
+    __table_args__ = (UniqueConstraint("board_id", "user_id", name="uq_board_user"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     board_id: Mapped[int] = mapped_column(
         ForeignKey("boards.id", ondelete="CASCADE"), index=True
-    )
-    step_id: Mapped[int] = mapped_column(
-        ForeignKey("steps.id", ondelete="CASCADE"), index=True
     )
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"), index=True
@@ -69,6 +68,5 @@ class BoardStepUser(Base):
         DateTime, default=datetime.utcnow, nullable=False
     )
 
-    board: Mapped["Board"] = relationship(back_populates="board_step_users")
-    step: Mapped["Step"] = relationship(back_populates="board_step_users")
-    user: Mapped["User"] = relationship(back_populates="board_step_users")
+    board: Mapped["Board"] = relationship(back_populates="board_users")
+    user: Mapped["User"] = relationship(back_populates="board_users")

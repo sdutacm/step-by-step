@@ -17,13 +17,14 @@ class BoardBase(BaseModel):
 
 
 class BoardCreate(BoardBase):
-    pass
+    step_id: int
 
 
 class BoardUpdate(BaseModel):
     name: str | None = None
     description: str | None = None
     visibility: BoardVisibility | None = None
+    step_id: int | None = None
 
 
 class BoardResponse(BaseModel):
@@ -37,6 +38,8 @@ class BoardResponse(BaseModel):
     creator_username: str
     created_at: datetime
     updated_at: datetime
+    step_id: int
+    step_title: str
     member_count: int = 0
 
     class Config:
@@ -65,35 +68,21 @@ class BoardListResponse(BaseModel):
     items: list[BoardListItem]
 
 
-class AssignmentBase(BaseModel):
-    step_id: int
-    user_id: int
-
-
-class AssignmentCreate(AssignmentBase):
-    pass
-
-
-class AssignmentRemove(AssignmentBase):
-    pass
-
-
-class AssignmentResponse(BaseModel):
+class BoardUserResponse(BaseModel):
     id: int
     board_id: int
-    step_id: int
     user_id: int
-    step_title: str
     username: str
+    nickname: str | None = None
     created_at: datetime
 
     class Config:
         from_attributes = True
 
 
-class AssignmentListResponse(BaseModel):
+class BoardUserListResponse(BaseModel):
     total: int
-    items: list[AssignmentResponse]
+    items: list[BoardUserResponse]
 
 
 class ProblemProgress(BaseModel):
@@ -120,13 +109,17 @@ class UserBoardProgress(BaseModel):
     user_id: int
     username: str
     nickname: str | None = None
-    steps: list[StepProgress]
-    total_solved: int
+    solved_problems: int
     total_problems: int
+    progress_percent: float
+    status: str
+    problems: list[ProblemProgress]
 
 
 class BoardProgressResponse(BaseModel):
     board_id: int
     board_name: str
+    step_id: int
+    step_title: str
     group_id: int
     users: list[UserBoardProgress]

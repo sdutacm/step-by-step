@@ -13,6 +13,8 @@ export interface Board {
   creator_username: string
   created_at: string
   updated_at: string
+  step_id: number
+  step_title: string
   member_count: number
 }
 
@@ -39,32 +41,28 @@ export interface CreateBoardData {
   name: string
   description?: string
   visibility: BoardVisibility
+  step_id: number
 }
 
 export interface UpdateBoardData {
   name?: string
   description?: string
   visibility?: BoardVisibility
+  step_id?: number
 }
 
-export interface Assignment {
+export interface BoardUser {
   id: number
   board_id: number
-  step_id: number
   user_id: number
-  step_title: string
   username: string
+  nickname: string | null
   created_at: string
 }
 
-export interface AssignmentListResponse {
+export interface BoardUserListResponse {
   total: number
-  items: Assignment[]
-}
-
-export interface CreateAssignmentData {
-  step_id: number
-  user_id: number
+  items: BoardUser[]
 }
 
 export interface ProblemProgress {
@@ -77,28 +75,22 @@ export interface ProblemProgress {
   ac_time: string | null
 }
 
-export interface StepProgress {
-  step_id: number
-  step_title: string
-  total_problems: number
+export interface UserBoardProgress {
+  user_id: number
+  username: string
+  nickname: string | null
   solved_problems: number
+  total_problems: number
   progress_percent: number
   status: 'not_started' | 'in_progress' | 'completed'
   problems: ProblemProgress[]
 }
 
-export interface UserBoardProgress {
-  user_id: number
-  username: string
-  nickname: string | null
-  steps: StepProgress[]
-  total_solved: number
-  total_problems: number
-}
-
 export interface BoardProgressResponse {
   board_id: number
   board_name: string
+  step_id: number
+  step_title: string
   group_id: number
   users: UserBoardProgress[]
 }
@@ -182,39 +174,39 @@ export async function deleteBoard(id: number): Promise<void> {
   }
 }
 
-export async function getBoardAssignments(boardId: number): Promise<AssignmentListResponse> {
-  const response = await fetchWithAuth(`/api/boards/${boardId}/assignments`)
+export async function getBoardUsers(boardId: number): Promise<BoardUserListResponse> {
+  const response = await fetchWithAuth(`/api/boards/${boardId}/users`)
   if (!response.ok) {
-    throw new Error('Failed to get assignments')
+    throw new Error('Failed to get board users')
   }
   return await response.json()
 }
 
-export async function createAssignments(
+export async function createBoardUsers(
   boardId: number,
-  data: CreateAssignmentData[]
-): Promise<AssignmentListResponse> {
-  const response = await fetchWithAuth(`/api/boards/${boardId}/assignments`, {
+  userIds: number[]
+): Promise<BoardUserListResponse> {
+  const response = await fetchWithAuth(`/api/boards/${boardId}/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(userIds),
   })
   if (!response.ok) {
     const error = await response.json()
-    throw new Error(error.detail || 'Failed to create assignments')
+    throw new Error(error.detail || 'Failed to create board users')
   }
   return await response.json()
 }
 
-export async function deleteAssignment(boardId: number, assignmentId: number): Promise<void> {
-  const response = await fetchWithAuth(`/api/boards/${boardId}/assignments/${assignmentId}`, {
+export async function deleteBoardUser(boardId: number, userId: number): Promise<void> {
+  const response = await fetchWithAuth(`/api/boards/${boardId}/users/${userId}`, {
     method: 'DELETE',
   })
   if (!response.ok) {
     const error = await response.json()
-    throw new Error(error.detail || 'Failed to delete assignment')
+    throw new Error(error.detail || 'Failed to delete board user')
   }
 }
 
