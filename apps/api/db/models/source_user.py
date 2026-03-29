@@ -21,5 +21,6 @@ class SourceUser(Base):
     )
     source: Mapped[str] = mapped_column(String, index=True)
     username: Mapped[str] = mapped_column(String, index=True)
+    nickname: Mapped[str | None] = mapped_column(String, nullable=True)
 
     user: Mapped["User"] = relationship(back_populates="source_users")

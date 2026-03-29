@@ -8,6 +8,7 @@ import {
   ElSkeleton,
   ElEmpty,
   ElMessage,
+  ElLink,
   ElTable,
   ElTableColumn,
   ElDialog,
@@ -48,6 +49,7 @@ interface TableUser {
 interface CellData {
   solved: boolean
   ac_time: string | null
+  failed_time: string | null
   result: number | null
 }
 
@@ -86,13 +88,23 @@ const cellMap = computed(() => {
       userMap.set(problem.problem_id, {
         solved: problem.ac_time !== null,
         ac_time: problem.ac_time,
-        result: problem.ac_time !== null ? 1 : null,
+        failed_time: problem.failed_time,
+        result: problem.result,
       })
     }
     map.set(user.user_id, userMap)
   }
   return map
 })
+
+function isWithin7Days(dateStr: string | null): boolean {
+  if (!dateStr) return false
+  const date = new Date(dateStr)
+  const now = new Date()
+  const diffTime = now.getTime() - date.getTime()
+  const diffDays = diffTime / (1000 * 60 * 60 * 24)
+  return diffDays <= 7
+}
 
 const tableHeight = ref(window.innerHeight - 220)
 
@@ -104,6 +116,29 @@ function getCellData(problemId: number, userId: number): CellData | null {
   const userMap = cellMap.value.get(userId)
   if (!userMap) return null
   return userMap.get(problemId) || null
+}
+
+function getCellStyle(problemId: number, userId: number): string {
+  const cell = getCellData(problemId, userId)
+  if (!cell || cell.result === null) return ''
+  const timeToCheck = cell.result === 1 ? cell.ac_time : cell.failed_time
+  const within7Days = isWithin7Days(timeToCheck)
+  if (cell.result === 1) {
+    return within7Days
+      ? 'background-color: #67c23a; color: #fff; text-align: center; line-height: inherit;'
+      : 'background-color: #e1f3d8; color: #67c23a; text-align: center; line-height: inherit;'
+  } else {
+    return within7Days
+      ? 'background-color: #f56c6c; color: #fff; text-align: center; line-height: inherit;'
+      : 'background-color: #fde2e2; color: #f56c6c; text-align: center; line-height: inherit;'
+  }
+}
+
+function getCellTimeText(problemId: number, userId: number): string {
+  const cell = getCellData(problemId, userId)
+  if (!cell || cell.result === null) return ''
+  const time = cell.result === 1 ? cell.ac_time : cell.failed_time
+  return formatTime(time || '')
 }
 
 function openCellDialog(problemId: number, userId: number) {
@@ -167,71 +202,6 @@ function getProblemUrl(source: string, problemId: string): string {
   if (source === 'vj') return `https://vjudge.net/problem/${problemId}`
   if (source === 'sdut') return `https://oj.sdutacm.cn/onlinejudge3/problems/${problemId}`
   return '#'
-}
-
-interface SpanMethodProps {
-  row: ProblemProgress
-  column: { property: string }
-  rowIndex: number
-  columnIndex: number
-}
-
-const specialtyMergeMap = computed(() => {
-  const map: number[] = []
-  if (!problems.value.length) return map
-
-  for (let i = 0; i < problems.value.length; i++) {
-    if (i === 0) {
-      map.push(1)
-    } else {
-      const current = problems.value[i]
-      const prev = problems.value[i - 1]
-      if (current.specialty === prev.specialty && current.specialty !== null) {
-        map.push(0)
-      } else {
-        map.push(1)
-      }
-    }
-  }
-  return map
-})
-
-const topicMergeMap = computed(() => {
-  const map: number[] = []
-  if (!problems.value.length) return map
-
-  for (let i = 0; i < problems.value.length; i++) {
-    if (i === 0) {
-      map.push(1)
-    } else {
-      const current = problems.value[i]
-      const prev = problems.value[i - 1]
-      if (current.topic === prev.topic && current.topic !== null) {
-        map.push(0)
-      } else {
-        map.push(1)
-      }
-    }
-  }
-  return map
-})
-
-function spanMethod({ row, column, rowIndex, columnIndex }: SpanMethodProps) {
-  if (column.property === 'specialty') {
-    const rowspan = specialtyMergeMap.value[rowIndex]
-    if (rowspan === 0) {
-      return { rowspan: 0, colspan: 1 }
-    }
-    return { rowspan: rowspan, colspan: 1 }
-  }
-  if (column.property === 'topic') {
-    const rowspan = topicMergeMap.value[rowIndex]
-    if (rowspan === 0) {
-      return { rowspan: 0, colspan: 1 }
-    }
-    return { rowspan: rowspan, colspan: 1 }
-  }
-  return { rowspan: 1, colspan: 1 }
 }
 
 async function fetchCurrentUser() {
@@ -301,36 +271,33 @@ onUnmounted(() => {
           <el-table
             :data="problems"
             border
-            :span-method="spanMethod"
             :scrollbar-always-on="true"
             :height="tableHeight"
             class="board-table"
           >
-            <el-table-column prop="specialty" label="专项" min-width="120" align="center" fixed />
-            <el-table-column prop="topic" label="专题" min-width="120" align="center" fixed />
-            <el-table-column prop="title" label="题目" min-width="200" fixed />
+            <el-table-column prop="specialty" label="专项" width="120" align="center" fixed show-overflow-tooltip />
+            <el-table-column prop="topic" label="专题" width="120" align="center" fixed show-overflow-tooltip />
+            <el-table-column prop="title" label="题目" width="180" fixed show-overflow-tooltip>
+              <template #default="{ row }">
+                <el-link type="primary" :href="getProblemUrl(row.source, row.oj_problem_id)" target="_blank">{{ row.title }}</el-link>
+              </template>
+            </el-table-column>
             <el-table-column
               v-for="user in users"
               :key="user.user_id"
               :label="user.nickname ? `${user.username} (${user.nickname})` : user.username"
-              min-width="150"
+              width="220"
               align="center"
             >
               <template #default="{ row }">
-                <span
-                  v-if="getCellData(row.problem_id, user.user_id)?.solved"
-                  style="color: #67c23a; cursor: pointer"
+                <div
+                  v-if="getCellData(row.problem_id, user.user_id)?.result !== null"
+                  :style="getCellStyle(row.problem_id, user.user_id)"
+                  class="cell-bg"
                   @click="openCellDialog(row.problem_id, user.user_id)"
                 >
-                  ✓ {{ formatTime(getCellData(row.problem_id, user.user_id)?.ac_time || '') }}
-                </span>
-                <span
-                  v-else
-                  style="color: #c0c4cc; cursor: pointer"
-                  @click="openCellDialog(row.problem_id, user.user_id)"
-                >
-                  ✗
-                </span>
+                  {{ getCellTimeText(row.problem_id, user.user_id) }}
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -399,7 +366,19 @@ onUnmounted(() => {
   overflow-x: auto;
 }
 
-.board-table :deep(.el-table__body) {
-  width: auto !important;
+.board-table :deep(.el-table__body .el-table-cell) {
+  position: relative;
+}
+
+.cell-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

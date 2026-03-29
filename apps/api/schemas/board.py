@@ -119,6 +119,8 @@ class ProblemProgress(BaseModel):
     specialty: str | None = None
     topic: str | None = None
     ac_time: datetime | None = None
+    failed_time: datetime | None = None
+    result: int | None = None
 
 
 class StepProgress(BaseModel):

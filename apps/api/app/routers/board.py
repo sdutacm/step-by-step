@@ -99,27 +99,42 @@ def calculate_user_step_progress(
     )
 
     solved_map: dict[int, datetime] = {}
+    attempted_map: dict[int, int] = {}
+    failed_time_map: dict[int, datetime] = {}
     for sp in step_problems:
         solutions = (
             db.query(Solution)
             .filter(
                 Solution.problem_id == sp.problem_id,
-                Solution.result == ResultEnum.Accepted,
             )
             .all()
         )
         for sol in solutions:
             src_username = source_usernames.get(sol.source)
             if src_username and sol.username == src_username:
-                if sp.problem_id not in solved_map:
-                    solved_map[sp.problem_id] = sol.submitted_at
-                elif sol.submitted_at < solved_map[sp.problem_id]:
-                    solved_map[sp.problem_id] = sol.submitted_at
+                problem_id = sp.problem_id
+                if sol.result == ResultEnum.Accepted:
+                    if problem_id not in solved_map:
+                        solved_map[problem_id] = sol.submitted_at
+                    elif sol.submitted_at < solved_map[problem_id]:
+                        solved_map[problem_id] = sol.submitted_at
+                else:
+                    if problem_id not in attempted_map:
+                        attempted_map[problem_id] = sol.result.value
+                        failed_time_map[problem_id] = sol.submitted_at
+                    elif sol.submitted_at > failed_time_map[problem_id]:
+                        failed_time_map[problem_id] = sol.submitted_at
 
     problems: list[ProblemProgress] = []
     for sp in step_problems:
         problem = sp.problem
         ac_time = solved_map.get(sp.problem_id)
+        failed_time = failed_time_map.get(sp.problem_id)
+        result = (
+            ResultEnum.Accepted.value
+            if sp.problem_id in solved_map
+            else attempted_map.get(sp.problem_id)
+        )
         problems.append(
             ProblemProgress(
                 problem_id=sp.problem_id,
@@ -130,6 +145,8 @@ def calculate_user_step_progress(
                 specialty=sp.specialty,
                 topic=sp.topic,
                 ac_time=ac_time,
+                failed_time=failed_time,
+                result=result,
             )
         )
 

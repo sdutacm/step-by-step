@@ -77,6 +77,7 @@ async def bind_source(
         user_id=current_user.id,
         source=binding_data.source,
         username=binding_data.username,
+        nickname=binding_data.nickname,
     )
     db.add(source_user)
     db.commit()

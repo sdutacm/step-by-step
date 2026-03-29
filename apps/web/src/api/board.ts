@@ -96,6 +96,8 @@ export interface ProblemProgress {
   specialty: string | null
   topic: string | null
   ac_time: string | null
+  failed_time: string | null
+  result: number | null
 }
 
 export interface UserBoardProgress {

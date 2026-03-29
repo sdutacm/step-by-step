@@ -9,6 +9,7 @@ class SourceUserResponse(BaseModel):
     id: int
     source: str
     username: str
+    nickname: str | None = None
 
     class Config:
         from_attributes = True

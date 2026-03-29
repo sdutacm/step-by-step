@@ -5,3 +5,4 @@ class SourceBindingRequest(BaseModel):
     source: str
     username: str
     password: str
+    nickname: str | None = None
