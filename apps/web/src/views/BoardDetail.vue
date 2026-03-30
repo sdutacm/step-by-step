@@ -333,7 +333,7 @@ onUnmounted(() => {
             type="primary"
             :href="getProblemUrl(row.source, row.oj_problem_id)"
             target="_blank"
-            style="font-size: 12px;"
+            style="font-size: 12px"
             >{{ row.title }}</el-link
           >
         </template>
@@ -350,7 +350,7 @@ onUnmounted(() => {
             v-if="getCellData(row.problem_id, user.user_id)?.result !== null"
             :style="getCellStyle(row.problem_id, user.user_id)"
             class="cell-bg"
-            style="font-size: 12px;"
+            style="font-size: 12px"
             @click="openSubmissionsDialog(row.problem_id, user.user_id)"
           >
             {{ getCellTimeText(row.problem_id, user.user_id) }}
