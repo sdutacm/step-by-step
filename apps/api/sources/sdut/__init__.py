@@ -8,6 +8,7 @@ from sources.base import SourceBase
 from .problems import problems
 from .solutions import solutions
 
+
 class SDUT(SourceBase):
     source = "sdut"
 
