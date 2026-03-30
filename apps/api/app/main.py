@@ -1,3 +1,4 @@
+import asyncio
 import sys
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -40,10 +41,10 @@ scheduler = BackgroundScheduler()
 def create_sync_problems_task(source_cls: SourceBase):
     source_name = source_cls.__name__
 
-    async def task():
+    def task():
         logger.info(f"Starting scheduled {source_name} problems sync")
         try:
-            await source_cls.problems()
+            asyncio.get_event_loop().run_until_complete(source_cls.problems())
         except Exception as e:
             logger.error(f"Error syncing {source_name} problems: {e}")
 
@@ -53,10 +54,10 @@ def create_sync_problems_task(source_cls: SourceBase):
 def create_sync_solutions_task(source_cls: SourceBase):
     source_name = source_cls.__name__
 
-    async def task():
+    def task():
         logger.info(f"Starting scheduled {source_name} solutions sync")
         try:
-            await source_cls.solutions()
+            asyncio.get_event_loop().run_until_complete(source_cls.solutions())
         except Exception as e:
             logger.error(f"Error syncing {source_name} solutions: {e}")
 
@@ -75,7 +76,7 @@ async def startup_event():
         )
         scheduler.add_job(
             create_sync_solutions_task(source_cls),
-            IntervalTrigger(hours=1),
+            IntervalTrigger(minutes=1),
             id=f"sync_{source_cls.__name__.lower()}_solutions",
             replace_existing=True,
         )
