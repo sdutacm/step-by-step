@@ -44,7 +44,7 @@ def create_sync_problems_task(source_cls: SourceBase):
     def task():
         logger.info(f"Starting scheduled {source_name} problems sync")
         try:
-            asyncio.get_event_loop().run_until_complete(source_cls.problems())
+            asyncio.run(source_cls.problems())
         except Exception as e:
             logger.error(f"Error syncing {source_name} problems: {e}")
 
@@ -57,7 +57,7 @@ def create_sync_solutions_task(source_cls: SourceBase):
     def task():
         logger.info(f"Starting scheduled {source_name} solutions sync")
         try:
-            asyncio.get_event_loop().run_until_complete(source_cls.solutions())
+            asyncio.run(source_cls.solutions())
         except Exception as e:
             logger.error(f"Error syncing {source_name} solutions: {e}")
 
