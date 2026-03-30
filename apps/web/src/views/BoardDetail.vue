@@ -83,6 +83,65 @@ const cellMap = computed(() => {
   return map;
 });
 
+interface SpanResult {
+  rowspan: number;
+  colspan: number;
+}
+
+const specialtySpan = computed<Record<number, SpanResult>>(() => {
+  const spanMap: Record<number, SpanResult> = {};
+  const data = problems.value;
+  for (let i = 0; i < data.length; ) {
+    const current = data[i];
+    let j = i;
+    while (j < data.length && data[j].specialty === current.specialty) {
+      j++;
+    }
+    for (let k = i; k < j; k++) {
+      spanMap[k] = k === i ? { rowspan: j - i, colspan: 1 } : { rowspan: 0, colspan: 0 };
+    }
+    i = j;
+  }
+  return spanMap;
+});
+
+const topicSpan = computed<Record<number, SpanResult>>(() => {
+  const spanMap: Record<number, SpanResult> = {};
+  const data = problems.value;
+  for (let i = 0; i < data.length; ) {
+    const current = data[i];
+    let j = i;
+    while (
+      j < data.length &&
+      data[j].specialty === current.specialty &&
+      data[j].topic === current.topic
+    ) {
+      j++;
+    }
+    for (let k = i; k < j; k++) {
+      spanMap[k] = k === i ? { rowspan: j - i, colspan: 1 } : { rowspan: 0, colspan: 0 };
+    }
+    i = j;
+  }
+  return spanMap;
+});
+
+function objectSpanMethod({
+  rowIndex,
+  columnIndex,
+}: {
+  rowIndex: number;
+  columnIndex: number;
+}): SpanResult | undefined {
+  if (columnIndex === 0) {
+    return specialtySpan.value[rowIndex];
+  }
+  if (columnIndex === 1) {
+    return topicSpan.value[rowIndex];
+  }
+  return undefined;
+}
+
 const tableHeight = ref(window.innerHeight - 80);
 
 function updateTableHeight() {
@@ -250,6 +309,7 @@ onUnmounted(() => {
       :scrollbar-always-on="true"
       :height="tableHeight"
       class="board-table"
+      :span-method="objectSpanMethod"
     >
       <el-table-column
         prop="specialty"
