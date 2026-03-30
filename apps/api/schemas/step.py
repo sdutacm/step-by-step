@@ -40,6 +40,7 @@ class StepResponse(BaseModel):
     description: str | None = None
     creator_id: int
     creator_username: str
+    creator_nickname: str | None = None
     created_at: datetime
     updated_at: datetime
     problems: list[ProblemSimple] = []
@@ -55,6 +56,7 @@ class StepListItem(BaseModel):
     description: str | None = None
     creator_id: int
     creator_username: str
+    creator_nickname: str | None = None
     created_at: datetime
     updated_at: datetime
     problem_count: int = 0

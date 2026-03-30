@@ -6,6 +6,7 @@ export interface Group {
   description: string | null;
   creator_id: number | null;
   creator_username: string | null;
+  creator_nickname: string | null;
   created_at: string;
   updated_at: string;
   member_count: number;
@@ -17,6 +18,7 @@ export interface GroupListItem {
   description: string | null;
   creator_id: number | null;
   creator_username: string | null;
+  creator_nickname: string | null;
   created_at: string;
   updated_at: string;
   member_count: number;

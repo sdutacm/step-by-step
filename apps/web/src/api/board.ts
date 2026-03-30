@@ -11,6 +11,7 @@ export interface Board {
   group_name: string | null;
   created_by: number;
   creator_username: string;
+  creator_nickname: string | null;
   created_at: string;
   updated_at: string;
   step_id: number;
@@ -26,6 +27,7 @@ export interface BoardListItem {
   group_id: number;
   created_by: number;
   creator_username: string;
+  creator_nickname: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -41,6 +43,7 @@ export interface PublicBoardListItem {
   step_title: string;
   created_by: number;
   creator_username: string;
+  creator_nickname: string | null;
   created_at: string;
   updated_at: string;
 }

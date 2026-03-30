@@ -45,6 +45,7 @@ def create_step(
         description=step.description,
         creator_id=step.created_by,
         creator_username=current_user.username,
+        creator_nickname=current_user.nickname,
         created_at=step.created_at,
         updated_at=step.updated_at,
         problems=[],
@@ -62,7 +63,7 @@ def list_steps(
     total = db.query(func.count(Step.id)).scalar()
     steps = (
         db.query(Step)
-        .options(joinedload(Step.step_problems))
+        .options(joinedload(Step.step_problems), joinedload(Step.creator))
         .order_by(Step.updated_at.desc())
         .offset((page - 1) * page_size)
         .limit(page_size)
@@ -75,6 +76,7 @@ def list_steps(
             description=step.description,
             creator_id=step.created_by,
             creator_username=step.creator.username if step.creator else "",
+            creator_nickname=step.creator.nickname if step.creator else None,
             created_at=step.created_at,
             updated_at=step.updated_at,
             problem_count=len(step.step_problems),
@@ -164,6 +166,7 @@ def update_step(
         description=step.description,
         creator_id=step.created_by,
         creator_username=step.creator.username if step.creator else "",
+        creator_nickname=step.creator.nickname if step.creator else None,
         created_at=step.created_at,
         updated_at=step.updated_at,
         problems=[],
@@ -289,6 +292,7 @@ def add_problems_to_step(
         description=step.description,
         creator_id=step.created_by,
         creator_username=step.creator.username if step.creator else "",
+        creator_nickname=step.creator.nickname if step.creator else None,
         created_at=step.created_at,
         updated_at=step.updated_at,
         problems=problems,
@@ -417,6 +421,7 @@ def reorder_step_problems(
         description=step.description,
         creator_id=step.created_by,
         creator_username=step.creator.username if step.creator else "",
+        creator_nickname=step.creator.nickname if step.creator else None,
         created_at=step.created_at,
         updated_at=step.updated_at,
         problems=problems,

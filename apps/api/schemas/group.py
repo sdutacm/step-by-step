@@ -23,6 +23,7 @@ class GroupResponse(BaseModel):
     description: str | None = None
     creator_id: int | None = None
     creator_username: str | None = None
+    creator_nickname: str | None = None
     created_at: datetime
     updated_at: datetime
     member_count: int = 0
@@ -37,6 +38,7 @@ class GroupListItem(BaseModel):
     description: str | None = None
     creator_id: int | None = None
     creator_username: str | None = None
+    creator_nickname: str | None = None
     created_at: datetime
     updated_at: datetime
     member_count: int = 0

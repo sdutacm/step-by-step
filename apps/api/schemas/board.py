@@ -36,6 +36,7 @@ class BoardResponse(BaseModel):
     group_name: str | None = None
     created_by: int
     creator_username: str
+    creator_nickname: str | None = None
     created_at: datetime
     updated_at: datetime
     step_id: int
@@ -54,6 +55,7 @@ class BoardListItem(BaseModel):
     group_id: int
     created_by: int
     creator_username: str
+    creator_nickname: str | None = None
     created_at: datetime
     updated_at: datetime
 
@@ -72,6 +74,7 @@ class PublicBoardListItem(BaseModel):
     step_title: str
     created_by: int
     creator_username: str
+    creator_nickname: str | None = None
     created_at: datetime
     updated_at: datetime
 

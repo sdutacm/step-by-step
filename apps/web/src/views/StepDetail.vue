@@ -342,7 +342,7 @@ watch(
           </div>
           <div>
             <strong>创建者：</strong>
-            <span>{{ step.creator_username }}</span>
+            <span>{{ step.creator_nickname || step.creator_username }}</span>
           </div>
           <div>
             <strong>创建时间：</strong>

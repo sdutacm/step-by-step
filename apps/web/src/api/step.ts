@@ -23,6 +23,7 @@ export interface Step {
   description: string | null;
   creator_id: number;
   creator_username: string;
+  creator_nickname: string | null;
   created_at: string;
   updated_at: string;
   problems: ProblemSimple[];
@@ -35,6 +36,7 @@ export interface StepListItem {
   description: string | null;
   creator_id: number;
   creator_username: string;
+  creator_nickname: string | null;
   created_at: string;
   updated_at: string;
   problem_count: number;

@@ -150,7 +150,11 @@ watch(
             {{ row.description ?? "-" }}
           </template>
         </el-table-column>
-        <el-table-column prop="creator_username" label="创建者" width="120" />
+        <el-table-column prop="creator_username" label="创建者" width="120">
+          <template #default="{ row }">
+            {{ row.creator_nickname || row.creator_username }}
+          </template>
+        </el-table-column>
         <el-table-column prop="problem_count" label="题目数" width="100" align="center">
           <template #default="{ row }">
             {{ row.problem_count }}

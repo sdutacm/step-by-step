@@ -79,7 +79,7 @@ onMounted(async () => {
       <el-menu-item v-if="isSuperAdmin" index="/admin/users"> 用户管理 </el-menu-item>
       <el-menu-item index="/steps/create"> 创建训练计划 </el-menu-item>
       <el-menu-item index="/profile">
-        {{ userStore.user?.username }}
+        {{ userStore.user?.nickname || userStore.user?.username }}
       </el-menu-item>
       <el-menu-item index="" @click="handleLogout"> 退出登录 </el-menu-item>
     </template>

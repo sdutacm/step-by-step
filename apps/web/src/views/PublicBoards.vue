@@ -100,7 +100,11 @@ onMounted(() => {
             {{ row.step_title ?? "-" }}
           </template>
         </el-table-column>
-        <el-table-column prop="creator_username" label="创建者" width="120" />
+        <el-table-column prop="creator_username" label="创建者" width="120">
+          <template #default="{ row }">
+            {{ row.creator_nickname || row.creator_username }}
+          </template>
+        </el-table-column>
         <el-table-column prop="created_at" label="创建时间" width="180">
           <template #default="{ row }">
             {{ formatTime(row.created_at) }}
