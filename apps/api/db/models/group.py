@@ -9,7 +9,6 @@ from db.base import Base
 if TYPE_CHECKING:
     from db.models.board import Board
     from db.models.group_user import GroupUser
-    from db.models.step import Step
     from db.models.user import User
 
 
@@ -34,7 +33,6 @@ class Group(Base):
         back_populates="group",
         cascade="all, delete-orphan",
     )
-    steps: Mapped[list["Step"]] = relationship(back_populates="group")
     boards: Mapped[list["Board"]] = relationship(
         back_populates="group",
         cascade="all, delete-orphan",

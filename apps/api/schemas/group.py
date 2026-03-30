@@ -26,7 +26,6 @@ class GroupResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
     member_count: int = 0
-    step_count: int = 0
 
     class Config:
         from_attributes = True
@@ -41,7 +40,6 @@ class GroupListItem(BaseModel):
     created_at: datetime
     updated_at: datetime
     member_count: int = 0
-    step_count: int = 0
 
     class Config:
         from_attributes = True

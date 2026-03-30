@@ -8,7 +8,6 @@ from db.base import Base
 
 if TYPE_CHECKING:
     from db.models.board import Board
-    from db.models.group import Group
     from db.models.problem import Problem
     from db.models.step_problem import StepProblem
     from db.models.user import User
@@ -23,9 +22,6 @@ class Step(Base):
     created_by: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"), index=True
     )
-    group_id: Mapped[int | None] = mapped_column(
-        ForeignKey("groups.id", ondelete="CASCADE"), nullable=True, index=True
-    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=datetime.utcnow, nullable=False
     )
@@ -34,7 +30,6 @@ class Step(Base):
     )
 
     creator: Mapped["User"] = relationship(back_populates="steps")
-    group: Mapped["Group"] = relationship(back_populates="steps")
     step_problems: Mapped[list["StepProblem"]] = relationship(
         back_populates="step",
         cascade="all, delete-orphan",

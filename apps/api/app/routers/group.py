@@ -67,7 +67,6 @@ def create_group(
         created_at=group.created_at,
         updated_at=group.updated_at,
         member_count=1,
-        step_count=0,
     )
 
 
@@ -83,7 +82,6 @@ def list_groups(
         db.query(Group)
         .options(
             joinedload(Group.group_users),
-            joinedload(Group.steps),
             joinedload(Group.creator),
         )
         .order_by(Group.created_at.desc())
@@ -101,7 +99,6 @@ def list_groups(
             created_at=g.created_at,
             updated_at=g.updated_at,
             member_count=len(g.group_users),
-            step_count=len(g.steps),
         )
         for g in groups
     ]
@@ -118,7 +115,6 @@ def get_group(
         db.query(Group)
         .options(
             joinedload(Group.group_users),
-            joinedload(Group.steps),
             joinedload(Group.creator),
         )
         .filter(Group.id == group_id)
@@ -138,7 +134,6 @@ def get_group(
         created_at=group.created_at,
         updated_at=group.updated_at,
         member_count=len(group.group_users),
-        step_count=len(group.steps),
     )
 
 
@@ -200,7 +195,6 @@ def update_group(
         created_at=group.created_at,
         updated_at=group.updated_at,
         member_count=len(group.group_users),
-        step_count=len(group.steps),
     )
 
 
