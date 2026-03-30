@@ -6,7 +6,7 @@ from loguru import logger
 from sources.base import SourceBase
 
 from .problems import problems
-
+from .solutions import solutions
 
 class SDUT(SourceBase):
     source = "sdut"
@@ -44,9 +44,8 @@ class SDUT(SourceBase):
 
     @staticmethod
     async def problems():
-        logger.debug("SDUT problems called (not implemented)")
         await problems()
 
     @staticmethod
     async def solutions():
-        logger.debug("SDUT solutions called (not implemented)")
+        await solutions()

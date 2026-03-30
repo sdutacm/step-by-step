@@ -76,7 +76,7 @@ async def startup_event():
         )
         scheduler.add_job(
             create_sync_solutions_task(source_cls),
-            IntervalTrigger(minutes=1),
+            IntervalTrigger(hours=1),
             id=f"sync_{source_cls.__name__.lower()}_solutions",
             replace_existing=True,
         )
