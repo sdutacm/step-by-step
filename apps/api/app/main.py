@@ -1,6 +1,6 @@
 import sys
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.interval import IntervalTrigger
 from fastapi import FastAPI, Request
@@ -16,6 +16,7 @@ from app.routers.solution import router as solution_router
 from app.routers.source import router as source_router
 from app.routers.step import router as step_router
 from sources import sources
+from sources.base import SourceBase
 
 logger.remove()
 logger.add(
@@ -33,10 +34,10 @@ logger.add(
 
 app = FastAPI()
 
-scheduler = AsyncIOScheduler()
+scheduler = BackgroundScheduler()
 
 
-def create_sync_problems_task(source_cls):
+def create_sync_problems_task(source_cls: SourceBase):
     source_name = source_cls.__name__
 
     async def task():
@@ -49,7 +50,7 @@ def create_sync_problems_task(source_cls):
     return task
 
 
-def create_sync_solutions_task(source_cls):
+def create_sync_solutions_task(source_cls: SourceBase):
     source_name = source_cls.__name__
 
     async def task():
