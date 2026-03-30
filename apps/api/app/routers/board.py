@@ -2,7 +2,7 @@ from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from loguru import logger
-from sqlalchemy import func
+from sqlalchemy import and_, func, or_
 from sqlalchemy.orm import Session, joinedload
 
 from app.dependencies.permissions import require_group_admin
@@ -92,45 +92,62 @@ def calculate_user_step_progress(
     user_id: int,
     step_id: int,
     source_usernames: dict[str, str],
+    step: Step | None = None,
+    step_problems: list[StepProblem] | None = None,
 ) -> tuple[int, int, list[ProblemProgress]]:
-    step = db.query(Step).filter(Step.id == step_id).first()
+    if step is None:
+        step = db.query(Step).filter(Step.id == step_id).first()
     if not step:
         return 0, 0, []
 
-    step_problems = (
-        db.query(StepProblem)
-        .filter(StepProblem.step_id == step_id)
-        .order_by(StepProblem.order)
+    if step_problems is None:
+        step_problems = (
+            db.query(StepProblem)
+            .options(joinedload(StepProblem.problem))
+            .filter(StepProblem.step_id == step_id)
+            .order_by(StepProblem.order)
+            .all()
+        )
+    else:
+        for sp in step_problems:
+            _ = sp.problem
+
+    problem_ids = [sp.problem_id for sp in step_problems]
+
+    source_filters = [
+        and_(Solution.source == src, Solution.username == uname)
+        for src, uname in source_usernames.items()
+    ]
+    all_solutions = (
+        db.query(Solution)
+        .filter(
+            Solution.problem_id.in_(problem_ids),
+            or_(*source_filters),
+        )
         .all()
     )
 
-    all_submissions: dict[int, list[Solution]] = {}
+    solutions_by_problem: dict[int, list[Solution]] = {}
+    for sol in all_solutions:
+        solutions_by_problem.setdefault(sol.problem_id, []).append(sol)
+
     solved_map: dict[int, datetime] = {}
     failed_time_map: dict[int, datetime] = {}
-    for sp in step_problems:
-        solutions = (
-            db.query(Solution)
-            .filter(
-                Solution.problem_id == sp.problem_id,
-            )
-            .all()
-        )
-        problem_id = sp.problem_id
-        all_submissions[problem_id] = []
-        for sol in solutions:
-            src_username = source_usernames.get(sol.source)
-            if src_username and sol.username == src_username:
-                all_submissions[problem_id].append(sol)
-                if sol.result == ResultEnum.Accepted:
-                    if problem_id not in solved_map:
-                        solved_map[problem_id] = sol.submitted_at
-                    elif sol.submitted_at < solved_map[problem_id]:
-                        solved_map[problem_id] = sol.submitted_at
-                else:
-                    if problem_id not in failed_time_map:
-                        failed_time_map[problem_id] = sol.submitted_at
-                    elif sol.submitted_at > failed_time_map[problem_id]:
-                        failed_time_map[problem_id] = sol.submitted_at
+    all_submissions: dict[int, list[Solution]] = {}
+
+    for problem_id, sols in solutions_by_problem.items():
+        all_submissions[problem_id] = sols
+        for sol in sols:
+            if sol.result == ResultEnum.Accepted:
+                if problem_id not in solved_map:
+                    solved_map[problem_id] = sol.submitted_at
+                elif sol.submitted_at < solved_map[problem_id]:
+                    solved_map[problem_id] = sol.submitted_at
+            else:
+                if problem_id not in failed_time_map:
+                    failed_time_map[problem_id] = sol.submitted_at
+                elif sol.submitted_at > failed_time_map[problem_id]:
+                    failed_time_map[problem_id] = sol.submitted_at
 
     problems: list[ProblemProgress] = []
     for sp in step_problems:
@@ -733,11 +750,33 @@ def get_board_progress(
             detail="Step not found",
         )
 
+    step_problems = (
+        db.query(StepProblem)
+        .options(joinedload(StepProblem.problem))
+        .filter(StepProblem.step_id == board.step_id)
+        .order_by(StepProblem.order)
+        .all()
+    )
+
+    all_user_ids = [bu.user_id for bu in board_users]
+    all_source_users = (
+        db.query(SourceUser).filter(SourceUser.user_id.in_(all_user_ids)).all()
+    )
+
+    user_source_map: dict[int, dict[str, str]] = {}
+    for su in all_source_users:
+        user_source_map.setdefault(su.user_id, {})[su.source] = su.username
+
     result_users: list[UserBoardProgress] = []
     for bu in board_users:
-        source_usernames = get_user_source_usernames(db, bu.user_id)
+        source_usernames = user_source_map.get(bu.user_id, {})
         solved_count, total_count, problems = calculate_user_step_progress(
-            db, bu.user_id, board.step_id, source_usernames
+            db,
+            bu.user_id,
+            board.step_id,
+            source_usernames,
+            step=step,
+            step_problems=step_problems,
         )
 
         progress_percent = (solved_count / total_count * 100) if total_count > 0 else 0
