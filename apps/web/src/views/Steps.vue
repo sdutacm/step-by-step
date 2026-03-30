@@ -10,7 +10,6 @@ import {
   ElEmpty,
   ElMessage,
   ElMessageBox,
-  ElTag,
 } from "element-plus";
 import { getSteps, deleteStep, type StepListItem, type StepListResponse } from "../api/step";
 import { getCurrentUser } from "../api/auth";
@@ -149,12 +148,6 @@ watch(
         <el-table-column prop="description" label="描述" min-width="200">
           <template #default="{ row }">
             {{ row.description ?? "-" }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="group_name" label="组织" width="120">
-          <template #default="{ row }">
-            <el-tag v-if="row.group_name" type="success" size="small">{{ row.group_name }}</el-tag>
-            <span v-else style="color: #909399">-</span>
           </template>
         </el-table-column>
         <el-table-column prop="creator_username" label="创建者" width="120" />

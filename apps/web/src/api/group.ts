@@ -9,7 +9,6 @@ export interface Group {
   created_at: string;
   updated_at: string;
   member_count: number;
-  step_count: number;
 }
 
 export interface GroupListItem {
@@ -21,7 +20,6 @@ export interface GroupListItem {
   created_at: string;
   updated_at: string;
   member_count: number;
-  step_count: number;
 }
 
 export interface GroupListResponse {
