@@ -1,0 +1,826 @@
+[
+  {
+    "order": 1,
+    "topic": "C++的标准模版库的应用",
+    "title": "Surprising Strings",
+    "specialty": "基本算法",
+    "problem_id": "POJ-3096",
+    "source": "vj"
+  },
+  {
+    "order": 2,
+    "topic": "C++的标准模版库的应用",
+    "title": "Organize Your Train part II",
+    "specialty": "基本算法",
+    "problem_id": "POJ-3007",
+    "source": "vj"
+  },
+  {
+    "order": 3,
+    "topic": "较为复杂的模拟题的训练",
+    "title": "Lucky and Good Months by Gregorian Calendar",
+    "specialty": "基本算法",
+    "problem_id": "POJ-3393",
+    "source": "vj"
+  },
+  {
+    "order": 4,
+    "topic": "较为复杂的模拟题的训练",
+    "title": "Instant Complexity",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1472",
+    "source": "vj"
+  },
+  {
+    "order": 5,
+    "topic": "较为复杂的模拟题的训练",
+    "title": "Flesch Reading Ease",
+    "specialty": "基本算法",
+    "problem_id": "POJ-3371",
+    "source": "vj"
+  },
+  {
+    "order": 6,
+    "topic": "较为复杂的模拟题的训练",
+    "title": "The Same Game",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1027",
+    "source": "vj"
+  },
+  {
+    "order": 7,
+    "topic": "较为复杂的模拟题的训练",
+    "title": "Connect",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2706",
+    "source": "vj"
+  },
+  {
+    "order": 8,
+    "topic": "差分约束系统的建立和求解",
+    "title": "Intervals",
+    "specialty": "图算法",
+    "problem_id": "POJ-1201",
+    "source": "vj"
+  },
+  {
+    "order": 9,
+    "topic": "差分约束系统的建立和求解",
+    "title": "Is the Information Reliable?",
+    "specialty": "图算法",
+    "problem_id": "POJ-2983",
+    "source": "vj"
+  },
+  {
+    "order": 10,
+    "topic": "差分约束系统的建立和求解",
+    "title": "Candies",
+    "specialty": "图算法",
+    "problem_id": "POJ-3159",
+    "source": "vj"
+  },
+  {
+    "order": 11,
+    "topic": "差分约束系统的建立和求解",
+    "title": "Cashier Employment",
+    "specialty": "图算法",
+    "problem_id": "POJ-1275",
+    "source": "vj"
+  },
+  {
+    "order": 12,
+    "topic": "差分约束系统的建立和求解",
+    "title": "King",
+    "specialty": "图算法",
+    "problem_id": "POJ-1364",
+    "source": "vj"
+  },
+  {
+    "order": 13,
+    "topic": "最小费用最大流",
+    "title": "Minimum Cost",
+    "specialty": "图算法",
+    "problem_id": "POJ-2516",
+    "source": "vj"
+  },
+  {
+    "order": 14,
+    "topic": "最小费用最大流",
+    "title": "Going Home",
+    "specialty": "图算法",
+    "problem_id": "POJ-2195",
+    "source": "vj"
+  },
+  {
+    "order": 15,
+    "topic": "最小费用最大流",
+    "title": "Kaka's Matrix Travels",
+    "specialty": "图算法",
+    "problem_id": "POJ-3422",
+    "source": "vj"
+  },
+  {
+    "order": 16,
+    "topic": "双连通分量",
+    "title": "Knights of the Round Table",
+    "specialty": "图算法",
+    "problem_id": "POJ-2942",
+    "source": "vj"
+  },
+  {
+    "order": 17,
+    "topic": "双连通分量",
+    "title": "Network",
+    "specialty": "图算法",
+    "problem_id": "POJ-3694",
+    "source": "vj"
+  },
+  {
+    "order": 18,
+    "topic": "强连通分支及其缩点",
+    "title": "Popular Cows",
+    "specialty": "图算法",
+    "problem_id": "POJ-2186",
+    "source": "vj"
+  },
+  {
+    "order": 19,
+    "topic": "强连通分支及其缩点",
+    "title": "Instantaneous Transference",
+    "specialty": "图算法",
+    "problem_id": "POJ-3592",
+    "source": "vj"
+  },
+  {
+    "order": 20,
+    "topic": "强连通分支及其缩点",
+    "title": "Countries in War",
+    "specialty": "图算法",
+    "problem_id": "POJ-3114",
+    "source": "vj"
+  },
+  {
+    "order": 21,
+    "topic": "图的割边和割点",
+    "title": "Road Construction",
+    "specialty": "图算法",
+    "problem_id": "POJ-3352",
+    "source": "vj"
+  },
+  {
+    "order": 22,
+    "topic": "最小割模型",
+    "title": "Paratroopers",
+    "specialty": "图算法",
+    "problem_id": "POJ-3308",
+    "source": "vj"
+  },
+  {
+    "order": 23,
+    "topic": "最小割模型",
+    "title": "Hard Life",
+    "specialty": "图算法",
+    "problem_id": "POJ-3155",
+    "source": "vj"
+  },
+  {
+    "order": 24,
+    "topic": "KM算法(最大权/最小权）",
+    "title": "Going Home",
+    "specialty": "图算法",
+    "problem_id": "POJ-2195",
+    "source": "vj"
+  },
+  {
+    "order": 25,
+    "topic": "KM算法(最大权/最小权）",
+    "title": "Supervisor, Supervisee",
+    "specialty": "图算法",
+    "problem_id": "POJ-2400",
+    "source": "vj"
+  },
+  {
+    "order": 26,
+    "topic": "KM算法(最大权/最小权）",
+    "title": "The Windy's",
+    "specialty": "图算法",
+    "problem_id": "POJ-3686",
+    "source": "vj"
+  },
+  {
+    "order": 27,
+    "topic": "线段树",
+    "title": "Mayor's posters",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2528",
+    "source": "vj"
+  },
+  {
+    "order": 28,
+    "topic": "线段树",
+    "title": "Buy Tickets",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2828",
+    "source": "vj"
+  },
+  {
+    "order": 29,
+    "topic": "线段树",
+    "title": "Count Color",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2777",
+    "source": "vj"
+  },
+  {
+    "order": 30,
+    "topic": "线段树",
+    "title": "Who Gets the Most Candies?",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2886",
+    "source": "vj"
+  },
+  {
+    "order": 31,
+    "topic": "线段树",
+    "title": "Potted Flower",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2750",
+    "source": "vj"
+  },
+  {
+    "order": 32,
+    "topic": "静态二叉检索树,平衡树treap,splay",
+    "title": "Stars in Your Window",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2482",
+    "source": "vj"
+  },
+  {
+    "order": 33,
+    "topic": "静态二叉检索树,平衡树treap,splay",
+    "title": "Stars",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2352",
+    "source": "vj"
+  },
+  {
+    "order": 34,
+    "topic": "静态二叉检索树,平衡树treap,splay",
+    "title": "Tunnel Warfare",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2892",
+    "source": "vj"
+  },
+  {
+    "order": 35,
+    "topic": "静态二叉检索树,平衡树treap,splay",
+    "title": "A Simple Problem with Integers",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3468",
+    "source": "vj"
+  },
+  {
+    "order": 36,
+    "topic": "树状树组",
+    "title": "Mobile phones",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1195",
+    "source": "vj"
+  },
+  {
+    "order": 37,
+    "topic": "树状树组",
+    "title": "Apple Tree",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3321",
+    "source": "vj"
+  },
+  {
+    "order": 38,
+    "topic": "RMQ",
+    "title": "Balanced Lineup",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3264",
+    "source": "vj"
+  },
+  {
+    "order": 39,
+    "topic": "RMQ",
+    "title": "Frequent values",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3368",
+    "source": "vj"
+  },
+  {
+    "order": 40,
+    "topic": "并查集的高级应用",
+    "title": "Find them, Catch them",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1703",
+    "source": "vj"
+  },
+  {
+    "order": 41,
+    "topic": "并查集的高级应用",
+    "title": "A Bug's Life",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2492",
+    "source": "vj"
+  },
+  {
+    "order": 42,
+    "topic": "KMP算法",
+    "title": "Period",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1961",
+    "source": "vj"
+  },
+  {
+    "order": 43,
+    "topic": "KMP算法",
+    "title": "Power Strings",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2406",
+    "source": "vj"
+  },
+  {
+    "order": 44,
+    "topic": "最优化剪枝和可行性",
+    "title": "Best Sequence",
+    "specialty": "搜索",
+    "problem_id": "POJ-1699",
+    "source": "vj"
+  },
+  {
+    "order": 45,
+    "topic": "搜索的技巧和优化",
+    "title": "Paid Roads",
+    "specialty": "搜索",
+    "problem_id": "POJ-3411",
+    "source": "vj"
+  },
+  {
+    "order": 46,
+    "topic": "搜索的技巧和优化",
+    "title": "ROADS",
+    "specialty": "搜索",
+    "problem_id": "POJ-1724",
+    "source": "vj"
+  },
+  {
+    "order": 47,
+    "topic": "记忆化搜索",
+    "title": "Changing Digits",
+    "specialty": "搜索",
+    "problem_id": "POJ-3373",
+    "source": "vj"
+  },
+  {
+    "order": 48,
+    "topic": "记忆化搜索",
+    "title": "Painting A Board",
+    "specialty": "搜索",
+    "problem_id": "POJ-1691",
+    "source": "vj"
+  },
+  {
+    "order": 49,
+    "topic": "较为复杂的动态规划",
+    "title": "棋盘分割",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1191",
+    "source": "vj"
+  },
+  {
+    "order": 50,
+    "topic": "较为复杂的动态规划",
+    "title": "The Troublesome Frog",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1054",
+    "source": "vj"
+  },
+  {
+    "order": 51,
+    "topic": "较为复杂的动态规划",
+    "title": "Cheapest Palindrome",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3280",
+    "source": "vj"
+  },
+  {
+    "order": 52,
+    "topic": "较为复杂的动态规划",
+    "title": "Get Many Persimmon Trees",
+    "specialty": "动态规划",
+    "problem_id": "POJ-2029",
+    "source": "vj"
+  },
+  {
+    "order": 53,
+    "topic": "较为复杂的动态规划",
+    "title": "Martian Mining",
+    "specialty": "动态规划",
+    "problem_id": "POJ-2948",
+    "source": "vj"
+  },
+  {
+    "order": 54,
+    "topic": "较为复杂的动态规划",
+    "title": "Spiderman",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1925",
+    "source": "vj"
+  },
+  {
+    "order": 55,
+    "topic": "较为复杂的动态规划",
+    "title": "Whac-a-Mole",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3034",
+    "source": "vj"
+  },
+  {
+    "order": 56,
+    "topic": "记录状态的动态规划",
+    "title": "Almost the shortest route",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3554",
+    "source": "vj"
+  },
+  {
+    "order": 57,
+    "topic": "记录状态的动态规划",
+    "title": "Mondriaan's Dream",
+    "specialty": "动态规划",
+    "problem_id": "POJ-2411",
+    "source": "vj"
+  },
+  {
+    "order": 58,
+    "topic": "记录状态的动态规划",
+    "title": "炮兵阵地",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1185",
+    "source": "vj"
+  },
+  {
+    "order": 59,
+    "topic": "树型动态规划",
+    "title": "The Lost House",
+    "specialty": "动态规划",
+    "problem_id": "POJ-2057",
+    "source": "vj"
+  },
+  {
+    "order": 60,
+    "topic": "树型动态规划",
+    "title": "Rebuilding Roads",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1947",
+    "source": "vj"
+  },
+  {
+    "order": 61,
+    "topic": "树型动态规划",
+    "title": "Apple Tree",
+    "specialty": "动态规划",
+    "problem_id": "POJ-2486",
+    "source": "vj"
+  },
+  {
+    "order": 62,
+    "topic": "树型动态规划",
+    "title": "Contestants Division",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3140",
+    "source": "vj"
+  },
+  {
+    "order": 63,
+    "topic": "组合数学,polya定理,置换群",
+    "title": "Necklace of Beads",
+    "specialty": "数学",
+    "problem_id": "POJ-1286",
+    "source": "vj"
+  },
+  {
+    "order": 64,
+    "topic": "组合数学,polya定理,置换群",
+    "title": "Let it Bead",
+    "specialty": "数学",
+    "problem_id": "POJ-2409",
+    "source": "vj"
+  },
+  {
+    "order": 65,
+    "topic": "组合数学,polya定理,置换群",
+    "title": "Cow Sorting",
+    "specialty": "数学",
+    "problem_id": "POJ-3270",
+    "source": "vj"
+  },
+  {
+    "order": 66,
+    "topic": "组合数学,polya定理,置换群",
+    "title": "Cipher",
+    "specialty": "数学",
+    "problem_id": "POJ-1026",
+    "source": "vj"
+  },
+  {
+    "order": 67,
+    "topic": "高斯消元法",
+    "title": "Widget Factory",
+    "specialty": "数学",
+    "problem_id": "POJ-2947",
+    "source": "vj"
+  },
+  {
+    "order": 68,
+    "topic": "高斯消元法",
+    "title": "Single-Player Games",
+    "specialty": "数学",
+    "problem_id": "POJ-1487",
+    "source": "vj"
+  },
+  {
+    "order": 69,
+    "topic": "高斯消元法",
+    "title": "SETI",
+    "specialty": "数学",
+    "problem_id": "POJ-2065",
+    "source": "vj"
+  },
+  {
+    "order": 70,
+    "topic": "高斯消元法",
+    "title": "The Clocks",
+    "specialty": "数学",
+    "problem_id": "POJ-1166",
+    "source": "vj"
+  },
+  {
+    "order": 71,
+    "topic": "高斯消元法",
+    "title": "EXTENDED LIGHTS OUT",
+    "specialty": "数学",
+    "problem_id": "POJ-1222",
+    "source": "vj"
+  },
+  {
+    "order": 72,
+    "topic": "概率问题",
+    "title": "Football",
+    "specialty": "数学",
+    "problem_id": "POJ-3071",
+    "source": "vj"
+  },
+  {
+    "order": 73,
+    "topic": "概率问题",
+    "title": "Coin Toss",
+    "specialty": "数学",
+    "problem_id": "POJ-3440",
+    "source": "vj"
+  },
+  {
+    "order": 74,
+    "topic": "GCD、扩展的欧几里德",
+    "title": "青蛙的约会",
+    "specialty": "数学",
+    "problem_id": "POJ-1061",
+    "source": "vj"
+  },
+  {
+    "order": 75,
+    "topic": "GCD、扩展的欧几里德",
+    "title": "Strange Way to Express Integers",
+    "specialty": "数学",
+    "problem_id": "POJ-2891",
+    "source": "vj"
+  },
+  {
+    "order": 76,
+    "topic": "GCD、扩展的欧几里德",
+    "title": "Astronomy",
+    "specialty": "数学",
+    "problem_id": "POJ-3101",
+    "source": "vj"
+  },
+  {
+    "order": 77,
+    "topic": "GCD、扩展的欧几里德",
+    "title": "C Looooops",
+    "specialty": "数学",
+    "problem_id": "POJ-2115",
+    "source": "vj"
+  },
+  {
+    "order": 78,
+    "topic": "计算方法(矩阵、三分等)",
+    "title": "Dropping tests",
+    "specialty": "数学",
+    "problem_id": "POJ-2976",
+    "source": "vj"
+  },
+  {
+    "order": 79,
+    "topic": "计算方法(矩阵、三分等)",
+    "title": "Cellular Automaton",
+    "specialty": "数学",
+    "problem_id": "POJ-3150",
+    "source": "vj"
+  },
+  {
+    "order": 80,
+    "topic": "计算方法(矩阵、三分等)",
+    "title": "Kaka's Matrix Travels",
+    "specialty": "数学",
+    "problem_id": "POJ-3422",
+    "source": "vj"
+  },
+  {
+    "order": 81,
+    "topic": "计算方法(矩阵、三分等)",
+    "title": "Fibonacci",
+    "specialty": "数学",
+    "problem_id": "POJ-3070",
+    "source": "vj"
+  },
+  {
+    "order": 82,
+    "topic": "计算方法(矩阵、三分等)",
+    "title": "Texas Trip",
+    "specialty": "数学",
+    "problem_id": "POJ-3301",
+    "source": "vj"
+  },
+  {
+    "order": 83,
+    "topic": "随机化算法",
+    "title": "Matrix Multiplication",
+    "specialty": "数学",
+    "problem_id": "POJ-3318",
+    "source": "vj"
+  },
+  {
+    "order": 84,
+    "topic": "随机化算法",
+    "title": "Jersey Politics",
+    "specialty": "数学",
+    "problem_id": "POJ-2454",
+    "source": "vj"
+  },
+  {
+    "order": 85,
+    "topic": "杂题",
+    "title": "Bee Breeding",
+    "specialty": "数学",
+    "problem_id": "POJ-1870",
+    "source": "vj"
+  },
+  {
+    "order": 86,
+    "topic": "杂题",
+    "title": "Rinse",
+    "specialty": "数学",
+    "problem_id": "POJ-3296",
+    "source": "vj"
+  },
+  {
+    "order": 87,
+    "topic": "杂题",
+    "title": "How many 0's?",
+    "specialty": "数学",
+    "problem_id": "POJ-3286",
+    "source": "vj"
+  },
+  {
+    "order": 88,
+    "topic": "杂题",
+    "title": "Trees Made to Order",
+    "specialty": "数学",
+    "problem_id": "POJ-1095",
+    "source": "vj"
+  },
+  {
+    "order": 89,
+    "topic": "坐标离散化",
+    "title": "Atlantis",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1151",
+    "source": "vj"
+  },
+  {
+    "order": 90,
+    "topic": "扫描线算法",
+    "title": "November Rain",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1765",
+    "source": "vj"
+  },
+  {
+    "order": 91,
+    "topic": "扫描线算法",
+    "title": "Picture",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1177",
+    "source": "vj"
+  },
+  {
+    "order": 92,
+    "topic": "扫描线算法",
+    "title": "Atlantis",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1151",
+    "source": "vj"
+  },
+  {
+    "order": 93,
+    "topic": "扫描线算法",
+    "title": "City Horizon",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-3277",
+    "source": "vj"
+  },
+  {
+    "order": 94,
+    "topic": "扫描线算法",
+    "title": "Amphiphilic Carbon Molecules",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-2280",
+    "source": "vj"
+  },
+  {
+    "order": 95,
+    "topic": "扫描线算法",
+    "title": "Subway planning",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-3004",
+    "source": "vj"
+  },
+  {
+    "order": 96,
+    "topic": "多边形的核",
+    "title": "How I Mathematician Wonder What You Are!",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-3130",
+    "source": "vj"
+  },
+  {
+    "order": 97,
+    "topic": "多边形的核",
+    "title": "Rotating Scoreboard",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-3335",
+    "source": "vj"
+  },
+  {
+    "order": 98,
+    "topic": "几何工具的综合应用",
+    "title": "Disks",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1819",
+    "source": "vj"
+  },
+  {
+    "order": 99,
+    "topic": "几何工具的综合应用",
+    "title": "Treasure Hunt",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1066",
+    "source": "vj"
+  },
+  {
+    "order": 100,
+    "topic": "几何工具的综合应用",
+    "title": "Area of Polygons",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-2043",
+    "source": "vj"
+  },
+  {
+    "order": 101,
+    "topic": "几何工具的综合应用",
+    "title": "Mountains",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-3227",
+    "source": "vj"
+  },
+  {
+    "order": 102,
+    "topic": "几何工具的综合应用",
+    "title": "Gunman",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-2165",
+    "source": "vj"
+  },
+  {
+    "order": 103,
+    "topic": "几何工具的综合应用",
+    "title": "Geometry with a ruler",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-3429",
+    "source": "vj"
+  }
+]

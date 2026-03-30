@@ -1,0 +1,1122 @@
+[
+  {
+    "order": 1,
+    "topic": "基础",
+    "title": "Hello World!（printf练习）",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1110",
+    "source": "sdut"
+  },
+  {
+    "order": 2,
+    "topic": "基础",
+    "title": "输出字符串",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1151",
+    "source": "sdut"
+  },
+  {
+    "order": 3,
+    "topic": "基础",
+    "title": "图形输出（字符常量练习）",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1112",
+    "source": "sdut"
+  },
+  {
+    "order": 4,
+    "topic": "基础",
+    "title": "用*号输出字母C的图案",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1156",
+    "source": "sdut"
+  },
+  {
+    "order": 5,
+    "topic": "基础",
+    "title": "打印图形",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1155",
+    "source": "sdut"
+  },
+  {
+    "order": 6,
+    "topic": "基础",
+    "title": "求两个整数之和",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1152",
+    "source": "sdut"
+  },
+  {
+    "order": 7,
+    "topic": "基础",
+    "title": "A+B Problem",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1000",
+    "source": "sdut"
+  },
+  {
+    "order": 8,
+    "topic": "基础",
+    "title": "计算A+B（顺序结构）",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1114",
+    "source": "sdut"
+  },
+  {
+    "order": 9,
+    "topic": "基础",
+    "title": "交换两个整数的值（顺序结构）",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1115",
+    "source": "sdut"
+  },
+  {
+    "order": 10,
+    "topic": "基础",
+    "title": "逆置正整数",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1189",
+    "source": "sdut"
+  },
+  {
+    "order": 11,
+    "topic": "基础",
+    "title": "买糖果",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1203",
+    "source": "sdut"
+  },
+  {
+    "order": 12,
+    "topic": "基础",
+    "title": "三个整数和、积与平均值",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1167",
+    "source": "sdut"
+  },
+  {
+    "order": 13,
+    "topic": "基础",
+    "title": "格式化输出（常量练习）",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1111",
+    "source": "sdut"
+  },
+  {
+    "order": 14,
+    "topic": "基础",
+    "title": "圆柱体计算",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1207",
+    "source": "sdut"
+  },
+  {
+    "order": 15,
+    "topic": "基础",
+    "title": "温度转换",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1208",
+    "source": "sdut"
+  },
+  {
+    "order": 16,
+    "topic": "基础",
+    "title": "单个字符输入和输出（顺序结构）",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1113",
+    "source": "sdut"
+  },
+  {
+    "order": 17,
+    "topic": "基础",
+    "title": "转换字母（顺序结构）",
+    "specialty": "实验1---顺序结构程序设计",
+    "problem_id": "1116",
+    "source": "sdut"
+  },
+  {
+    "order": 18,
+    "topic": "基础",
+    "title": "求绝对值（选择结构）",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1117",
+    "source": "sdut"
+  },
+  {
+    "order": 19,
+    "topic": "基础",
+    "title": "时间间隔",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1177",
+    "source": "sdut"
+  },
+  {
+    "order": 20,
+    "topic": "基础",
+    "title": "求两个整数之中较大者",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1153",
+    "source": "sdut"
+  },
+  {
+    "order": 21,
+    "topic": "基础",
+    "title": "两个数最大",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1158",
+    "source": "sdut"
+  },
+  {
+    "order": 22,
+    "topic": "基础",
+    "title": "小鑫の日常系列故事（一）——判断对错",
+    "specialty": "选择结构程序设计",
+    "problem_id": "2732",
+    "source": "sdut"
+  },
+  {
+    "order": 23,
+    "topic": "基础",
+    "title": "小鑫追女神",
+    "specialty": "选择结构程序设计",
+    "problem_id": "3102",
+    "source": "sdut"
+  },
+  {
+    "order": 24,
+    "topic": "基础",
+    "title": "求三个整数的最大值",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1154",
+    "source": "sdut"
+  },
+  {
+    "order": 25,
+    "topic": "基础",
+    "title": "相加和最大值",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1148",
+    "source": "sdut"
+  },
+  {
+    "order": 26,
+    "topic": "基础",
+    "title": "从大到小输出a、b、c（选择结构）",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1118",
+    "source": "sdut"
+  },
+  {
+    "order": 27,
+    "topic": "基础",
+    "title": "三个数排序",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1183",
+    "source": "sdut"
+  },
+  {
+    "order": 28,
+    "topic": "基础",
+    "title": "找中间数",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1190",
+    "source": "sdut"
+  },
+  {
+    "order": 29,
+    "topic": "基础",
+    "title": "整除",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1202",
+    "source": "sdut"
+  },
+  {
+    "order": 30,
+    "topic": "基础",
+    "title": "闰年",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1580",
+    "source": "sdut"
+  },
+  {
+    "order": 31,
+    "topic": "基础",
+    "title": "C/C++经典程序训练3---模拟计算器",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1133",
+    "source": "sdut"
+  },
+  {
+    "order": 32,
+    "topic": "基础",
+    "title": "某年某月的天数",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1160",
+    "source": "sdut"
+  },
+  {
+    "order": 33,
+    "topic": "基础",
+    "title": "输入数字星期，输出英文(switch语句)",
+    "specialty": "选择结构程序设计",
+    "problem_id": "1119",
+    "source": "sdut"
+  },
+  {
+    "order": 34,
+    "topic": "基础",
+    "title": "A+B for Input-Output Practice (I)",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "1010",
+    "source": "sdut"
+  },
+  {
+    "order": 35,
+    "topic": "基础",
+    "title": "A+B for Input-Output Practice (III)",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "1012",
+    "source": "sdut"
+  },
+  {
+    "order": 36,
+    "topic": "基础",
+    "title": "A+B for Input-Output Practice (VII)",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "1016",
+    "source": "sdut"
+  },
+  {
+    "order": 37,
+    "topic": "基础",
+    "title": "小金问呀问不会问题",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "3422",
+    "source": "sdut"
+  },
+  {
+    "order": 38,
+    "topic": "基础",
+    "title": "优越数",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "1442",
+    "source": "sdut"
+  },
+  {
+    "order": 39,
+    "topic": "基础",
+    "title": "分段函数求值",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "2252",
+    "source": "sdut"
+  },
+  {
+    "order": 40,
+    "topic": "基础",
+    "title": "相似三角形",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "2562",
+    "source": "sdut"
+  },
+  {
+    "order": 41,
+    "topic": "基础",
+    "title": "计算球体积",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "1235",
+    "source": "sdut"
+  },
+  {
+    "order": 42,
+    "topic": "基础",
+    "title": "洗衣服",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "2742",
+    "source": "sdut"
+  },
+  {
+    "order": 43,
+    "topic": "基础",
+    "title": "压岁钱",
+    "specialty": "while 循环结构程序设计",
+    "problem_id": "2555",
+    "source": "sdut"
+  },
+  {
+    "order": 44,
+    "topic": "基础",
+    "title": "A+B for Input-Output Practice (II)",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1011",
+    "source": "sdut"
+  },
+  {
+    "order": 45,
+    "topic": "基础",
+    "title": "C/C++训练1---最大公约数与最小公倍数",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1131",
+    "source": "sdut"
+  },
+  {
+    "order": 46,
+    "topic": "基础",
+    "title": "判断素数（循环结构）",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1122",
+    "source": "sdut"
+  },
+  {
+    "order": 47,
+    "topic": "基础",
+    "title": "求绝对值最大值",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1147",
+    "source": "sdut"
+  },
+  {
+    "order": 48,
+    "topic": "基础",
+    "title": "圆周率",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1193",
+    "source": "sdut"
+  },
+  {
+    "order": 49,
+    "topic": "基础",
+    "title": "数列求和",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1134",
+    "source": "sdut"
+  },
+  {
+    "order": 50,
+    "topic": "基础",
+    "title": "计算1到n的和（循环结构）",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1120",
+    "source": "sdut"
+  },
+  {
+    "order": 51,
+    "topic": "基础",
+    "title": "求阶乘（循环结构）",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1123",
+    "source": "sdut"
+  },
+  {
+    "order": 52,
+    "topic": "基础",
+    "title": "两个数比较",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1159",
+    "source": "sdut"
+  },
+  {
+    "order": 53,
+    "topic": "基础",
+    "title": "做乘法 ",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "2249",
+    "source": "sdut"
+  },
+  {
+    "order": 54,
+    "topic": "基础",
+    "title": "简单计算",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "2250",
+    "source": "sdut"
+  },
+  {
+    "order": 55,
+    "topic": "基础",
+    "title": "猜糖块",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "2552",
+    "source": "sdut"
+  },
+  {
+    "order": 56,
+    "topic": "基础",
+    "title": "分数序列",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1169",
+    "source": "sdut"
+  },
+  {
+    "order": 57,
+    "topic": "基础",
+    "title": "期末考试之分等级",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "2251",
+    "source": "sdut"
+  },
+  {
+    "order": 58,
+    "topic": "基础",
+    "title": "平方数",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "3439",
+    "source": "sdut"
+  },
+  {
+    "order": 59,
+    "topic": "基础",
+    "title": "打印数字图形",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1179",
+    "source": "sdut"
+  },
+  {
+    "order": 60,
+    "topic": "基础",
+    "title": "打印菱形",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1174",
+    "source": "sdut"
+  },
+  {
+    "order": 61,
+    "topic": "基础",
+    "title": "水仙花数",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1239",
+    "source": "sdut"
+  },
+  {
+    "order": 62,
+    "topic": "基础",
+    "title": "余弦",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1194",
+    "source": "sdut"
+  },
+  {
+    "order": 63,
+    "topic": "基础",
+    "title": "拍皮球",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1184",
+    "source": "sdut"
+  },
+  {
+    "order": 64,
+    "topic": "基础",
+    "title": "完美的素数",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "2553",
+    "source": "sdut"
+  },
+  {
+    "order": 65,
+    "topic": "基础",
+    "title": "A+B for Input-Output Practice (IV)",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1013",
+    "source": "sdut"
+  },
+  {
+    "order": 66,
+    "topic": "基础",
+    "title": "小金掰呀掰不够玉米",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "3425",
+    "source": "sdut"
+  },
+  {
+    "order": 67,
+    "topic": "基础",
+    "title": "C/C++练习7---求某个范围内的所有素数",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1137",
+    "source": "sdut"
+  },
+  {
+    "order": 68,
+    "topic": "基础",
+    "title": "素数",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1165",
+    "source": "sdut"
+  },
+  {
+    "order": 69,
+    "topic": "基础",
+    "title": "for循环打印图形（循环结构）",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1121",
+    "source": "sdut"
+  },
+  {
+    "order": 70,
+    "topic": "基础",
+    "title": "打印金字塔",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1195",
+    "source": "sdut"
+  },
+  {
+    "order": 71,
+    "topic": "基础",
+    "title": "九九乘法表",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "2561",
+    "source": "sdut"
+  },
+  {
+    "order": 72,
+    "topic": "基础",
+    "title": "区域内点的个数",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "2749",
+    "source": "sdut"
+  },
+  {
+    "order": 73,
+    "topic": "基础",
+    "title": "C/C++经典程序训练5---图形打印问题",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "1135",
+    "source": "sdut"
+  },
+  {
+    "order": 74,
+    "topic": "基础",
+    "title": "小鑫の日常系列故事（六）——奇遇记",
+    "specialty": "for循环结构程序设计",
+    "problem_id": "2737",
+    "source": "sdut"
+  },
+  {
+    "order": 75,
+    "topic": "基础",
+    "title": "计算表达式",
+    "specialty": "函数的运用",
+    "problem_id": "1199",
+    "source": "sdut"
+  },
+  {
+    "order": 76,
+    "topic": "基础",
+    "title": "求数列的和",
+    "specialty": "函数的运用",
+    "problem_id": "1238",
+    "source": "sdut"
+  },
+  {
+    "order": 77,
+    "topic": "基础",
+    "title": "一元二次方程Ⅰ",
+    "specialty": "函数的运用",
+    "problem_id": "1161",
+    "source": "sdut"
+  },
+  {
+    "order": 78,
+    "topic": "基础",
+    "title": "求三角形面积",
+    "specialty": "函数的运用",
+    "problem_id": "1206",
+    "source": "sdut"
+  },
+  {
+    "order": 79,
+    "topic": "基础",
+    "title": "求实数绝对值",
+    "specialty": "函数的运用",
+    "problem_id": "1209",
+    "source": "sdut"
+  },
+  {
+    "order": 80,
+    "topic": "基础",
+    "title": "C/C++程序训练6---歌德巴赫猜想的证明",
+    "specialty": "函数的运用",
+    "problem_id": "1136",
+    "source": "sdut"
+  },
+  {
+    "order": 81,
+    "topic": "基础",
+    "title": "分段函数",
+    "specialty": "函数的运用",
+    "problem_id": "2557",
+    "source": "sdut"
+  },
+  {
+    "order": 82,
+    "topic": "基础",
+    "title": "C/C++经典程序训练2---斐波那契数列",
+    "specialty": "函数的运用",
+    "problem_id": "1132",
+    "source": "sdut"
+  },
+  {
+    "order": 83,
+    "topic": "基础",
+    "title": "计算题",
+    "specialty": "函数的运用",
+    "problem_id": "1149",
+    "source": "sdut"
+  },
+  {
+    "order": 84,
+    "topic": "基础",
+    "title": "斐波那契？",
+    "specialty": "函数的运用",
+    "problem_id": "1689",
+    "source": "sdut"
+  },
+  {
+    "order": 85,
+    "topic": "基础",
+    "title": "高中数学？",
+    "specialty": "函数的运用",
+    "problem_id": "2400",
+    "source": "sdut"
+  },
+  {
+    "order": 86,
+    "topic": "基础",
+    "title": "计算组合数",
+    "specialty": "函数的运用",
+    "problem_id": "1586",
+    "source": "sdut"
+  },
+  {
+    "order": 87,
+    "topic": "基础",
+    "title": "最值",
+    "specialty": "一维数组的运用",
+    "problem_id": "1170",
+    "source": "sdut"
+  },
+  {
+    "order": 88,
+    "topic": "基础",
+    "title": "整数位",
+    "specialty": "一维数组的运用",
+    "problem_id": "1191",
+    "source": "sdut"
+  },
+  {
+    "order": 89,
+    "topic": "基础",
+    "title": "小鑫数数儿",
+    "specialty": "一维数组的运用",
+    "problem_id": "3106",
+    "source": "sdut"
+  },
+  {
+    "order": 90,
+    "topic": "基础",
+    "title": "小鑫の日常系列故事（五）——卡片游戏",
+    "specialty": "一维数组的运用",
+    "problem_id": "2736",
+    "source": "sdut"
+  },
+  {
+    "order": 91,
+    "topic": "基础",
+    "title": "区间之和",
+    "specialty": "一维数组的运用",
+    "problem_id": "2565",
+    "source": "sdut"
+  },
+  {
+    "order": 92,
+    "topic": "基础",
+    "title": "分割整数",
+    "specialty": "一维数组的运用",
+    "problem_id": "1175",
+    "source": "sdut"
+  },
+  {
+    "order": 93,
+    "topic": "基础",
+    "title": "数组逆序",
+    "specialty": "一维数组的运用",
+    "problem_id": "1178",
+    "source": "sdut"
+  },
+  {
+    "order": 94,
+    "topic": "基础",
+    "title": "排序",
+    "specialty": "一维数组的运用",
+    "problem_id": "1582",
+    "source": "sdut"
+  },
+  {
+    "order": 95,
+    "topic": "基础",
+    "title": "数列有序!",
+    "specialty": "一维数组的运用",
+    "problem_id": "1244",
+    "source": "sdut"
+  },
+  {
+    "order": 96,
+    "topic": "基础",
+    "title": "矩阵输出",
+    "specialty": "一维数组的运用",
+    "problem_id": "1523",
+    "source": "sdut"
+  },
+  {
+    "order": 97,
+    "topic": "基础",
+    "title": "排序问题",
+    "specialty": "一维数组的运用",
+    "problem_id": "1196",
+    "source": "sdut"
+  },
+  {
+    "order": 98,
+    "topic": "基础",
+    "title": "各位数字之和排序",
+    "specialty": "一维数组的运用",
+    "problem_id": "1188",
+    "source": "sdut"
+  },
+  {
+    "order": 99,
+    "topic": "基础",
+    "title": "期末考试之排名次",
+    "specialty": "一维数组的运用",
+    "problem_id": "2255",
+    "source": "sdut"
+  },
+  {
+    "order": 100,
+    "topic": "基础",
+    "title": "第X大的数",
+    "specialty": "一维数组的运用",
+    "problem_id": "2748",
+    "source": "sdut"
+  },
+  {
+    "order": 101,
+    "topic": "基础",
+    "title": "小鑫爱运动",
+    "specialty": "一维数组的运用",
+    "problem_id": "3103",
+    "source": "sdut"
+  },
+  {
+    "order": 102,
+    "topic": "基础",
+    "title": "冒泡排序中数据交换的次数",
+    "specialty": "一维数组的运用",
+    "problem_id": "2554",
+    "source": "sdut"
+  },
+  {
+    "order": 103,
+    "topic": "基础",
+    "title": "数组逆序",
+    "specialty": "一维数组的运用",
+    "problem_id": "1186",
+    "source": "sdut"
+  },
+  {
+    "order": 104,
+    "topic": "基础",
+    "title": "数日子",
+    "specialty": "一维数组的运用",
+    "problem_id": "1182",
+    "source": "sdut"
+  },
+  {
+    "order": 105,
+    "topic": "基础",
+    "title": "C语言实验——矩阵转置",
+    "specialty": "二维数组的运用",
+    "problem_id": "1164",
+    "source": "sdut"
+  },
+  {
+    "order": 106,
+    "topic": "基础",
+    "title": "杨辉三角",
+    "specialty": "二维数组的运用",
+    "problem_id": "1216",
+    "source": "sdut"
+  },
+  {
+    "order": 107,
+    "topic": "基础",
+    "title": "对称矩阵的判定",
+    "specialty": "二维数组的运用",
+    "problem_id": "1522",
+    "source": "sdut"
+  },
+  {
+    "order": 108,
+    "topic": "基础",
+    "title": "求一个3*3矩阵对角线元素之和",
+    "specialty": "二维数组的运用",
+    "problem_id": "1185",
+    "source": "sdut"
+  },
+  {
+    "order": 109,
+    "topic": "基础",
+    "title": "矩阵的舞蹈",
+    "specialty": "二维数组的运用",
+    "problem_id": "1572",
+    "source": "sdut"
+  },
+  {
+    "order": 110,
+    "topic": "基础",
+    "title": "鞍点计算",
+    "specialty": "二维数组的运用",
+    "problem_id": "1198",
+    "source": "sdut"
+  },
+  {
+    "order": 111,
+    "topic": "基础",
+    "title": "爬山",
+    "specialty": "二维数组的运用",
+    "problem_id": "3442",
+    "source": "sdut"
+  },
+  {
+    "order": 112,
+    "topic": "基础",
+    "title": "小泉的难题",
+    "specialty": "指针",
+    "problem_id": "2105",
+    "source": "sdut"
+  },
+  {
+    "order": 113,
+    "topic": "基础",
+    "title": "n个数的排序",
+    "specialty": "指针",
+    "problem_id": "3441",
+    "source": "sdut"
+  },
+  {
+    "order": 114,
+    "topic": "基础",
+    "title": "矩阵下三角元素之和",
+    "specialty": "指针",
+    "problem_id": "1172",
+    "source": "sdut"
+  },
+  {
+    "order": 115,
+    "topic": "基础",
+    "title": "又见回文",
+    "specialty": "指针",
+    "problem_id": "2560",
+    "source": "sdut"
+  },
+  {
+    "order": 116,
+    "topic": "基础",
+    "title": "保留字母",
+    "specialty": "字符数组的运用",
+    "problem_id": "1162",
+    "source": "sdut"
+  },
+  {
+    "order": 117,
+    "topic": "基础",
+    "title": "保留整数",
+    "specialty": "字符数组的运用",
+    "problem_id": "1171",
+    "source": "sdut"
+  },
+  {
+    "order": 118,
+    "topic": "基础",
+    "title": "简单编码",
+    "specialty": "字符数组的运用",
+    "problem_id": "1187",
+    "source": "sdut"
+  },
+  {
+    "order": 119,
+    "topic": "基础",
+    "title": "编码",
+    "specialty": "字符数组的运用",
+    "problem_id": "2761",
+    "source": "sdut"
+  },
+  {
+    "order": 120,
+    "topic": "基础",
+    "title": "大小写转换",
+    "specialty": "字符数组的运用",
+    "problem_id": "1168",
+    "source": "sdut"
+  },
+  {
+    "order": 121,
+    "topic": "基础",
+    "title": "大小写转换",
+    "specialty": "字符数组的运用",
+    "problem_id": "2746",
+    "source": "sdut"
+  },
+  {
+    "order": 122,
+    "topic": "基础",
+    "title": "删除指定字符",
+    "specialty": "字符数组的运用",
+    "problem_id": "1176",
+    "source": "sdut"
+  },
+  {
+    "order": 123,
+    "topic": "基础",
+    "title": "字符统计1",
+    "specialty": "字符数组的运用",
+    "problem_id": "1219",
+    "source": "sdut"
+  },
+  {
+    "order": 124,
+    "topic": "基础",
+    "title": "字符统计2",
+    "specialty": "字符数组的运用",
+    "problem_id": "1525",
+    "source": "sdut"
+  },
+  {
+    "order": 125,
+    "topic": "基础",
+    "title": "字符编码",
+    "specialty": "字符数组的运用",
+    "problem_id": "1204",
+    "source": "sdut"
+  },
+  {
+    "order": 126,
+    "topic": "基础",
+    "title": "简单密码破解",
+    "specialty": "字符数组的运用",
+    "problem_id": "1210",
+    "source": "sdut"
+  },
+  {
+    "order": 127,
+    "topic": "基础",
+    "title": "统计元音",
+    "specialty": "字符数组的运用",
+    "problem_id": "1250",
+    "source": "sdut"
+  },
+  {
+    "order": 128,
+    "topic": "基础",
+    "title": "传说中的数据结构",
+    "specialty": "字符数组的运用",
+    "problem_id": "2556",
+    "source": "sdut"
+  },
+  {
+    "order": 129,
+    "topic": "基础",
+    "title": "小鑫の日常系列故事（七）——小纸条",
+    "specialty": "字符数组的运用",
+    "problem_id": "2738",
+    "source": "sdut"
+  },
+  {
+    "order": 130,
+    "topic": "基础",
+    "title": "单词统计",
+    "specialty": "字符数组的运用",
+    "problem_id": "1180",
+    "source": "sdut"
+  },
+  {
+    "order": 131,
+    "topic": "基础",
+    "title": "合法的C标识符",
+    "specialty": "字符数组的运用",
+    "problem_id": "1205",
+    "source": "sdut"
+  },
+  {
+    "order": 132,
+    "topic": "基础",
+    "title": "C语言合法标识符",
+    "specialty": "字符数组的运用",
+    "problem_id": "1246",
+    "source": "sdut"
+  },
+  {
+    "order": 133,
+    "topic": "基础",
+    "title": "字符逆序",
+    "specialty": "字符数组的运用",
+    "problem_id": "1173",
+    "source": "sdut"
+  },
+  {
+    "order": 134,
+    "topic": "基础",
+    "title": "回文串判定",
+    "specialty": "字符数组的运用",
+    "problem_id": "1524",
+    "source": "sdut"
+  },
+  {
+    "order": 135,
+    "topic": "基础",
+    "title": "简单字符串比较",
+    "specialty": "字符数组的运用",
+    "problem_id": "1333",
+    "source": "sdut"
+  },
+  {
+    "order": 136,
+    "topic": "基础",
+    "title": "字符串排序",
+    "specialty": "字符数组的运用",
+    "problem_id": "1201",
+    "source": "sdut"
+  },
+  {
+    "order": 137,
+    "topic": "基础",
+    "title": "找老乡",
+    "specialty": "字符数组的运用",
+    "problem_id": "3443",
+    "source": "sdut"
+  },
+  {
+    "order": 138,
+    "topic": "基础",
+    "title": "简单字符串排序",
+    "specialty": "字符数组的运用",
+    "problem_id": "1334",
+    "source": "sdut"
+  },
+  {
+    "order": 139,
+    "topic": "基础",
+    "title": "小鑫の日常系列故事（二）——石头剪子布",
+    "specialty": "字符数组的运用",
+    "problem_id": "2733",
+    "source": "sdut"
+  },
+  {
+    "order": 140,
+    "topic": "基础",
+    "title": "小鑫の日常系列故事（十）——排名次",
+    "specialty": "字符数组的运用",
+    "problem_id": "2741",
+    "source": "sdut"
+  }
+]

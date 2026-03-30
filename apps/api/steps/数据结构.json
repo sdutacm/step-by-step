@@ -1,0 +1,754 @@
+[
+  {
+    "order": 1,
+    "topic": "顺序表基本操作",
+    "title": "数据结构上机测试1：顺序表的应用",
+    "specialty": "实验1-顺序表",
+    "problem_id": "1130",
+    "source": "sdut"
+  },
+  {
+    "order": 2,
+    "topic": "顺序表基本操作",
+    "title": "顺序表应用1：多余元素删除之移位算法",
+    "specialty": "实验1-顺序表",
+    "problem_id": "3324",
+    "source": "sdut"
+  },
+  {
+    "order": 3,
+    "topic": "顺序表基本操作",
+    "title": "顺序表应用2：多余元素删除之建表算法",
+    "specialty": "实验1-顺序表",
+    "problem_id": "3325",
+    "source": "sdut"
+  },
+  {
+    "order": 4,
+    "topic": "顺序表基本操作",
+    "title": "顺序表应用3：元素位置互换之移位算法",
+    "specialty": "实验1-顺序表",
+    "problem_id": "3326",
+    "source": "sdut"
+  },
+  {
+    "order": 5,
+    "topic": "顺序表基本操作",
+    "title": "顺序表应用4：元素位置互换之逆置算法",
+    "specialty": "实验1-顺序表",
+    "problem_id": "3327",
+    "source": "sdut"
+  },
+  {
+    "order": 6,
+    "topic": "顺序表归并",
+    "title": "顺序表应用5：有序顺序表归并",
+    "specialty": "实验1-顺序表",
+    "problem_id": "3329",
+    "source": "sdut"
+  },
+  {
+    "order": 7,
+    "topic": "顺序表应用",
+    "title": "顺序表应用6：有序顺序表查询",
+    "specialty": "实验1-顺序表",
+    "problem_id": "3330",
+    "source": "sdut"
+  },
+  {
+    "order": 8,
+    "topic": "线性链表",
+    "title": "数据结构上机测试2-1:单链表操作A",
+    "specialty": "实验2-链表",
+    "problem_id": "1138",
+    "source": "sdut"
+  },
+  {
+    "order": 9,
+    "topic": "线性链表",
+    "title": "数据结构上机测试2-2:单链表操作B",
+    "specialty": "实验2-链表",
+    "problem_id": "1139",
+    "source": "sdut"
+  },
+  {
+    "order": 10,
+    "topic": "线性链表",
+    "title": "数据结构实验之链表一：顺序建立链表",
+    "specialty": "实验2-链表",
+    "problem_id": "2116",
+    "source": "sdut"
+  },
+  {
+    "order": 11,
+    "topic": "线性链表",
+    "title": "数据结构实验之链表二：逆序建立链表",
+    "specialty": "实验2-链表",
+    "problem_id": "2117",
+    "source": "sdut"
+  },
+  {
+    "order": 12,
+    "topic": "线性链表",
+    "title": "数据结构实验之链表三：链表的逆置",
+    "specialty": "实验2-链表",
+    "problem_id": "2118",
+    "source": "sdut"
+  },
+  {
+    "order": 13,
+    "topic": "线性链表",
+    "title": "数据结构实验之链表四：有序链表的归并",
+    "specialty": "实验2-链表",
+    "problem_id": "2119",
+    "source": "sdut"
+  },
+  {
+    "order": 14,
+    "topic": "线性链表",
+    "title": "数据结构实验之链表五：单链表的拆分",
+    "specialty": "实验2-链表",
+    "problem_id": "2120",
+    "source": "sdut"
+  },
+  {
+    "order": 15,
+    "topic": "线性链表",
+    "title": "数据结构实验之链表六：有序链表的建立",
+    "specialty": "实验2-链表",
+    "problem_id": "2121",
+    "source": "sdut"
+  },
+  {
+    "order": 16,
+    "topic": "线性链表",
+    "title": "数据结构实验之链表七：单链表中重复元素的删除",
+    "specialty": "实验2-链表",
+    "problem_id": "2122",
+    "source": "sdut"
+  },
+  {
+    "order": 17,
+    "topic": "双向链表",
+    "title": "数据结构实验之链表九：双向链表",
+    "specialty": "实验2-链表",
+    "problem_id": "2054",
+    "source": "sdut"
+  },
+  {
+    "order": 18,
+    "topic": "循环链表",
+    "title": "约瑟夫问题",
+    "specialty": "实验2-链表",
+    "problem_id": "1197",
+    "source": "sdut"
+  },
+  {
+    "order": 19,
+    "topic": "循环链表",
+    "title": "不敢死队问题",
+    "specialty": "实验2-链表",
+    "problem_id": "2056",
+    "source": "sdut"
+  },
+  {
+    "order": 20,
+    "topic": "循环链表",
+    "title": "多项式求和",
+    "specialty": "实验2-链表",
+    "problem_id": "2504",
+    "source": "sdut"
+  },
+  {
+    "order": 21,
+    "topic": "循环链表",
+    "title": "二元多项式",
+    "specialty": "实验2-链表",
+    "problem_id": "1482",
+    "source": "sdut"
+  },
+  {
+    "order": 22,
+    "topic": "进制转化",
+    "title": "数据结构实验之栈与队列一：进制转换",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2131",
+    "source": "sdut"
+  },
+  {
+    "order": 23,
+    "topic": "进制转化",
+    "title": "进制转换",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "1252",
+    "source": "sdut"
+  },
+  {
+    "order": 24,
+    "topic": "表达式求值",
+    "title": "数据结构实验之栈与队列二：一般算术表达式转换成后缀式",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2132",
+    "source": "sdut"
+  },
+  {
+    "order": 25,
+    "topic": "表达式求值",
+    "title": "数据结构实验之栈与队列三：后缀式求值",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2133",
+    "source": "sdut"
+  },
+  {
+    "order": 26,
+    "topic": "表达式求值",
+    "title": "算术表达式的转换",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2484",
+    "source": "sdut"
+  },
+  {
+    "order": 27,
+    "topic": "括号匹配",
+    "title": "数据结构实验之栈与队列四：括号匹配",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2134",
+    "source": "sdut"
+  },
+  {
+    "order": 28,
+    "topic": "栈操作",
+    "title": "数据结构实验之栈与队列五：下一较大值（一）",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "3332",
+    "source": "sdut"
+  },
+  {
+    "order": 29,
+    "topic": "栈操作",
+    "title": "数据结构实验之栈与队列六：下一较大值（二）",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "3333",
+    "source": "sdut"
+  },
+  {
+    "order": 30,
+    "topic": "栈操作",
+    "title": "数据结构实验之栈与队列七：出栈序列判定",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "3334",
+    "source": "sdut"
+  },
+  {
+    "order": 31,
+    "topic": "栈操作",
+    "title": "数据结构实验之栈与队列八：栈的基本操作",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "3335",
+    "source": "sdut"
+  },
+  {
+    "order": 32,
+    "topic": "行编辑器",
+    "title": "数据结构实验之栈与队列九：行编辑器",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "1479",
+    "source": "sdut"
+  },
+  {
+    "order": 33,
+    "topic": "深度优先搜索",
+    "title": "数据结构实验之栈与队列十：走迷宫",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2449",
+    "source": "sdut"
+  },
+  {
+    "order": 34,
+    "topic": "双向队列",
+    "title": "双向队列",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "1466",
+    "source": "sdut"
+  },
+  {
+    "order": 35,
+    "topic": "栈和队列",
+    "title": "离散事件模拟-银行管理",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2087",
+    "source": "sdut"
+  },
+  {
+    "order": 36,
+    "topic": "栈和队列",
+    "title": "数据结构实验之栈与队列十一：refresh的停车场",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2088",
+    "source": "sdut"
+  },
+  {
+    "order": 37,
+    "topic": "队列",
+    "title": "数据结构实验之队列一:排队买饭",
+    "specialty": "实验3-栈和队列",
+    "problem_id": "2135",
+    "source": "sdut"
+  },
+  {
+    "order": 38,
+    "topic": "字符串连接",
+    "title": "串结构练习——字符串连接",
+    "specialty": "实验4-串、数组",
+    "problem_id": "2124",
+    "source": "sdut"
+  },
+  {
+    "order": 39,
+    "topic": "字符串匹配",
+    "title": "数据结构实验之串一：KMP简单应用",
+    "specialty": "实验4-串、数组",
+    "problem_id": "2772",
+    "source": "sdut"
+  },
+  {
+    "order": 40,
+    "topic": "字符串匹配",
+    "title": "数据结构实验之串二：字符串匹配",
+    "specialty": "实验4-串、数组",
+    "problem_id": "2125",
+    "source": "sdut"
+  },
+  {
+    "order": 41,
+    "topic": "字符串匹配",
+    "title": "数据结构实验之串三：KMP应用",
+    "specialty": "实验4-串、数组",
+    "problem_id": "3311",
+    "source": "sdut"
+  },
+  {
+    "order": 42,
+    "topic": "字符串操作",
+    "title": "学密码学一定得学程序",
+    "specialty": "实验4-串、数组",
+    "problem_id": "2463",
+    "source": "sdut"
+  },
+  {
+    "order": 43,
+    "topic": "字符串哈希",
+    "title": "Message Flood",
+    "specialty": "实验4-串、数组",
+    "problem_id": "1500",
+    "source": "sdut"
+  },
+  {
+    "order": 44,
+    "topic": "数组操作",
+    "title": "数据结构实验之数组二：稀疏矩阵",
+    "specialty": "实验4-串、数组",
+    "problem_id": "3348",
+    "source": "sdut"
+  },
+  {
+    "order": 45,
+    "topic": "数组操作",
+    "title": "数据结构实验之数组三：快速转置",
+    "specialty": "实验4-串、数组",
+    "problem_id": "3347",
+    "source": "sdut"
+  },
+  {
+    "order": 46,
+    "topic": "树的同构",
+    "title": "数据结构实验之二叉树一：树的同构",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "3340",
+    "source": "sdut"
+  },
+  {
+    "order": 47,
+    "topic": "树的遍历",
+    "title": "数据结构实验之二叉树二：遍历二叉树",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "3341",
+    "source": "sdut"
+  },
+  {
+    "order": 48,
+    "topic": "树的遍历",
+    "title": "数据结构实验之求二叉树后序遍历和层次遍历",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "2137",
+    "source": "sdut"
+  },
+  {
+    "order": 49,
+    "topic": "树的遍历",
+    "title": "树结构练习——排序二叉树的中序遍历",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "2128",
+    "source": "sdut"
+  },
+  {
+    "order": 50,
+    "topic": "树的遍历",
+    "title": "数据结构实验之二叉树的建立与遍历",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "2136",
+    "source": "sdut"
+  },
+  {
+    "order": 51,
+    "topic": "二叉树操作",
+    "title": "数据结构实验之二叉树三：统计叶子数",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "3342",
+    "source": "sdut"
+  },
+  {
+    "order": 52,
+    "topic": "二叉树操作",
+    "title": "数据结构实验之二叉树四：（先序中序）还原二叉树",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "3343",
+    "source": "sdut"
+  },
+  {
+    "order": 53,
+    "topic": "二叉树操作",
+    "title": "数据结构实验之二叉树五：层序遍历",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "3344",
+    "source": "sdut"
+  },
+  {
+    "order": 54,
+    "topic": "二叉树操作",
+    "title": "数据结构实验之二叉树七：叶子问题",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "3346",
+    "source": "sdut"
+  },
+  {
+    "order": 55,
+    "topic": "二叉树操作",
+    "title": "二叉排序树",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "2482",
+    "source": "sdut"
+  },
+  {
+    "order": 56,
+    "topic": "哈夫曼树",
+    "title": "数据结构实验之二叉树六：哈夫曼编码",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "3345",
+    "source": "sdut"
+  },
+  {
+    "order": 57,
+    "topic": "哈夫曼树",
+    "title": "树-堆结构练习——合并果子之哈夫曼树",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "2127",
+    "source": "sdut"
+  },
+  {
+    "order": 58,
+    "topic": "判断连通分量个数",
+    "title": "树结构练习——判断给定森林中有多少棵树",
+    "specialty": "实验5-树和二叉树",
+    "problem_id": "2129",
+    "source": "sdut"
+  },
+  {
+    "order": 59,
+    "topic": "邻接矩阵表示",
+    "title": "数据结构实验之图论一：基于邻接矩阵的广度优先搜索遍历",
+    "specialty": "实验6-图",
+    "problem_id": "2141",
+    "source": "sdut"
+  },
+  {
+    "order": 60,
+    "topic": "邻接表表示",
+    "title": "数据结构实验之图论二：基于邻接表的广度优先搜索遍历",
+    "specialty": "实验6-图",
+    "problem_id": "2142",
+    "source": "sdut"
+  },
+  {
+    "order": 61,
+    "topic": "深度优先搜索",
+    "title": "数据结构实验之图论二：图的深度遍历",
+    "specialty": "实验6-图",
+    "problem_id": "2107",
+    "source": "sdut"
+  },
+  {
+    "order": 62,
+    "topic": "深度优先搜索",
+    "title": "数据结构实验之图论四：迷宫探索",
+    "specialty": "实验6-图",
+    "problem_id": "3361",
+    "source": "sdut"
+  },
+  {
+    "order": 63,
+    "topic": "广度优先搜索",
+    "title": "Catch That Cow",
+    "specialty": "实验6-图",
+    "problem_id": "1028",
+    "source": "sdut"
+  },
+  {
+    "order": 64,
+    "topic": "广度优先搜索",
+    "title": "数据结构实验之图论五：从起始点到目标点的最短步数（BFS）",
+    "specialty": "实验6-图",
+    "problem_id": "2139",
+    "source": "sdut"
+  },
+  {
+    "order": 65,
+    "topic": "优先搜索",
+    "title": "数据结构实验之图论三：判断可达性",
+    "specialty": "实验6-图",
+    "problem_id": "2138",
+    "source": "sdut"
+  },
+  {
+    "order": 66,
+    "topic": "最小生成树",
+    "title": "数据结构实验之图论六：村村通公路",
+    "specialty": "实验6-图",
+    "problem_id": "3362",
+    "source": "sdut"
+  },
+  {
+    "order": 67,
+    "topic": "最小生成树",
+    "title": "数据结构实验之图论九：最小生成树",
+    "specialty": "实验6-图",
+    "problem_id": "2144",
+    "source": "sdut"
+  },
+  {
+    "order": 68,
+    "topic": "最短路径",
+    "title": "数据结构实验之图论七：驴友计划",
+    "specialty": "实验6-图",
+    "problem_id": "3363",
+    "source": "sdut"
+  },
+  {
+    "order": 69,
+    "topic": "最短路径",
+    "title": "n a^o7 !",
+    "specialty": "实验6-图",
+    "problem_id": "2413",
+    "source": "sdut"
+  },
+  {
+    "order": 70,
+    "topic": "欧拉回路",
+    "title": "数据结构实验之图论八：欧拉回路",
+    "specialty": "实验6-图",
+    "problem_id": "3364",
+    "source": "sdut"
+  },
+  {
+    "order": 71,
+    "topic": "无向图的连通分量个数",
+    "title": "数据结构实验：连通分量个数",
+    "specialty": "实验6-图",
+    "problem_id": "1488",
+    "source": "sdut"
+  },
+  {
+    "order": 72,
+    "topic": "有向图的强连通分量",
+    "title": "完美网络",
+    "specialty": "实验6-图",
+    "problem_id": "2506",
+    "source": "sdut"
+  },
+  {
+    "order": 73,
+    "topic": "拓扑排序",
+    "title": "数据结构实验之图论十：判断给定图是否存在合法拓扑序列",
+    "specialty": "实验6-图",
+    "problem_id": "2140",
+    "source": "sdut"
+  },
+  {
+    "order": 74,
+    "topic": "关键路径",
+    "title": "数据结构实验之图论十一：AOE网上的关键路径",
+    "specialty": "实验6-图",
+    "problem_id": "2498",
+    "source": "sdut"
+  },
+  {
+    "order": 75,
+    "topic": "最短路径",
+    "title": "图结构练习——最短路径",
+    "specialty": "实验6-图",
+    "problem_id": "2143",
+    "source": "sdut"
+  },
+  {
+    "order": 76,
+    "topic": "二叉排序树",
+    "title": "数据结构实验之查找一：二叉排序树",
+    "specialty": "实验7-查找表",
+    "problem_id": "3373",
+    "source": "sdut"
+  },
+  {
+    "order": 77,
+    "topic": "平衡二叉树",
+    "title": "数据结构实验之查找二：平衡二叉树",
+    "specialty": "实验7-查找表",
+    "problem_id": "3374",
+    "source": "sdut"
+  },
+  {
+    "order": 78,
+    "topic": "树的种类统计",
+    "title": "数据结构实验之查找三：树的种类统计",
+    "specialty": "实验7-查找表",
+    "problem_id": "3375",
+    "source": "sdut"
+  },
+  {
+    "order": 79,
+    "topic": "二分查找",
+    "title": "数据结构实验之查找四：二分查找",
+    "specialty": "实验7-查找表",
+    "problem_id": "3376",
+    "source": "sdut"
+  },
+  {
+    "order": 80,
+    "topic": "二分查找",
+    "title": "数据结构上机实验之二分查找",
+    "specialty": "实验7-查找表",
+    "problem_id": "2039",
+    "source": "sdut"
+  },
+  {
+    "order": 81,
+    "topic": "顺序查找",
+    "title": "数据结构实验之查找六：顺序查找",
+    "specialty": "实验7-查找表",
+    "problem_id": "3378",
+    "source": "sdut"
+  },
+  {
+    "order": 82,
+    "topic": "顺序查找",
+    "title": "数据结构上机实验之顺序查找",
+    "specialty": "实验7-查找表",
+    "problem_id": "2040",
+    "source": "sdut"
+  },
+  {
+    "order": 83,
+    "topic": "哈希表",
+    "title": "查找练习 hash——出现过的数字",
+    "specialty": "实验7-查找表",
+    "problem_id": "2123",
+    "source": "sdut"
+  },
+  {
+    "order": 84,
+    "topic": "哈希表",
+    "title": "数据结构实验之查找五：平方之哈希表",
+    "specialty": "实验7-查找表",
+    "problem_id": "3377",
+    "source": "sdut"
+  },
+  {
+    "order": 85,
+    "topic": "哈希表",
+    "title": "数据结构实验之查找七：线性之哈希表",
+    "specialty": "实验7-查找表",
+    "problem_id": "3379",
+    "source": "sdut"
+  },
+  {
+    "order": 86,
+    "topic": "快速排序",
+    "title": "找女朋友",
+    "specialty": "实验8-内排序",
+    "problem_id": "2109",
+    "source": "sdut"
+  },
+  {
+    "order": 87,
+    "topic": "快速排序",
+    "title": "数据结构实验之排序一：一趟快排",
+    "specialty": "实验8-内排序",
+    "problem_id": "3398",
+    "source": "sdut"
+  },
+  {
+    "order": 88,
+    "topic": "快速排序",
+    "title": "数据结构实验之排序七：选课名单",
+    "specialty": "实验8-内排序",
+    "problem_id": "3404",
+    "source": "sdut"
+  },
+  {
+    "order": 89,
+    "topic": "冒泡排序",
+    "title": "数据结构实验之排序二：交换排序",
+    "specialty": "实验8-内排序",
+    "problem_id": "3399",
+    "source": "sdut"
+  },
+  {
+    "order": 90,
+    "topic": "桶排序",
+    "title": "数据结构实验之排序三：bucket sort",
+    "specialty": "实验8-内排序",
+    "problem_id": "3400",
+    "source": "sdut"
+  },
+  {
+    "order": 91,
+    "topic": "堆排序",
+    "title": "数据结构实验之排序四：寻找大富翁",
+    "specialty": "实验8-内排序",
+    "problem_id": "3401",
+    "source": "sdut"
+  },
+  {
+    "order": 92,
+    "topic": "归并排序",
+    "title": "数据结构实验之排序五：归并求逆序数",
+    "specialty": "实验8-内排序",
+    "problem_id": "3402",
+    "source": "sdut"
+  },
+  {
+    "order": 93,
+    "topic": "希尔排序",
+    "title": "数据结构实验之排序六：希尔排序",
+    "specialty": "实验8-内排序",
+    "problem_id": "3403",
+    "source": "sdut"
+  },
+  {
+    "order": 94,
+    "topic": "交叉排序",
+    "title": "交叉排序",
+    "specialty": "实验8-内排序",
+    "problem_id": "1591",
+    "source": "sdut"
+  }
+]

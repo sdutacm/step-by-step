@@ -1,0 +1,1466 @@
+[
+  {
+    "order": 1,
+    "topic": "基础计算几何",
+    "title": "TOYS",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-2318",
+    "source": "vj"
+  },
+  {
+    "order": 2,
+    "topic": "基础计算几何",
+    "title": "Toy Storage",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-2398",
+    "source": "vj"
+  },
+  {
+    "order": 3,
+    "topic": "基础计算几何",
+    "title": "Segments",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-3304",
+    "source": "vj"
+  },
+  {
+    "order": 4,
+    "topic": "基础计算几何",
+    "title": "Intersecting Lines",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-1269",
+    "source": "vj"
+  },
+  {
+    "order": 5,
+    "topic": "基础计算几何",
+    "title": "The Doors",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-1556",
+    "source": "vj"
+  },
+  {
+    "order": 6,
+    "topic": "基础计算几何",
+    "title": "Pick-up sticks",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-2653",
+    "source": "vj"
+  },
+  {
+    "order": 7,
+    "topic": "基础计算几何",
+    "title": "Treasure Hunt",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-1066",
+    "source": "vj"
+  },
+  {
+    "order": 8,
+    "topic": "基础计算几何",
+    "title": "Intersection",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-1410",
+    "source": "vj"
+  },
+  {
+    "order": 9,
+    "topic": "基础计算几何",
+    "title": "Space Ant",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-1696",
+    "source": "vj"
+  },
+  {
+    "order": 10,
+    "topic": "基础计算几何",
+    "title": "Kadj Squares",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-3347",
+    "source": "vj"
+  },
+  {
+    "order": 11,
+    "topic": "基础计算几何",
+    "title": "An Easy Problem?!",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-2826",
+    "source": "vj"
+  },
+  {
+    "order": 12,
+    "topic": "基础计算几何",
+    "title": "Pipe",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-1039",
+    "source": "vj"
+  },
+  {
+    "order": 13,
+    "topic": "基础计算几何",
+    "title": "Geometric Shapes",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-3449",
+    "source": "vj"
+  },
+  {
+    "order": 14,
+    "topic": "基础计算几何",
+    "title": "A Round Peg in a Ground Hole",
+    "specialty": "个人专题训练13",
+    "problem_id": "POJ-1584",
+    "source": "vj"
+  },
+  {
+    "order": 15,
+    "topic": "数论基础",
+    "title": "Bi-shoe and Phi-shoe",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1370",
+    "source": "vj"
+  },
+  {
+    "order": 16,
+    "topic": "数论基础",
+    "title": "Prime Independence",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1356",
+    "source": "vj"
+  },
+  {
+    "order": 17,
+    "topic": "数论基础",
+    "title": "Aladdin and the Flying Carpet",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1341",
+    "source": "vj"
+  },
+  {
+    "order": 18,
+    "topic": "数论基础",
+    "title": "Sigma Function",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1336",
+    "source": "vj"
+  },
+  {
+    "order": 19,
+    "topic": "数论基础",
+    "title": "Leading and Trailing",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1282",
+    "source": "vj"
+  },
+  {
+    "order": 20,
+    "topic": "数论基础",
+    "title": "Goldbach's Conjecture",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1259",
+    "source": "vj"
+  },
+  {
+    "order": 21,
+    "topic": "数论基础",
+    "title": "Harmonic Number (II)",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1245",
+    "source": "vj"
+  },
+  {
+    "order": 22,
+    "topic": "数论基础",
+    "title": "Pairs Forming LCM",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1236",
+    "source": "vj"
+  },
+  {
+    "order": 23,
+    "topic": "数论基础",
+    "title": "Harmonic Number",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1234",
+    "source": "vj"
+  },
+  {
+    "order": 24,
+    "topic": "数论基础",
+    "title": "Mysterious Bacteria",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1220",
+    "source": "vj"
+  },
+  {
+    "order": 25,
+    "topic": "数论基础",
+    "title": "Large Division",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1214",
+    "source": "vj"
+  },
+  {
+    "order": 26,
+    "topic": "数论基础",
+    "title": "Fantasy of a Summation",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1213",
+    "source": "vj"
+  },
+  {
+    "order": 27,
+    "topic": "数论基础",
+    "title": "Help Hanzo",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1197",
+    "source": "vj"
+  },
+  {
+    "order": 28,
+    "topic": "数论基础",
+    "title": "Trailing Zeroes (III)",
+    "specialty": "个人专题训练14",
+    "problem_id": "LightOJ-1138",
+    "source": "vj"
+  },
+  {
+    "order": 29,
+    "topic": "数论基础",
+    "title": "GCD - Extreme (II)",
+    "specialty": "个人专题训练14",
+    "problem_id": "UVA-11426",
+    "source": "vj"
+  },
+  {
+    "order": 30,
+    "topic": "数论基础",
+    "title": "Code Feat",
+    "specialty": "个人专题训练14",
+    "problem_id": "UVA-11754",
+    "source": "vj"
+  },
+  {
+    "order": 31,
+    "topic": "数论基础",
+    "title": "Emoogle Grid",
+    "specialty": "个人专题训练14",
+    "problem_id": "UVA-11916",
+    "source": "vj"
+  },
+  {
+    "order": 32,
+    "topic": "数论基础",
+    "title": "青蛙的约会",
+    "specialty": "个人专题训练14",
+    "problem_id": "POJ-1061",
+    "source": "vj"
+  },
+  {
+    "order": 33,
+    "topic": "数论基础",
+    "title": "C Looooops",
+    "specialty": "个人专题训练14",
+    "problem_id": "POJ-2115",
+    "source": "vj"
+  },
+  {
+    "order": 34,
+    "topic": "数论基础",
+    "title": "Death to Binary?",
+    "specialty": "个人专题训练14",
+    "problem_id": "POJ-2116",
+    "source": "vj"
+  },
+  {
+    "order": 35,
+    "topic": "数论基础",
+    "title": "Primes",
+    "specialty": "个人专题训练14",
+    "problem_id": "HDU-2161",
+    "source": "vj"
+  },
+  {
+    "order": 36,
+    "topic": "数论基础",
+    "title": "Maximum GCD",
+    "specialty": "个人专题训练14",
+    "problem_id": "UVA-11827",
+    "source": "vj"
+  },
+  {
+    "order": 37,
+    "topic": "数论基础",
+    "title": "Prime Time",
+    "specialty": "个人专题训练14",
+    "problem_id": "UVA-10200",
+    "source": "vj"
+  },
+  {
+    "order": 38,
+    "topic": "数论基础",
+    "title": "Farey Sequence",
+    "specialty": "个人专题训练14",
+    "problem_id": "POJ-2478",
+    "source": "vj"
+  },
+  {
+    "order": 39,
+    "topic": "数论基础",
+    "title": "The Super Powers",
+    "specialty": "个人专题训练14",
+    "problem_id": "UVA-11752",
+    "source": "vj"
+  },
+  {
+    "order": 40,
+    "topic": "数论基础",
+    "title": "Forever Young",
+    "specialty": "个人专题训练14",
+    "problem_id": "Gym-101242E",
+    "source": "vj"
+  },
+  {
+    "order": 41,
+    "topic": "数位DP",
+    "title": "Beautiful numbers",
+    "specialty": "个人专题训练15",
+    "problem_id": "CodeForces-55D",
+    "source": "vj"
+  },
+  {
+    "order": 42,
+    "topic": "数位DP",
+    "title": "XHXJ's LIS",
+    "specialty": "个人专题训练15",
+    "problem_id": "HDU-4352",
+    "source": "vj"
+  },
+  {
+    "order": 43,
+    "topic": "数位DP",
+    "title": "不要62",
+    "specialty": "个人专题训练15",
+    "problem_id": "HDU-2089",
+    "source": "vj"
+  },
+  {
+    "order": 44,
+    "topic": "数位DP",
+    "title": "Bomb",
+    "specialty": "个人专题训练15",
+    "problem_id": "HDU-3555",
+    "source": "vj"
+  },
+  {
+    "order": 45,
+    "topic": "数位DP",
+    "title": "Round Numbers",
+    "specialty": "个人专题训练15",
+    "problem_id": "POJ-3252",
+    "source": "vj"
+  },
+  {
+    "order": 46,
+    "topic": "数位DP",
+    "title": "Balanced Number",
+    "specialty": "个人专题训练15",
+    "problem_id": "HDU-3709",
+    "source": "vj"
+  },
+  {
+    "order": 47,
+    "topic": "数位DP",
+    "title": "B-number",
+    "specialty": "个人专题训练15",
+    "problem_id": "HDU-3652",
+    "source": "vj"
+  },
+  {
+    "order": 48,
+    "topic": "数位DP",
+    "title": "F(x)",
+    "specialty": "个人专题训练15",
+    "problem_id": "HDU-4734",
+    "source": "vj"
+  },
+  {
+    "order": 49,
+    "topic": "数位DP",
+    "title": "吉哥系列故事――恨7不成妻",
+    "specialty": "个人专题训练15",
+    "problem_id": "HDU-4507",
+    "source": "vj"
+  },
+  {
+    "order": 50,
+    "topic": "数位DP",
+    "title": "Balanced Numbers",
+    "specialty": "个人专题训练15",
+    "problem_id": "SPOJ-BALNUM",
+    "source": "vj"
+  },
+  {
+    "order": 51,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Number Sequence",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-1711",
+    "source": "vj"
+  },
+  {
+    "order": 52,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Oulipo",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-1686",
+    "source": "vj"
+  },
+  {
+    "order": 53,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "剪花布条",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-2087",
+    "source": "vj"
+  },
+  {
+    "order": 54,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Cyclic Nacklace",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-3746",
+    "source": "vj"
+  },
+  {
+    "order": 55,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Period",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-1358",
+    "source": "vj"
+  },
+  {
+    "order": 56,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "The Minimum Length",
+    "specialty": "个人专题训练16",
+    "problem_id": "HUST-1010",
+    "source": "vj"
+  },
+  {
+    "order": 57,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Power Strings",
+    "specialty": "个人专题训练16",
+    "problem_id": "POJ-2406",
+    "source": "vj"
+  },
+  {
+    "order": 58,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Seek the Name, Seek the Fame",
+    "specialty": "个人专题训练16",
+    "problem_id": "POJ-2752",
+    "source": "vj"
+  },
+  {
+    "order": 59,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Blue Jeans",
+    "specialty": "个人专题训练16",
+    "problem_id": "POJ-3080",
+    "source": "vj"
+  },
+  {
+    "order": 60,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Simpsons’ Hidden Talents",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-2594",
+    "source": "vj"
+  },
+  {
+    "order": 61,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Count the string",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-3336",
+    "source": "vj"
+  },
+  {
+    "order": 62,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Clairewd’s message",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-4300",
+    "source": "vj"
+  },
+  {
+    "order": 63,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Substrings",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-1238",
+    "source": "vj"
+  },
+  {
+    "order": 64,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Corporate Identity",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-2328",
+    "source": "vj"
+  },
+  {
+    "order": 65,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "String Problem",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-3374",
+    "source": "vj"
+  },
+  {
+    "order": 66,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "How many",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-2609",
+    "source": "vj"
+  },
+  {
+    "order": 67,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Period II",
+    "specialty": "个人专题训练16",
+    "problem_id": "FZU-1901",
+    "source": "vj"
+  },
+  {
+    "order": 68,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Teacher YYF",
+    "specialty": "个人专题训练16",
+    "problem_id": "POJ-3746",
+    "source": "vj"
+  },
+  {
+    "order": 69,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Best Reward",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-3613",
+    "source": "vj"
+  },
+  {
+    "order": 70,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Finding Palindromes",
+    "specialty": "个人专题训练16",
+    "problem_id": "POJ-3376",
+    "source": "vj"
+  },
+  {
+    "order": 71,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Palindrome",
+    "specialty": "个人专题训练16",
+    "problem_id": "POJ-3974",
+    "source": "vj"
+  },
+  {
+    "order": 72,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "吉哥系列故事――完美队形II",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-4513",
+    "source": "vj"
+  },
+  {
+    "order": 73,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Girls' research",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-3294",
+    "source": "vj"
+  },
+  {
+    "order": 74,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "最长回文",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-3068",
+    "source": "vj"
+  },
+  {
+    "order": 75,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Wow! Such Doge!",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-4847",
+    "source": "vj"
+  },
+  {
+    "order": 76,
+    "topic": "KMP&扩展KMP&Manacher",
+    "title": "Theme Section",
+    "specialty": "个人专题训练16",
+    "problem_id": "HDU-4763",
+    "source": "vj"
+  },
+  {
+    "order": 77,
+    "topic": "AC自动机",
+    "title": "Keywords Search",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-2222",
+    "source": "vj"
+  },
+  {
+    "order": 78,
+    "topic": "AC自动机",
+    "title": "病毒侵袭",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-2896",
+    "source": "vj"
+  },
+  {
+    "order": 79,
+    "topic": "AC自动机",
+    "title": "病毒侵袭持续中",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-3065",
+    "source": "vj"
+  },
+  {
+    "order": 80,
+    "topic": "AC自动机",
+    "title": "Detect the Virus",
+    "specialty": "个人专题训练17",
+    "problem_id": "ZOJ-3430",
+    "source": "vj"
+  },
+  {
+    "order": 81,
+    "topic": "AC自动机",
+    "title": "DNA Sequence",
+    "specialty": "个人专题训练17",
+    "problem_id": "POJ-2778",
+    "source": "vj"
+  },
+  {
+    "order": 82,
+    "topic": "AC自动机",
+    "title": "考研路茫茫――单词情结",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-2243",
+    "source": "vj"
+  },
+  {
+    "order": 83,
+    "topic": "AC自动机",
+    "title": "Censored!",
+    "specialty": "个人专题训练17",
+    "problem_id": "POJ-1625",
+    "source": "vj"
+  },
+  {
+    "order": 84,
+    "topic": "AC自动机",
+    "title": "Wireless Password",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-2825",
+    "source": "vj"
+  },
+  {
+    "order": 85,
+    "topic": "AC自动机",
+    "title": "Ring",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-2296",
+    "source": "vj"
+  },
+  {
+    "order": 86,
+    "topic": "AC自动机",
+    "title": "DNA repair",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-2457",
+    "source": "vj"
+  },
+  {
+    "order": 87,
+    "topic": "AC自动机",
+    "title": "Searching the String",
+    "specialty": "个人专题训练17",
+    "problem_id": "ZOJ-3228",
+    "source": "vj"
+  },
+  {
+    "order": 88,
+    "topic": "AC自动机",
+    "title": "Lost's revenge",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-3341",
+    "source": "vj"
+  },
+  {
+    "order": 89,
+    "topic": "AC自动机",
+    "title": "Resource Archiver",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-3247",
+    "source": "vj"
+  },
+  {
+    "order": 90,
+    "topic": "AC自动机",
+    "title": "BCD Code",
+    "specialty": "个人专题训练17",
+    "problem_id": "ZOJ-3494",
+    "source": "vj"
+  },
+  {
+    "order": 91,
+    "topic": "AC自动机",
+    "title": "Walk Through Squares",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-4758",
+    "source": "vj"
+  },
+  {
+    "order": 92,
+    "topic": "AC自动机",
+    "title": "小明系列故事――女友的考验",
+    "specialty": "个人专题训练17",
+    "problem_id": "HDU-4511",
+    "source": "vj"
+  },
+  {
+    "order": 93,
+    "topic": "后缀数组",
+    "title": "Musical Theme",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-1743",
+    "source": "vj"
+  },
+  {
+    "order": 94,
+    "topic": "后缀数组",
+    "title": "Milk Patterns",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-3261",
+    "source": "vj"
+  },
+  {
+    "order": 95,
+    "topic": "后缀数组",
+    "title": "Distinct Substrings",
+    "specialty": "个人专题训练18",
+    "problem_id": "SPOJ-DISUBSTR",
+    "source": "vj"
+  },
+  {
+    "order": 96,
+    "topic": "后缀数组",
+    "title": "New Distinct Substrings",
+    "specialty": "个人专题训练18",
+    "problem_id": "SPOJ-SUBST1",
+    "source": "vj"
+  },
+  {
+    "order": 97,
+    "topic": "后缀数组",
+    "title": "Power Strings",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-2406",
+    "source": "vj"
+  },
+  {
+    "order": 98,
+    "topic": "后缀数组",
+    "title": "Repeats",
+    "specialty": "个人专题训练18",
+    "problem_id": "SPOJ-REPEATS",
+    "source": "vj"
+  },
+  {
+    "order": 99,
+    "topic": "后缀数组",
+    "title": "Maximum repetition substring",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-3693",
+    "source": "vj"
+  },
+  {
+    "order": 100,
+    "topic": "后缀数组",
+    "title": "Long Long Message",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-2774",
+    "source": "vj"
+  },
+  {
+    "order": 101,
+    "topic": "后缀数组",
+    "title": "Common Substrings",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-3415",
+    "source": "vj"
+  },
+  {
+    "order": 102,
+    "topic": "后缀数组",
+    "title": "Life Forms",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-3294",
+    "source": "vj"
+  },
+  {
+    "order": 103,
+    "topic": "后缀数组",
+    "title": "Relevant Phrases of Annihilation",
+    "specialty": "个人专题训练18",
+    "problem_id": "SPOJ-PHRASES",
+    "source": "vj"
+  },
+  {
+    "order": 104,
+    "topic": "后缀数组",
+    "title": "Substrings",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-1226",
+    "source": "vj"
+  },
+  {
+    "order": 105,
+    "topic": "后缀数组",
+    "title": "Extend to Palindrome",
+    "specialty": "个人专题训练18",
+    "problem_id": "UVA-11475",
+    "source": "vj"
+  },
+  {
+    "order": 106,
+    "topic": "后缀数组",
+    "title": "Sequence",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-3581",
+    "source": "vj"
+  },
+  {
+    "order": 107,
+    "topic": "后缀数组",
+    "title": "Corporate Identity",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-3450",
+    "source": "vj"
+  },
+  {
+    "order": 108,
+    "topic": "后缀数组",
+    "title": "Blue Jeans",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-3080",
+    "source": "vj"
+  },
+  {
+    "order": 109,
+    "topic": "后缀数组",
+    "title": "Checking the Text",
+    "specialty": "个人专题训练18",
+    "problem_id": "POJ-2758",
+    "source": "vj"
+  },
+  {
+    "order": 110,
+    "topic": "矩阵",
+    "title": "233 Matrix",
+    "specialty": "个人专题训练19",
+    "problem_id": "HDU-5015",
+    "source": "vj"
+  },
+  {
+    "order": 111,
+    "topic": "矩阵",
+    "title": "Reading comprehension",
+    "specialty": "个人专题训练19",
+    "problem_id": "HDU-4990",
+    "source": "vj"
+  },
+  {
+    "order": 112,
+    "topic": "矩阵",
+    "title": "Krypton Number System",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-11651",
+    "source": "vj"
+  },
+  {
+    "order": 113,
+    "topic": "矩阵",
+    "title": "Fast Matrix Calculation",
+    "specialty": "个人专题训练19",
+    "problem_id": "HDU-4965",
+    "source": "vj"
+  },
+  {
+    "order": 114,
+    "topic": "矩阵",
+    "title": "Experienced Endeavour",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-11551",
+    "source": "vj"
+  },
+  {
+    "order": 115,
+    "topic": "矩阵",
+    "title": "Yet another Number Sequence",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-10689",
+    "source": "vj"
+  },
+  {
+    "order": 116,
+    "topic": "矩阵",
+    "title": "Power of Matrix",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-11149",
+    "source": "vj"
+  },
+  {
+    "order": 117,
+    "topic": "矩阵",
+    "title": "Contemplation! Algebra",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-10655",
+    "source": "vj"
+  },
+  {
+    "order": 118,
+    "topic": "矩阵",
+    "title": "Cellular Automaton",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-1386",
+    "source": "vj"
+  },
+  {
+    "order": 119,
+    "topic": "矩阵",
+    "title": "Recurrences",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-10870",
+    "source": "vj"
+  },
+  {
+    "order": 120,
+    "topic": "矩阵",
+    "title": "Number of Battlefields",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-11885",
+    "source": "vj"
+  },
+  {
+    "order": 121,
+    "topic": "矩阵",
+    "title": "So Easy!",
+    "specialty": "个人专题训练19",
+    "problem_id": "HDU-4565",
+    "source": "vj"
+  },
+  {
+    "order": 122,
+    "topic": "矩阵",
+    "title": "Yet Another Number Sequence",
+    "specialty": "个人专题训练19",
+    "problem_id": "CodeForces-392C",
+    "source": "vj"
+  },
+  {
+    "order": 123,
+    "topic": "矩阵",
+    "title": "Bear in the Field",
+    "specialty": "个人专题训练19",
+    "problem_id": "CodeForces-385E",
+    "source": "vj"
+  },
+  {
+    "order": 124,
+    "topic": "矩阵",
+    "title": "Construct a Matrix",
+    "specialty": "个人专题训练19",
+    "problem_id": "FZU-1911",
+    "source": "vj"
+  },
+  {
+    "order": 125,
+    "topic": "矩阵",
+    "title": "How Many Calls?",
+    "specialty": "个人专题训练19",
+    "problem_id": "UVA-10518",
+    "source": "vj"
+  },
+  {
+    "order": 126,
+    "topic": "矩阵",
+    "title": "M斐波那契数列",
+    "specialty": "个人专题训练19",
+    "problem_id": "HDU-4549",
+    "source": "vj"
+  },
+  {
+    "order": 127,
+    "topic": "矩阵",
+    "title": "Arc of Dream",
+    "specialty": "个人专题训练19",
+    "problem_id": "HDU-4686",
+    "source": "vj"
+  },
+  {
+    "order": 128,
+    "topic": "斜率DP",
+    "title": "Print Article",
+    "specialty": "个人专题训练20",
+    "problem_id": "HDU-3507",
+    "source": "vj"
+  },
+  {
+    "order": 129,
+    "topic": "斜率DP",
+    "title": "Lawrence",
+    "specialty": "个人专题训练20",
+    "problem_id": "HDU-2829",
+    "source": "vj"
+  },
+  {
+    "order": 130,
+    "topic": "斜率DP",
+    "title": "小明系列故事――捉迷藏",
+    "specialty": "个人专题训练20",
+    "problem_id": "HDU-4528",
+    "source": "vj"
+  },
+  {
+    "order": 131,
+    "topic": "斜率DP",
+    "title": "Pearls",
+    "specialty": "个人专题训练20",
+    "problem_id": "HDU-1300",
+    "source": "vj"
+  },
+  {
+    "order": 132,
+    "topic": "斜率DP",
+    "title": "MAX Average Problem",
+    "specialty": "个人专题训练20",
+    "problem_id": "HDU-2993",
+    "source": "vj"
+  },
+  {
+    "order": 133,
+    "topic": "斜率DP",
+    "title": "Cross the Wall",
+    "specialty": "个人专题训练20",
+    "problem_id": "UVALive-5097",
+    "source": "vj"
+  },
+  {
+    "order": 134,
+    "topic": "斜率DP",
+    "title": "Picnic Cows",
+    "specialty": "个人专题训练20",
+    "problem_id": "HDU-3045",
+    "source": "vj"
+  },
+  {
+    "order": 135,
+    "topic": "斜率DP",
+    "title": "Tree Construction",
+    "specialty": "个人专题训练20",
+    "problem_id": "HDU-3516",
+    "source": "vj"
+  },
+  {
+    "order": 136,
+    "topic": "斜率DP",
+    "title": "Post Office",
+    "specialty": "个人专题训练20",
+    "problem_id": "POJ-1160",
+    "source": "vj"
+  },
+  {
+    "order": 137,
+    "topic": "斜率DP",
+    "title": "Batch Scheduling",
+    "specialty": "个人专题训练20",
+    "problem_id": "POJ-1180",
+    "source": "vj"
+  },
+  {
+    "order": 138,
+    "topic": "斜率DP",
+    "title": "Best Cow Fences",
+    "specialty": "个人专题训练20",
+    "problem_id": "POJ-2018",
+    "source": "vj"
+  },
+  {
+    "order": 139,
+    "topic": "斜率DP",
+    "title": "K-Anonymous Sequence",
+    "specialty": "个人专题训练20",
+    "problem_id": "POJ-3709",
+    "source": "vj"
+  },
+  {
+    "order": 140,
+    "topic": "斜率DP",
+    "title": "Navigation Game",
+    "specialty": "个人专题训练20",
+    "problem_id": "POJ-2841",
+    "source": "vj"
+  },
+  {
+    "order": 141,
+    "topic": "斜率DP",
+    "title": "Pearls",
+    "specialty": "个人专题训练20",
+    "problem_id": "POJ-1260",
+    "source": "vj"
+  },
+  {
+    "order": 142,
+    "topic": "斜率DP",
+    "title": "Naming Babies",
+    "specialty": "个人专题训练20",
+    "problem_id": "UVA-12594",
+    "source": "vj"
+  },
+  {
+    "order": 143,
+    "topic": "斜率DP",
+    "title": "Division",
+    "specialty": "个人专题训练20",
+    "problem_id": "HDU-3480",
+    "source": "vj"
+  },
+  {
+    "order": 144,
+    "topic": "斜率DP",
+    "title": "Buffed Buffet",
+    "specialty": "个人专题训练20",
+    "problem_id": "UVALive-6771",
+    "source": "vj"
+  },
+  {
+    "order": 145,
+    "topic": "概率&期望",
+    "title": "A Dangerous Maze",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1027",
+    "source": "vj"
+  },
+  {
+    "order": 146,
+    "topic": "概率&期望",
+    "title": "Discovering Gold",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1030",
+    "source": "vj"
+  },
+  {
+    "order": 147,
+    "topic": "概率&期望",
+    "title": "Race to 1 Again",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1038",
+    "source": "vj"
+  },
+  {
+    "order": 148,
+    "topic": "概率&期望",
+    "title": "Just another Robbery",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1079",
+    "source": "vj"
+  },
+  {
+    "order": 149,
+    "topic": "概率&期望",
+    "title": "Birthday Paradox",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1104",
+    "source": "vj"
+  },
+  {
+    "order": 150,
+    "topic": "概率&期望",
+    "title": "Snakes and Ladders",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1151",
+    "source": "vj"
+  },
+  {
+    "order": 151,
+    "topic": "概率&期望",
+    "title": "Dice (III)",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1248",
+    "source": "vj"
+  },
+  {
+    "order": 152,
+    "topic": "概率&期望",
+    "title": "Island of Survival",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1265",
+    "source": "vj"
+  },
+  {
+    "order": 153,
+    "topic": "概率&期望",
+    "title": "Beating the Dataset",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1274",
+    "source": "vj"
+  },
+  {
+    "order": 154,
+    "topic": "概率&期望",
+    "title": "Lights inside 3D Grid",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1284",
+    "source": "vj"
+  },
+  {
+    "order": 155,
+    "topic": "概率&期望",
+    "title": "Where to Run?",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1287",
+    "source": "vj"
+  },
+  {
+    "order": 156,
+    "topic": "概率&期望",
+    "title": "Throwing Balls into the Baskets",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1317",
+    "source": "vj"
+  },
+  {
+    "order": 157,
+    "topic": "概率&期望",
+    "title": "Sending Packets",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1321",
+    "source": "vj"
+  },
+  {
+    "order": 158,
+    "topic": "概率&期望",
+    "title": "Aladdin and the Magical Sticks",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1342",
+    "source": "vj"
+  },
+  {
+    "order": 159,
+    "topic": "概率&期望",
+    "title": "Expected Cards",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1364",
+    "source": "vj"
+  },
+  {
+    "order": 160,
+    "topic": "概率&期望",
+    "title": "A Dangerous Maze (II)",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1395",
+    "source": "vj"
+  },
+  {
+    "order": 161,
+    "topic": "概率&期望",
+    "title": "Batting Practice",
+    "specialty": "个人专题训练21",
+    "problem_id": "LightOJ-1408",
+    "source": "vj"
+  },
+  {
+    "order": 162,
+    "topic": "概率&期望",
+    "title": "Race to 1",
+    "specialty": "个人专题训练21",
+    "problem_id": "UVA-11762",
+    "source": "vj"
+  },
+  {
+    "order": 163,
+    "topic": "概率&期望",
+    "title": "Expect the Expected",
+    "specialty": "个人专题训练21",
+    "problem_id": "UVA-11427",
+    "source": "vj"
+  },
+  {
+    "order": 164,
+    "topic": "概率&期望",
+    "title": "Tribles",
+    "specialty": "个人专题训练21",
+    "problem_id": "UVA-11021",
+    "source": "vj"
+  },
+  {
+    "order": 165,
+    "topic": "区间DP",
+    "title": "Cake",
+    "specialty": "个人专题训练22",
+    "problem_id": "ZOJ-3537",
+    "source": "vj"
+  },
+  {
+    "order": 166,
+    "topic": "区间DP",
+    "title": "Halloween Costumes",
+    "specialty": "个人专题训练22",
+    "problem_id": "LightOJ-1422",
+    "source": "vj"
+  },
+  {
+    "order": 167,
+    "topic": "区间DP",
+    "title": "Brackets",
+    "specialty": "个人专题训练22",
+    "problem_id": "POJ-2955",
+    "source": "vj"
+  },
+  {
+    "order": 168,
+    "topic": "区间DP",
+    "title": "Coloring Brackets",
+    "specialty": "个人专题训练22",
+    "problem_id": "CodeForces-149D",
+    "source": "vj"
+  },
+  {
+    "order": 169,
+    "topic": "区间DP",
+    "title": "Multiplication Puzzle",
+    "specialty": "个人专题训练22",
+    "problem_id": "POJ-1651",
+    "source": "vj"
+  },
+  {
+    "order": 170,
+    "topic": "区间DP",
+    "title": "Food Delivery",
+    "specialty": "个人专题训练22",
+    "problem_id": "ZOJ-3469",
+    "source": "vj"
+  },
+  {
+    "order": 171,
+    "topic": "区间DP",
+    "title": "You Are the One",
+    "specialty": "个人专题训练22",
+    "problem_id": "HDU-4283",
+    "source": "vj"
+  },
+  {
+    "order": 172,
+    "topic": "区间DP",
+    "title": "String painter",
+    "specialty": "个人专题训练22",
+    "problem_id": "HDU-2476",
+    "source": "vj"
+  },
+  {
+    "order": 173,
+    "topic": "计算几何之半平面交",
+    "title": "Rotating Scoreboard",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-3335",
+    "source": "vj"
+  },
+  {
+    "order": 174,
+    "topic": "计算几何之半平面交",
+    "title": "How I Mathematician Wonder What You Are!",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-3130",
+    "source": "vj"
+  },
+  {
+    "order": 175,
+    "topic": "计算几何之半平面交",
+    "title": "Video Surveillance",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-1474",
+    "source": "vj"
+  },
+  {
+    "order": 176,
+    "topic": "计算几何之半平面交",
+    "title": "Art Gallery",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-1279",
+    "source": "vj"
+  },
+  {
+    "order": 177,
+    "topic": "计算几何之半平面交",
+    "title": "Most Distant Point from the Sea",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-3525",
+    "source": "vj"
+  },
+  {
+    "order": 178,
+    "topic": "计算几何之半平面交",
+    "title": "Feng Shui",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-3384",
+    "source": "vj"
+  },
+  {
+    "order": 179,
+    "topic": "计算几何之半平面交",
+    "title": "Triathlon",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-1755",
+    "source": "vj"
+  },
+  {
+    "order": 180,
+    "topic": "计算几何之半平面交",
+    "title": "Hotter Colder",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-2540",
+    "source": "vj"
+  },
+  {
+    "order": 181,
+    "topic": "计算几何之半平面交",
+    "title": "Uyuw's Concert",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-2451",
+    "source": "vj"
+  },
+  {
+    "order": 182,
+    "topic": "计算几何之半平面交",
+    "title": "Nice Milk",
+    "specialty": "个人专题训练23",
+    "problem_id": "POJ-1271",
+    "source": "vj"
+  },
+  {
+    "order": 183,
+    "topic": "计算几何之半平面交",
+    "title": "Joining with Friend",
+    "specialty": "个人专题训练23",
+    "problem_id": "UVA-11722",
+    "source": "vj"
+  }
+]

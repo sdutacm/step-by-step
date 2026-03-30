@@ -1,0 +1,738 @@
+[
+  {
+    "order": 1,
+    "topic": "枚举",
+    "title": "Flip Game",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1753",
+    "source": "vj"
+  },
+  {
+    "order": 2,
+    "topic": "枚举",
+    "title": "The Pilots Brothers' refrigerator",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2965",
+    "source": "vj"
+  },
+  {
+    "order": 3,
+    "topic": "贪心",
+    "title": "Radar Installation",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1328",
+    "source": "vj"
+  },
+  {
+    "order": 4,
+    "topic": "贪心",
+    "title": "Power of Cryptography",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2109",
+    "source": "vj"
+  },
+  {
+    "order": 5,
+    "topic": "贪心",
+    "title": "Y2K Accounting Bug",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2586",
+    "source": "vj"
+  },
+  {
+    "order": 6,
+    "topic": "分治法",
+    "title": "Ubiquitous Religions",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2524",
+    "source": "vj"
+  },
+  {
+    "order": 7,
+    "topic": "递推",
+    "title": "Tiling",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2506",
+    "source": "vj"
+  },
+  {
+    "order": 8,
+    "topic": "构造法",
+    "title": "Tautology",
+    "specialty": "基本算法",
+    "problem_id": "POJ-3295",
+    "source": "vj"
+  },
+  {
+    "order": 9,
+    "topic": "模拟法",
+    "title": "Parencodings",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1068",
+    "source": "vj"
+  },
+  {
+    "order": 10,
+    "topic": "模拟法",
+    "title": "Crashing Robots",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2632",
+    "source": "vj"
+  },
+  {
+    "order": 11,
+    "topic": "模拟法",
+    "title": "Robot Motion",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1573",
+    "source": "vj"
+  },
+  {
+    "order": 12,
+    "topic": "模拟法",
+    "title": "Emag eht htiw Em Pleh",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2993",
+    "source": "vj"
+  },
+  {
+    "order": 13,
+    "topic": "模拟法",
+    "title": "Help Me with the Game",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2996",
+    "source": "vj"
+  },
+  {
+    "order": 14,
+    "topic": "图的深度优先遍历和广度优先遍历",
+    "title": "Catch That Cow",
+    "specialty": "图算法",
+    "problem_id": "POJ-3278",
+    "source": "vj"
+  },
+  {
+    "order": 15,
+    "topic": "图的深度优先遍历和广度优先遍历",
+    "title": "Finding Nemo",
+    "specialty": "图算法",
+    "problem_id": "POJ-2049",
+    "source": "vj"
+  },
+  {
+    "order": 16,
+    "topic": "图的深度优先遍历和广度优先遍历",
+    "title": "Children of the Candy Corn",
+    "specialty": "图算法",
+    "problem_id": "POJ-3083",
+    "source": "vj"
+  },
+  {
+    "order": 17,
+    "topic": "最短路径算法",
+    "title": "Currency Exchange",
+    "specialty": "图算法",
+    "problem_id": "POJ-1860",
+    "source": "vj"
+  },
+  {
+    "order": 18,
+    "topic": "最短路径算法",
+    "title": "Wormholes",
+    "specialty": "图算法",
+    "problem_id": "POJ-3259",
+    "source": "vj"
+  },
+  {
+    "order": 19,
+    "topic": "最短路径算法",
+    "title": "昂贵的聘礼",
+    "specialty": "图算法",
+    "problem_id": "POJ-1062",
+    "source": "vj"
+  },
+  {
+    "order": 20,
+    "topic": "最短路径算法",
+    "title": "Frogger",
+    "specialty": "图算法",
+    "problem_id": "POJ-2253",
+    "source": "vj"
+  },
+  {
+    "order": 21,
+    "topic": "最短路径算法",
+    "title": "Stockbroker Grapevine",
+    "specialty": "图算法",
+    "problem_id": "POJ-1125",
+    "source": "vj"
+  },
+  {
+    "order": 22,
+    "topic": "最短路径算法",
+    "title": "Arbitrage",
+    "specialty": "图算法",
+    "problem_id": "POJ-2240",
+    "source": "vj"
+  },
+  {
+    "order": 23,
+    "topic": "最小生成树算法",
+    "title": "Truck History",
+    "specialty": "图算法",
+    "problem_id": "POJ-1789",
+    "source": "vj"
+  },
+  {
+    "order": 24,
+    "topic": "最小生成树算法",
+    "title": "Highways",
+    "specialty": "图算法",
+    "problem_id": "POJ-2485",
+    "source": "vj"
+  },
+  {
+    "order": 25,
+    "topic": "最小生成树算法",
+    "title": "Agri-Net",
+    "specialty": "图算法",
+    "problem_id": "POJ-1258",
+    "source": "vj"
+  },
+  {
+    "order": 26,
+    "topic": "最小生成树算法",
+    "title": "Borg Maze",
+    "specialty": "图算法",
+    "problem_id": "POJ-3026",
+    "source": "vj"
+  },
+  {
+    "order": 27,
+    "topic": "拓扑排序",
+    "title": "Sorting It All Out",
+    "specialty": "图算法",
+    "problem_id": "POJ-1094",
+    "source": "vj"
+  },
+  {
+    "order": 28,
+    "topic": "拓扑排序",
+    "title": "The Cow Lexicon",
+    "specialty": "图算法",
+    "problem_id": "POJ-3267",
+    "source": "vj"
+  },
+  {
+    "order": 29,
+    "topic": "拓扑排序",
+    "title": "Labeling Balls",
+    "specialty": "图算法",
+    "problem_id": "POJ-3687",
+    "source": "vj"
+  },
+  {
+    "order": 30,
+    "topic": "二分图的最大匹配",
+    "title": "Asteroids",
+    "specialty": "图算法",
+    "problem_id": "POJ-3041",
+    "source": "vj"
+  },
+  {
+    "order": 31,
+    "topic": "二分图的最大匹配",
+    "title": "Antenna Placement",
+    "specialty": "图算法",
+    "problem_id": "POJ-3020",
+    "source": "vj"
+  },
+  {
+    "order": 32,
+    "topic": "最大流的增广路算法",
+    "title": "Power Network",
+    "specialty": "图算法",
+    "problem_id": "POJ-1459",
+    "source": "vj"
+  },
+  {
+    "order": 33,
+    "topic": "最大流的增广路算法",
+    "title": "ACM Computer Factory",
+    "specialty": "图算法",
+    "problem_id": "POJ-3436",
+    "source": "vj"
+  },
+  {
+    "order": 34,
+    "topic": "串",
+    "title": "Spell checker",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1035",
+    "source": "vj"
+  },
+  {
+    "order": 35,
+    "topic": "串",
+    "title": "Blue Jeans",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3080",
+    "source": "vj"
+  },
+  {
+    "order": 36,
+    "topic": "串",
+    "title": "All in All",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1936",
+    "source": "vj"
+  },
+  {
+    "order": 37,
+    "topic": "排序",
+    "title": "Who's in the Middle",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2388",
+    "source": "vj"
+  },
+  {
+    "order": 38,
+    "topic": "排序",
+    "title": "Ultra-QuickSort",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2299",
+    "source": "vj"
+  },
+  {
+    "order": 39,
+    "topic": "简单并查集的应用",
+    "title": "The Suspects",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1611",
+    "source": "vj"
+  },
+  {
+    "order": 40,
+    "topic": "哈希表和二分查找等高效查找法",
+    "title": "Snowflake\r\nSnow\r\nSnowflakes",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3349",
+    "source": "vj"
+  },
+  {
+    "order": 41,
+    "topic": "哈希表和二分查找等高效查找法",
+    "title": "Gold Balanced Lineup",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3274",
+    "source": "vj"
+  },
+  {
+    "order": 42,
+    "topic": "哈希表和二分查找等高效查找法",
+    "title": "Check the difficulty of problems",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2151",
+    "source": "vj"
+  },
+  {
+    "order": 43,
+    "topic": "哈希表和二分查找等高效查找法",
+    "title": "Eqs",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1840",
+    "source": "vj"
+  },
+  {
+    "order": 44,
+    "topic": "哈希表和二分查找等高效查找法",
+    "title": "Squares",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2002",
+    "source": "vj"
+  },
+  {
+    "order": 45,
+    "topic": "哈希表和二分查找等高效查找法",
+    "title": "Babelfish",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2503",
+    "source": "vj"
+  },
+  {
+    "order": 46,
+    "topic": "哈夫曼树",
+    "title": "Fence Repair",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3253",
+    "source": "vj"
+  },
+  {
+    "order": 47,
+    "topic": "堆,优先队列",
+    "title": "Sequence",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2442",
+    "source": "vj"
+  },
+  {
+    "order": 48,
+    "topic": "堆,优先队列",
+    "title": "Black Box",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1442",
+    "source": "vj"
+  },
+  {
+    "order": 49,
+    "topic": "trie树",
+    "title": "Colored Sticks",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2513",
+    "source": "vj"
+  },
+  {
+    "order": 50,
+    "topic": "trie树",
+    "title": "Hardwood Species",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2418",
+    "source": "vj"
+  },
+  {
+    "order": 51,
+    "topic": "深度优先搜索",
+    "title": "A Knight's Journey",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-2488",
+    "source": "vj"
+  },
+  {
+    "order": 52,
+    "topic": "深度优先搜索",
+    "title": "Children of the Candy Corn",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-3083",
+    "source": "vj"
+  },
+  {
+    "order": 53,
+    "topic": "深度优先搜索",
+    "title": "Curling 2.0",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-3009",
+    "source": "vj"
+  },
+  {
+    "order": 54,
+    "topic": "深度优先搜索",
+    "title": "棋盘问题",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-1321",
+    "source": "vj"
+  },
+  {
+    "order": 55,
+    "topic": "深度优先搜索",
+    "title": "Dungeon Master",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-2251",
+    "source": "vj"
+  },
+  {
+    "order": 56,
+    "topic": "广度优先搜索",
+    "title": "Catch That Cow",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-3278",
+    "source": "vj"
+  },
+  {
+    "order": 57,
+    "topic": "广度优先搜索",
+    "title": "Find The Multiple",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-1426",
+    "source": "vj"
+  },
+  {
+    "order": 58,
+    "topic": "广度优先搜索",
+    "title": "Prime Path",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-3126",
+    "source": "vj"
+  },
+  {
+    "order": 59,
+    "topic": "广度优先搜索",
+    "title": "Shuffle'm Up",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-3087",
+    "source": "vj"
+  },
+  {
+    "order": 60,
+    "topic": "广度优先搜索",
+    "title": "Pots",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-3414",
+    "source": "vj"
+  },
+  {
+    "order": 61,
+    "topic": "简单搜索技巧和剪枝",
+    "title": "Network Saboteur",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-2531",
+    "source": "vj"
+  },
+  {
+    "order": 62,
+    "topic": "简单搜索技巧和剪枝",
+    "title": "Shredding Company",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-1416",
+    "source": "vj"
+  },
+  {
+    "order": 63,
+    "topic": "简单搜索技巧和剪枝",
+    "title": "Sudoku",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-2676",
+    "source": "vj"
+  },
+  {
+    "order": 64,
+    "topic": "简单搜索技巧和剪枝",
+    "title": "Channel Allocation",
+    "specialty": "简单搜索",
+    "problem_id": "POJ-1129",
+    "source": "vj"
+  },
+  {
+    "order": 65,
+    "topic": "背包问题",
+    "title": "Balance",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1837",
+    "source": "vj"
+  },
+  {
+    "order": 66,
+    "topic": "背包问题",
+    "title": "Cash Machine",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1276",
+    "source": "vj"
+  },
+  {
+    "order": 67,
+    "topic": "型如下表的简单DP",
+    "title": "The Cow Lexicon",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3267",
+    "source": "vj"
+  },
+  {
+    "order": 68,
+    "topic": "型如下表的简单DP",
+    "title": "Alignment",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1836",
+    "source": "vj"
+  },
+  {
+    "order": 69,
+    "topic": "型如下表的简单DP",
+    "title": "Pearls",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1260",
+    "source": "vj"
+  },
+  {
+    "order": 70,
+    "topic": "型如下表的简单DP",
+    "title": "Longest Ordered Subsequence",
+    "specialty": "动态规划",
+    "problem_id": "POJ-2533",
+    "source": "vj"
+  },
+  {
+    "order": 71,
+    "topic": "型如下表的简单DP",
+    "title": "Cow Bowling",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3176",
+    "source": "vj"
+  },
+  {
+    "order": 72,
+    "topic": "型如下表的简单DP",
+    "title": "Human Gene Functions",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1080",
+    "source": "vj"
+  },
+  {
+    "order": 73,
+    "topic": "型如下表的简单DP",
+    "title": "Palindrome",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1159",
+    "source": "vj"
+  },
+  {
+    "order": 74,
+    "topic": "组合数学",
+    "title": "Round Numbers",
+    "specialty": "数学",
+    "problem_id": "POJ-3252",
+    "source": "vj"
+  },
+  {
+    "order": 75,
+    "topic": "组合数学",
+    "title": "Code",
+    "specialty": "数学",
+    "problem_id": "POJ-1850",
+    "source": "vj"
+  },
+  {
+    "order": 76,
+    "topic": "组合数学",
+    "title": "Number Sequence",
+    "specialty": "数学",
+    "problem_id": "POJ-1019",
+    "source": "vj"
+  },
+  {
+    "order": 77,
+    "topic": "组合数学",
+    "title": "Paths on a Grid",
+    "specialty": "数学",
+    "problem_id": "POJ-1942",
+    "source": "vj"
+  },
+  {
+    "order": 78,
+    "topic": "数论",
+    "title": "The Embarrassed Cryptographer",
+    "specialty": "数学",
+    "problem_id": "POJ-2635",
+    "source": "vj"
+  },
+  {
+    "order": 79,
+    "topic": "数论",
+    "title": "Semi-prime H-numbers",
+    "specialty": "数学",
+    "problem_id": "POJ-3292",
+    "source": "vj"
+  },
+  {
+    "order": 80,
+    "topic": "数论",
+    "title": "Sumdiv",
+    "specialty": "数学",
+    "problem_id": "POJ-1845",
+    "source": "vj"
+  },
+  {
+    "order": 81,
+    "topic": "数论",
+    "title": "C Looooops",
+    "specialty": "数学",
+    "problem_id": "POJ-2115",
+    "source": "vj"
+  },
+  {
+    "order": 82,
+    "topic": "计算方法",
+    "title": "Monthly Expense",
+    "specialty": "数学",
+    "problem_id": "POJ-3273",
+    "source": "vj"
+  },
+  {
+    "order": 83,
+    "topic": "计算方法",
+    "title": "River Hopscotch",
+    "specialty": "数学",
+    "problem_id": "POJ-3258",
+    "source": "vj"
+  },
+  {
+    "order": 84,
+    "topic": "计算方法",
+    "title": "Expanding Rods",
+    "specialty": "数学",
+    "problem_id": "POJ-1905",
+    "source": "vj"
+  },
+  {
+    "order": 85,
+    "topic": "计算方法",
+    "title": "Pie",
+    "specialty": "数学",
+    "problem_id": "POJ-3122",
+    "source": "vj"
+  },
+  {
+    "order": 86,
+    "topic": "几何公式",
+    "title": "Area",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1265",
+    "source": "vj"
+  },
+  {
+    "order": 87,
+    "topic": "叉积和点积的运用",
+    "title": "Building a Space Station",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-2031",
+    "source": "vj"
+  },
+  {
+    "order": 88,
+    "topic": "叉积和点积的运用",
+    "title": "Pipe",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1039",
+    "source": "vj"
+  },
+  {
+    "order": 89,
+    "topic": "多边型的简单算法和相关判定",
+    "title": "Fishnet",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1408",
+    "source": "vj"
+  },
+  {
+    "order": 90,
+    "topic": "多边型的简单算法和相关判定",
+    "title": "A Round Peg in a Ground Hole",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1584",
+    "source": "vj"
+  },
+  {
+    "order": 91,
+    "topic": "凸包",
+    "title": "Beauty Contest",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-2187",
+    "source": "vj"
+  },
+  {
+    "order": 92,
+    "topic": "凸包",
+    "title": "Wall",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-1113",
+    "source": "vj"
+  }
+]

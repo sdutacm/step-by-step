@@ -1,0 +1,594 @@
+[
+  {
+    "order": 1,
+    "topic": "代码快速写成",
+    "title": "Text Formalization",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2525",
+    "source": "vj"
+  },
+  {
+    "order": 2,
+    "topic": "代码快速写成",
+    "title": "Dynamic Declaration Language (DDL)",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1684",
+    "source": "vj"
+  },
+  {
+    "order": 3,
+    "topic": "代码快速写成",
+    "title": "Peter's Calculator",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1421",
+    "source": "vj"
+  },
+  {
+    "order": 4,
+    "topic": "代码快速写成",
+    "title": "Follow My Logic",
+    "specialty": "基本算法",
+    "problem_id": "POJ-1048",
+    "source": "vj"
+  },
+  {
+    "order": 5,
+    "topic": "代码快速写成",
+    "title": "Searching the Web",
+    "specialty": "基本算法",
+    "problem_id": "POJ-2050",
+    "source": "vj"
+  },
+  {
+    "order": 6,
+    "topic": "代码快速写成",
+    "title": "Busy Airport",
+    "specialty": "基本算法",
+    "problem_id": "POJ-3306",
+    "source": "vj"
+  },
+  {
+    "order": 7,
+    "topic": "保证正确性和高效性",
+    "title": "Terrarium",
+    "specialty": "基本算法",
+    "problem_id": "POJ-3434",
+    "source": "vj"
+  },
+  {
+    "order": 8,
+    "topic": "度限制最小生成树和第K最短路,分数规划",
+    "title": "Picnic Planning",
+    "specialty": "图算法",
+    "problem_id": "POJ-1639",
+    "source": "vj"
+  },
+  {
+    "order": 9,
+    "topic": "度限制最小生成树和第K最短路,分数规划",
+    "title": "Sightseeing Cows",
+    "specialty": "图算法",
+    "problem_id": "POJ-3621",
+    "source": "vj"
+  },
+  {
+    "order": 10,
+    "topic": "度限制最小生成树和第K最短路,分数规划",
+    "title": "Dropping tests",
+    "specialty": "图算法",
+    "problem_id": "POJ-2976",
+    "source": "vj"
+  },
+  {
+    "order": 11,
+    "topic": "度限制最小生成树和第K最短路,分数规划",
+    "title": "Roadblocks",
+    "specialty": "图算法",
+    "problem_id": "POJ-3255",
+    "source": "vj"
+  },
+  {
+    "order": 12,
+    "topic": "度限制最小生成树和第K最短路,分数规划",
+    "title": "Colored Sticks",
+    "specialty": "图算法",
+    "problem_id": "POJ-2513",
+    "source": "vj"
+  },
+  {
+    "order": 13,
+    "topic": "度限制最小生成树和第K最短路,分数规划",
+    "title": "Remmarguts' Date",
+    "specialty": "图算法",
+    "problem_id": "POJ-2449",
+    "source": "vj"
+  },
+  {
+    "order": 14,
+    "topic": "最优比率生成树",
+    "title": "Desert King",
+    "specialty": "图算法",
+    "problem_id": "POJ-2728",
+    "source": "vj"
+  },
+  {
+    "order": 15,
+    "topic": "最小树形图",
+    "title": "Command Network",
+    "specialty": "图算法",
+    "problem_id": "POJ-3164",
+    "source": "vj"
+  },
+  {
+    "order": 16,
+    "topic": "次小生成树",
+    "title": "The Unique MST",
+    "specialty": "图算法",
+    "problem_id": "POJ-1679",
+    "source": "vj"
+  },
+  {
+    "order": 17,
+    "topic": "2-SAT问题",
+    "title": "Ikki's Story IV - Panda's Trick",
+    "specialty": "图算法",
+    "problem_id": "POJ-3207",
+    "source": "vj"
+  },
+  {
+    "order": 18,
+    "topic": "2-SAT问题",
+    "title": "Katu Puzzle",
+    "specialty": "图算法",
+    "problem_id": "POJ-3678",
+    "source": "vj"
+  },
+  {
+    "order": 19,
+    "topic": "2-SAT问题",
+    "title": "Priest John's Busiest Day",
+    "specialty": "图算法",
+    "problem_id": "POJ-3683",
+    "source": "vj"
+  },
+  {
+    "order": 20,
+    "topic": "2-SAT问题",
+    "title": "Wedding",
+    "specialty": "图算法",
+    "problem_id": "POJ-3648",
+    "source": "vj"
+  },
+  {
+    "order": 21,
+    "topic": "2-SAT问题",
+    "title": "Get Luffy Out",
+    "specialty": "图算法",
+    "problem_id": "POJ-2723",
+    "source": "vj"
+  },
+  {
+    "order": 22,
+    "topic": "2-SAT问题",
+    "title": "Building roads",
+    "specialty": "图算法",
+    "problem_id": "POJ-2749",
+    "source": "vj"
+  },
+  {
+    "order": 23,
+    "topic": "无向图、有向图",
+    "title": "Sightseeing trip",
+    "specialty": "图算法",
+    "problem_id": "POJ-1734",
+    "source": "vj"
+  },
+  {
+    "order": 24,
+    "topic": "trie图的建立和应用,DFA",
+    "title": "DNA Sequence",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2778",
+    "source": "vj"
+  },
+  {
+    "order": 25,
+    "topic": "trie图的建立和应用,DFA",
+    "title": "DNA repair",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3691",
+    "source": "vj"
+  },
+  {
+    "order": 26,
+    "topic": "LCA和RMQ问题",
+    "title": "Nearest Common Ancestors",
+    "specialty": "数据结构",
+    "problem_id": "POJ-1330",
+    "source": "vj"
+  },
+  {
+    "order": 27,
+    "topic": "双端队列和它的应用",
+    "title": "Sliding Window",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2823",
+    "source": "vj"
+  },
+  {
+    "order": 28,
+    "topic": "左偏树",
+    "title": "Making the Grade",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3666",
+    "source": "vj"
+  },
+  {
+    "order": 29,
+    "topic": "左偏树",
+    "title": "K-Monotonic",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3016",
+    "source": "vj"
+  },
+  {
+    "order": 30,
+    "topic": "后缀树,后缀数组",
+    "title": "Common Substrings",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3415",
+    "source": "vj"
+  },
+  {
+    "order": 31,
+    "topic": "后缀树,后缀数组",
+    "title": "Life Forms",
+    "specialty": "数据结构",
+    "problem_id": "POJ-3294",
+    "source": "vj"
+  },
+  {
+    "order": 32,
+    "topic": "后缀树,后缀数组",
+    "title": "Long Long Message",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2774",
+    "source": "vj"
+  },
+  {
+    "order": 33,
+    "topic": "后缀树,后缀数组",
+    "title": "Checking the Text",
+    "specialty": "数据结构",
+    "problem_id": "POJ-2758",
+    "source": "vj"
+  },
+  {
+    "order": 34,
+    "topic": "较麻烦的搜索题目训练",
+    "title": "The Bermuda Triangle",
+    "specialty": "搜索",
+    "problem_id": "POJ-1069",
+    "source": "vj"
+  },
+  {
+    "order": 35,
+    "topic": "较麻烦的搜索题目训练",
+    "title": "Bloxorz I",
+    "specialty": "搜索",
+    "problem_id": "POJ-3322",
+    "source": "vj"
+  },
+  {
+    "order": 36,
+    "topic": "较麻烦的搜索题目训练",
+    "title": "Pushing Boxes",
+    "specialty": "搜索",
+    "problem_id": "POJ-1475",
+    "source": "vj"
+  },
+  {
+    "order": 37,
+    "topic": "较麻烦的搜索题目训练",
+    "title": "The Treasure",
+    "specialty": "搜索",
+    "problem_id": "POJ-1924",
+    "source": "vj"
+  },
+  {
+    "order": 38,
+    "topic": "较麻烦的搜索题目训练",
+    "title": "Finding Nemo",
+    "specialty": "搜索",
+    "problem_id": "POJ-2049",
+    "source": "vj"
+  },
+  {
+    "order": 39,
+    "topic": "较麻烦的搜索题目训练",
+    "title": "Doors and... more doors",
+    "specialty": "搜索",
+    "problem_id": "POJ-3426",
+    "source": "vj"
+  },
+  {
+    "order": 40,
+    "topic": "广搜的状态优化",
+    "title": "Hang or not to hang",
+    "specialty": "搜索",
+    "problem_id": "POJ-1768",
+    "source": "vj"
+  },
+  {
+    "order": 41,
+    "topic": "广搜的状态优化",
+    "title": "聪明的打字员",
+    "specialty": "搜索",
+    "problem_id": "POJ-1184",
+    "source": "vj"
+  },
+  {
+    "order": 42,
+    "topic": "广搜的状态优化",
+    "title": "A Dicey Problem",
+    "specialty": "搜索",
+    "problem_id": "POJ-1872",
+    "source": "vj"
+  },
+  {
+    "order": 43,
+    "topic": "广搜的状态优化",
+    "title": "Holedox Moving",
+    "specialty": "搜索",
+    "problem_id": "POJ-1324",
+    "source": "vj"
+  },
+  {
+    "order": 44,
+    "topic": "广搜的状态优化",
+    "title": "Gap",
+    "specialty": "搜索",
+    "problem_id": "POJ-2046",
+    "source": "vj"
+  },
+  {
+    "order": 45,
+    "topic": "广搜的状态优化",
+    "title": "It's not a Bug, It's a Feature!",
+    "specialty": "搜索",
+    "problem_id": "POJ-1482",
+    "source": "vj"
+  },
+  {
+    "order": 46,
+    "topic": "深搜的优化",
+    "title": "Cubic Eight-Puzzle",
+    "specialty": "搜索",
+    "problem_id": "POJ-3131",
+    "source": "vj"
+  },
+  {
+    "order": 47,
+    "topic": "深搜的优化",
+    "title": "Light Up",
+    "specialty": "搜索",
+    "problem_id": "POJ-2870",
+    "source": "vj"
+  },
+  {
+    "order": 48,
+    "topic": "深搜的优化",
+    "title": "The Rotation Game",
+    "specialty": "搜索",
+    "problem_id": "POJ-2286",
+    "source": "vj"
+  },
+  {
+    "order": 49,
+    "topic": "需要用数据结构优化的动态规划",
+    "title": "Similarity of necklaces 2",
+    "specialty": "动态规划",
+    "problem_id": "POJ-2754",
+    "source": "vj"
+  },
+  {
+    "order": 50,
+    "topic": "需要用数据结构优化的动态规划",
+    "title": "Crazy Thairs",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3378",
+    "source": "vj"
+  },
+  {
+    "order": 51,
+    "topic": "需要用数据结构优化的动态规划",
+    "title": "Cut the Sequence",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3017",
+    "source": "vj"
+  },
+  {
+    "order": 52,
+    "topic": "四边形不等式理论、斜率优化",
+    "title": "Post Office",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1160",
+    "source": "vj"
+  },
+  {
+    "order": 53,
+    "topic": "四边形不等式理论、斜率优化",
+    "title": "Batch Scheduling",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1180",
+    "source": "vj"
+  },
+  {
+    "order": 54,
+    "topic": "四边形不等式理论、斜率优化",
+    "title": "K-Anonymous Sequence",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3709",
+    "source": "vj"
+  },
+  {
+    "order": 55,
+    "topic": "较难的状态DP、插头DP",
+    "title": "Manhattan Wiring",
+    "specialty": "动态规划",
+    "problem_id": "POJ-3133",
+    "source": "vj"
+  },
+  {
+    "order": 56,
+    "topic": "较难的状态DP、插头DP",
+    "title": "Tony's Tour",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1739",
+    "source": "vj"
+  },
+  {
+    "order": 57,
+    "topic": "较难的状态DP、插头DP",
+    "title": "Mondriaan's Dream",
+    "specialty": "动态规划",
+    "problem_id": "POJ-2411",
+    "source": "vj"
+  },
+  {
+    "order": 58,
+    "topic": "较难的状态DP、插头DP",
+    "title": "Shortcut",
+    "specialty": "动态规划",
+    "problem_id": "POJ-1763",
+    "source": "vj"
+  },
+  {
+    "order": 59,
+    "topic": "组合数学",
+    "title": "Magic Bracelet",
+    "specialty": "数学",
+    "problem_id": "POJ-2888",
+    "source": "vj"
+  },
+  {
+    "order": 60,
+    "topic": "组合数学",
+    "title": "Color",
+    "specialty": "数学",
+    "problem_id": "POJ-2154",
+    "source": "vj"
+  },
+  {
+    "order": 61,
+    "topic": "博奕论",
+    "title": "Stake Your Claim",
+    "specialty": "数学",
+    "problem_id": "POJ-3317",
+    "source": "vj"
+  },
+  {
+    "order": 62,
+    "topic": "博奕论",
+    "title": "Triangle War",
+    "specialty": "数学",
+    "problem_id": "POJ-1085",
+    "source": "vj"
+  },
+  {
+    "order": 63,
+    "topic": "半平面求交",
+    "title": "Feng Shui",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-3384",
+    "source": "vj"
+  },
+  {
+    "order": 64,
+    "topic": "半平面求交",
+    "title": "Hotter Colder",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-2540",
+    "source": "vj"
+  },
+  {
+    "order": 65,
+    "topic": "可视图的建立",
+    "title": "A safe way",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-2966",
+    "source": "vj"
+  },
+  {
+    "order": 66,
+    "topic": "对踵点",
+    "title": "Triangle",
+    "specialty": "计算几何学",
+    "problem_id": "POJ-2079",
+    "source": "vj"
+  },
+  {
+    "order": 67,
+    "topic": "综合题",
+    "title": "Island of Logic",
+    "specialty": "其他",
+    "problem_id": "POJ-1478",
+    "source": "vj"
+  },
+  {
+    "order": 68,
+    "topic": "综合题",
+    "title": "Random Walk",
+    "specialty": "其他",
+    "problem_id": "POJ-1462",
+    "source": "vj"
+  },
+  {
+    "order": 69,
+    "topic": "综合题",
+    "title": "Robocode",
+    "specialty": "其他",
+    "problem_id": "POJ-2729",
+    "source": "vj"
+  },
+  {
+    "order": 70,
+    "topic": "综合题",
+    "title": "Monster Trap",
+    "specialty": "其他",
+    "problem_id": "POJ-2048",
+    "source": "vj"
+  },
+  {
+    "order": 71,
+    "topic": "综合题",
+    "title": "ACM Underground",
+    "specialty": "其他",
+    "problem_id": "POJ-3336",
+    "source": "vj"
+  },
+  {
+    "order": 72,
+    "topic": "综合题",
+    "title": "Roofing It",
+    "specialty": "其他",
+    "problem_id": "POJ-3315",
+    "source": "vj"
+  },
+  {
+    "order": 73,
+    "topic": "综合题",
+    "title": "Color the Map",
+    "specialty": "其他",
+    "problem_id": "POJ-2148",
+    "source": "vj"
+  },
+  {
+    "order": 74,
+    "topic": "综合题",
+    "title": "Reflections",
+    "specialty": "其他",
+    "problem_id": "POJ-1263",
+    "source": "vj"
+  }
+]

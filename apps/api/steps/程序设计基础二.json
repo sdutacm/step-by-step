@@ -1,0 +1,482 @@
+[
+  {
+    "order": 1,
+    "topic": "基础",
+    "title": "最终排名",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "2446",
+    "source": "sdut"
+  },
+  {
+    "order": 2,
+    "topic": "基础",
+    "title": "来淄博旅游",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "2055",
+    "source": "sdut"
+  },
+  {
+    "order": 3,
+    "topic": "基础",
+    "title": "英文金曲大赛",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "1211",
+    "source": "sdut"
+  },
+  {
+    "order": 4,
+    "topic": "基础",
+    "title": "选夫婿1",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "1569",
+    "source": "sdut"
+  },
+  {
+    "order": 5,
+    "topic": "基础",
+    "title": "共用体练习",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "1960",
+    "source": "sdut"
+  },
+  {
+    "order": 6,
+    "topic": "基础",
+    "title": "简单枚举类型——植物与颜色",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "1959",
+    "source": "sdut"
+  },
+  {
+    "order": 7,
+    "topic": "扩展",
+    "title": "选票统计",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "1294",
+    "source": "sdut"
+  },
+  {
+    "order": 8,
+    "topic": "扩展",
+    "title": "选夫婿2",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "1595",
+    "source": "sdut"
+  },
+  {
+    "order": 9,
+    "topic": "扩展",
+    "title": "商人的诀窍",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "2278",
+    "source": "sdut"
+  },
+  {
+    "order": 10,
+    "topic": "扩展",
+    "title": "老--质价比",
+    "specialty": "实验1-结构体，共用体和枚举",
+    "problem_id": "2873",
+    "source": "sdut"
+  },
+  {
+    "order": 11,
+    "topic": "基础",
+    "title": "数据结构实验之链表一：顺序建立链表",
+    "specialty": "实验2-链表",
+    "problem_id": "2116",
+    "source": "sdut"
+  },
+  {
+    "order": 12,
+    "topic": "基础",
+    "title": "数据结构实验之链表二：逆序建立链表",
+    "specialty": "实验2-链表",
+    "problem_id": "2117",
+    "source": "sdut"
+  },
+  {
+    "order": 13,
+    "topic": "基础",
+    "title": "数据结构实验之链表三：链表的逆置",
+    "specialty": "实验2-链表",
+    "problem_id": "2118",
+    "source": "sdut"
+  },
+  {
+    "order": 14,
+    "topic": "基础",
+    "title": "数据结构实验之链表四：有序链表的归并",
+    "specialty": "实验2-链表",
+    "problem_id": "2119",
+    "source": "sdut"
+  },
+  {
+    "order": 15,
+    "topic": "拓展",
+    "title": "约瑟夫问题",
+    "specialty": "实验2-链表",
+    "problem_id": "1197",
+    "source": "sdut"
+  },
+  {
+    "order": 16,
+    "topic": "拓展",
+    "title": "数据结构实验之链表七：单链表中重复元素的删除",
+    "specialty": "实验2-链表",
+    "problem_id": "2122",
+    "source": "sdut"
+  },
+  {
+    "order": 17,
+    "topic": "拓展",
+    "title": "数据结构实验之链表九：双向链表",
+    "specialty": "实验2-链表",
+    "problem_id": "2054",
+    "source": "sdut"
+  },
+  {
+    "order": 18,
+    "topic": "拓展",
+    "title": "整理音乐",
+    "specialty": "实验2-链表",
+    "problem_id": "2053",
+    "source": "sdut"
+  },
+  {
+    "order": 19,
+    "topic": "拓展",
+    "title": "金牌、银牌、铜牌",
+    "specialty": "实验2-链表",
+    "problem_id": "2057",
+    "source": "sdut"
+  },
+  {
+    "order": 20,
+    "topic": "拓展",
+    "title": "不敢死队问题",
+    "specialty": "实验2-链表",
+    "problem_id": "2056",
+    "source": "sdut"
+  },
+  {
+    "order": 21,
+    "topic": "基础",
+    "title": "母牛的故事",
+    "specialty": "实验3-递推",
+    "problem_id": "1243",
+    "source": "sdut"
+  },
+  {
+    "order": 22,
+    "topic": "基础",
+    "title": "王小二切饼",
+    "specialty": "实验3-递推",
+    "problem_id": "2050",
+    "source": "sdut"
+  },
+  {
+    "order": 23,
+    "topic": "基础",
+    "title": "骨牌铺方格",
+    "specialty": "实验3-递推",
+    "problem_id": "1018",
+    "source": "sdut"
+  },
+  {
+    "order": 24,
+    "topic": "基础",
+    "title": "爬楼梯",
+    "specialty": "实验3-递推",
+    "problem_id": "2173",
+    "source": "sdut"
+  },
+  {
+    "order": 25,
+    "topic": "拓展",
+    "title": "养兔子",
+    "specialty": "实验3-递推",
+    "problem_id": "1218",
+    "source": "sdut"
+  },
+  {
+    "order": 26,
+    "topic": "拓展",
+    "title": "Fighting_小银考呀考不过四级",
+    "specialty": "实验3-递推",
+    "problem_id": "3460",
+    "source": "sdut"
+  },
+  {
+    "order": 27,
+    "topic": "拓展",
+    "title": "三国佚事——巴蜀之危",
+    "specialty": "实验3-递推",
+    "problem_id": "2058",
+    "source": "sdut"
+  },
+  {
+    "order": 28,
+    "topic": "拓展",
+    "title": "们--加强斐波那契",
+    "specialty": "实验3-递推",
+    "problem_id": "2869",
+    "source": "sdut"
+  },
+  {
+    "order": 29,
+    "topic": "拓展",
+    "title": "马拦过河卒",
+    "specialty": "实验3-递推",
+    "problem_id": "1265",
+    "source": "sdut"
+  },
+  {
+    "order": 30,
+    "topic": "拓展",
+    "title": "折线分割平面",
+    "specialty": "实验3-递推",
+    "problem_id": "1023",
+    "source": "sdut"
+  },
+  {
+    "order": 31,
+    "topic": "基础",
+    "title": "递归的函数",
+    "specialty": "实验4-递归",
+    "problem_id": "2176",
+    "source": "sdut"
+  },
+  {
+    "order": 32,
+    "topic": "基础",
+    "title": "汉诺塔系列1",
+    "specialty": "实验4-递归",
+    "problem_id": "2064",
+    "source": "sdut"
+  },
+  {
+    "order": 33,
+    "topic": "基础",
+    "title": "青蛙过河",
+    "specialty": "实验4-递归",
+    "problem_id": "3479",
+    "source": "sdut"
+  },
+  {
+    "order": 34,
+    "topic": "基础",
+    "title": "螺旋方阵",
+    "specialty": "实验4-递归",
+    "problem_id": "1295",
+    "source": "sdut"
+  },
+  {
+    "order": 35,
+    "topic": "扩展",
+    "title": "计算组合数",
+    "specialty": "实验4-递归",
+    "problem_id": "1586",
+    "source": "sdut"
+  },
+  {
+    "order": 36,
+    "topic": "扩展",
+    "title": "汉诺塔系列2",
+    "specialty": "实验4-递归",
+    "problem_id": "2066",
+    "source": "sdut"
+  },
+  {
+    "order": 37,
+    "topic": "扩展",
+    "title": "蟠桃记",
+    "specialty": "实验4-递归",
+    "problem_id": "1217",
+    "source": "sdut"
+  },
+  {
+    "order": 38,
+    "topic": "扩展",
+    "title": "数学黑洞",
+    "specialty": "实验4-递归",
+    "problem_id": "3470",
+    "source": "sdut"
+  },
+  {
+    "order": 39,
+    "topic": "扩展",
+    "title": "数值分解",
+    "specialty": "实验4-递归",
+    "problem_id": "3478",
+    "source": "sdut"
+  },
+  {
+    "order": 40,
+    "topic": "扩展",
+    "title": "M--二分查找",
+    "specialty": "实验4-递归",
+    "problem_id": "2872",
+    "source": "sdut"
+  },
+  {
+    "order": 41,
+    "topic": "基础",
+    "title": "活动选择",
+    "specialty": "实验5-贪心",
+    "problem_id": "1298",
+    "source": "sdut"
+  },
+  {
+    "order": 42,
+    "topic": "基础",
+    "title": "区间覆盖问题",
+    "specialty": "实验5-贪心",
+    "problem_id": "2074",
+    "source": "sdut"
+  },
+  {
+    "order": 43,
+    "topic": "基础",
+    "title": "删数问题",
+    "specialty": "实验5-贪心",
+    "problem_id": "2072",
+    "source": "sdut"
+  },
+  {
+    "order": 44,
+    "topic": "扩展",
+    "title": "活动选择问题",
+    "specialty": "实验5-贪心",
+    "problem_id": "2073",
+    "source": "sdut"
+  },
+  {
+    "order": 45,
+    "topic": "扩展",
+    "title": "最少拦截系统",
+    "specialty": "实验5-贪心",
+    "problem_id": "2075",
+    "source": "sdut"
+  },
+  {
+    "order": 46,
+    "topic": "扩展",
+    "title": "迷瘴",
+    "specialty": "实验5-贪心",
+    "problem_id": "2077",
+    "source": "sdut"
+  },
+  {
+    "order": 47,
+    "topic": "扩展",
+    "title": "悼念512汶川大地震遇难同胞",
+    "specialty": "实验5-贪心",
+    "problem_id": "2079",
+    "source": "sdut"
+  },
+  {
+    "order": 48,
+    "topic": "扩展",
+    "title": "懒虫小鑫",
+    "specialty": "实验5-贪心",
+    "problem_id": "2851",
+    "source": "sdut"
+  },
+  {
+    "order": 49,
+    "topic": "扩展",
+    "title": "商人小鑫",
+    "specialty": "实验5-贪心",
+    "problem_id": "2850",
+    "source": "sdut"
+  },
+  {
+    "order": 50,
+    "topic": "扩展",
+    "title": "装船问题",
+    "specialty": "实验5-贪心",
+    "problem_id": "2052",
+    "source": "sdut"
+  },
+  {
+    "order": 51,
+    "topic": "基础",
+    "title": "数字三角形问题",
+    "specialty": "实验6-动态规划",
+    "problem_id": "1730",
+    "source": "sdut"
+  },
+  {
+    "order": 52,
+    "topic": "基础",
+    "title": "最长上升子序列",
+    "specialty": "实验6-动态规划",
+    "problem_id": "1299",
+    "source": "sdut"
+  },
+  {
+    "order": 53,
+    "topic": "基础",
+    "title": "最长公共子序列问题",
+    "specialty": "实验6-动态规划",
+    "problem_id": "2080",
+    "source": "sdut"
+  },
+  {
+    "order": 54,
+    "topic": "扩展",
+    "title": "小鑫去爬山",
+    "specialty": "实验6-动态规划",
+    "problem_id": "2852",
+    "source": "sdut"
+  },
+  {
+    "order": 55,
+    "topic": "扩展",
+    "title": "上升子序列",
+    "specialty": "实验6-动态规划",
+    "problem_id": "2171",
+    "source": "sdut"
+  },
+  {
+    "order": 56,
+    "topic": "扩展",
+    "title": "最长公共子序列",
+    "specialty": "实验6-动态规划",
+    "problem_id": "1008",
+    "source": "sdut"
+  },
+  {
+    "order": 57,
+    "topic": "扩展",
+    "title": "免费馅饼",
+    "specialty": "实验6-动态规划",
+    "problem_id": "1366",
+    "source": "sdut"
+  },
+  {
+    "order": 58,
+    "topic": "扩展",
+    "title": "走迷宫",
+    "specialty": "实验6-动态规划",
+    "problem_id": "1269",
+    "source": "sdut"
+  },
+  {
+    "order": 59,
+    "topic": "扩展",
+    "title": "取数字问题",
+    "specialty": "实验6-动态规划",
+    "problem_id": "1304",
+    "source": "sdut"
+  },
+  {
+    "order": 60,
+    "topic": "扩展",
+    "title": "马的走法",
+    "specialty": "实验6-动态规划",
+    "problem_id": "1400",
+    "source": "sdut"
+  }
+]
